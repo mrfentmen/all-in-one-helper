@@ -238,7 +238,7 @@ const { tool } = Astro.props;
 
     const utilitySlugs = ['word-counter','json-formatter','password-generator'];
     const pdfSlugs = ['merge-pdf','split-pdf','compress-pdf','pdf-to-jpg','jpg-to-pdf','rotate-pdf','extract-text','watermark-pdf','unlock-pdf'];
-    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background'];
+    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background','image-watermark'];
     const videoSlugs = ['video-compress'];
     const audioSlugs = ['audio-tools'];
     const pdfPlusSlugs = ['delete-pages','protect-pdf','repair-pdf','pdf-to-word','sign-pdf','reorder-pdf','compare-pdf','redact-pdf','form-fill-pdf','add-page-numbers'];
@@ -248,6 +248,16 @@ const { tool } = Astro.props;
       document.getElementById('pdfPlusControls').classList.remove('hidden');
       ['deleteCtrl','protectCtrl','signCtrl','reorderCtrl'].forEach(id=> document.getElementById(id)?.classList.remove('hidden'));
     }
+    if (slug === 'gif-studio') {
+      document.getElementById('gifControls').classList.remove('hidden');
+    }
+    if (slug === 'calculators') {
+      document.getElementById('funControls').classList.remove('hidden');
+      document.getElementById('ageCtrl').classList.remove('hidden');
+      utilityArea.classList.remove('hidden');
+      dropzone.style.display = 'none';
+      utilityInput.placeholder = 'Mode commands: age 1990-05-14 | pct 20 of 150 | loan 100000 5% 30y | sci sin(0.5)+log(10) | unit 5 km m | contrast #000 vs #fff';
+    }
     if (slug === 'exif-viewer' || slug === 'steganography') {
       utilityArea.classList.remove('hidden');
       dropzone.style.display = '';
@@ -255,11 +265,14 @@ const { tool } = Astro.props;
       if (slug === 'exif-viewer') utilityInput.placeholder = '(optional) expected info - results shown below';
     }
 
-    const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image','heic-to-jpg','photo-collage','watermark-remover','image-splitter'];
+    const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image','heic-to-jpg','photo-collage','watermark-remover','image-splitter','image-watermark'];
     const gifSlugs = ['gif-maker','video-to-gif','gif-optimizer','gif-resizer','gif-splitter','screen-recorder','webcam-booth','audio-recorder'];
     const textDevSlugs = ['base64','url-encode','hash-generator','diff-checker','regex-tester','jwt-decoder','markdown-to-html','css-minify','uuid-generator','lorem-ipsum','json-to-csv','csv-to-json','xml-formatter','yaml-converter','html-entity','cron-tester','time-zone','contrast-checker','gradient-generator','case-converter','handwriting','percentage-calc','loan-calc','countdown-timer','dice-roller','scientific-calc','hex-to-rgb','csv-to-markdown','regex-visualizer','shadow-generator','user-agent-parser','ip-info','wheel-picker','table-to-html','text-to-speech','speech-to-text','wifi-qr','vcard-qr'];
     const funSlugs = ['invoice-generator','barcode-generator','unit-converter','age-calculator','pomodoro-timer','totp-generator'];
     textDevSlugs.push('encrypt-file','checksum-verifier','subnet-calculator','base-converter','line-tools','split-bill');
+    textDevSlugs.push('timestamp-converter','fancy-font-generator','json-to-typescript','tdee-calculator','meta-tag-generator','morse-code-translator','url-slug-generator','password-strength-checker');
+    const isGifStudio = slug === 'gif-studio';
+    const isCalcHub = slug === 'calculators';
 
     if (utilitySlugs.includes(slug)) {
       utilityArea.classList.remove('hidden');
@@ -312,6 +325,11 @@ const { tool } = Astro.props;
       if (slug === 'meme-generator') document.getElementById('memeCtrl').classList.remove('hidden');
       if (slug === 'svg-to-png') document.getElementById('svgCtrl').classList.remove('hidden');
       if (slug === 'blur-image') document.getElementById('blurCtrl').classList.remove('hidden');
+      if (slug === 'image-watermark') {
+        document.getElementById('memeCtrl').classList.remove('hidden');
+        document.getElementById('memeTop').placeholder = 'Watermark text';
+        document.getElementById('memeBottom').placeholder = '(unused)';
+      }
     }
     if (gifSlugs.includes(slug)) {
       document.getElementById('gifControls').classList.remove('hidden');
@@ -651,7 +669,7 @@ const { tool } = Astro.props;
       }
       if (slug === 'qr-generator') return;
 
-      if (!files.length && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
+      if (!files.length && slug!=='calculators' && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
       skeleton.classList.remove('hidden'); skeleton.classList.remove('hidden'); setStatus('Working on it right in your browser…');
       actionBtn.disabled=true;
       try {
@@ -910,12 +928,12 @@ const { tool } = Astro.props;
           const start=document.getElementById('videoTrimStart').value.trim();
           const end=document.getElementById('videoTrimEnd').value.trim();
           skeleton.classList.remove('hidden'); setStatus('Loading ffmpeg (~30MB, first time)...');
-          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
-          const { toBlobURL } = await import('@ffmpeg/util');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
           const ffmpeg = new FFmpeg();
           ffmpeg.on('log', ({message})=>{ if(message.includes('time=')) setStatus('Encoding '+message.slice(-20)); });
           const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
-          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'), workerURL: '/ffmpeg/worker.js' });
           await ffmpeg.writeFile('input', new Uint8Array(await f.arrayBuffer()));
           let args = [];
           if(start || end){
@@ -940,11 +958,11 @@ const { tool } = Astro.props;
           const end=document.getElementById('audioEnd').value.trim();
           const fmt=document.getElementById('audioFormat').value;
           skeleton.classList.remove('hidden'); setStatus('Loading ffmpeg...');
-          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
-          const { toBlobURL } = await import('@ffmpeg/util');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
           const ffmpeg = new FFmpeg();
           const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
-          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'), workerURL: '/ffmpeg/worker.js' });
           await ffmpeg.writeFile('input', new Uint8Array(await f.arrayBuffer()));
           let args = [];
           if(start) args.push('-ss', start);
@@ -1135,11 +1153,11 @@ const { tool } = Astro.props;
           const delay=parseInt(document.getElementById('gifDelay').value)||20;
           const size=document.getElementById('gifSize').value;
           setStatus('Creating GIF via ffmpeg (no upload)...');
-          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
-          const { toBlobURL } = await import('@ffmpeg/util');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
           const ffmpeg = new FFmpeg();
           const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
-          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'), workerURL: '/ffmpeg/worker.js' });
           // Write images.jpg, input1.jpg...
           for(let i=0;i<files.length;i++){
             await ffmpeg.writeFile(`input${i}.jpg`, new Uint8Array(await files[i].arrayBuffer()));
@@ -1157,10 +1175,10 @@ const { tool } = Astro.props;
           const url=URL.createObjectURL(resultBlob); const img=new Image(); img.src=url; img.style.maxWidth='100%'; const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(img); prev.classList.remove('hidden');
         } else if (slug === 'video-to-gif') {
           if(files.length!==1) throw new Error('Select 1 video');
-          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
-          const { toBlobURL } = await import('@ffmpeg/util');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
           const ffmpeg=new FFmpeg(); const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
-          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'), workerURL: '/ffmpeg/worker.js' });
           await ffmpeg.writeFile('input', new Uint8Array(await files[0].arrayBuffer()));
           await ffmpeg.exec(['-i','input','-vf','fps=10,scale=480:-1:flags=lanczos','-loop','0','output.gif']);
           const data=await ffmpeg.readFile('output.gif');
@@ -1169,10 +1187,10 @@ const { tool } = Astro.props;
         } else if (slug === 'gif-optimizer') {
           if(files.length!==1) throw new Error('Select 1 GIF');
           // Simple optimize: re-encode via canvas reduce colors? For MVP, compress via ffmpeg
-          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
-          const { toBlobURL } = await import('@ffmpeg/util');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
           const ffmpeg=new FFmpeg(); const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
-          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'), workerURL: '/ffmpeg/worker.js' });
           await ffmpeg.writeFile('input.gif', new Uint8Array(await files[0].arrayBuffer()));
           await ffmpeg.exec(['-i','input.gif','-vf','scale=iw*0.9:ih*0.9','output.gif']);
           const data=await ffmpeg.readFile('output.gif');
@@ -1182,10 +1200,10 @@ const { tool } = Astro.props;
           if(files.length!==1) throw new Error('Select 1 GIF');
           const size=document.getElementById('gifSize').value;
           if(size==='original') throw new Error('Select size');
-          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
-          const { toBlobURL } = await import('@ffmpeg/util');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
           const ffmpeg=new FFmpeg(); const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
-          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'), workerURL: '/ffmpeg/worker.js' });
           await ffmpeg.writeFile('input.gif', new Uint8Array(await files[0].arrayBuffer()));
           await ffmpeg.exec(['-i','input.gif','-vf',`scale=${size}:-1:flags=lanczos`,'output.gif']);
           const data=await ffmpeg.readFile('output.gif');
@@ -2031,6 +2049,332 @@ const { tool } = Astro.props;
           const tip=bill*tipPct/100, total=bill+tip, each=total/people;
           utilityOutput.textContent='Bill: $'+bill.toFixed(2)+'\nTip ('+tipPct+'%): $'+tip.toFixed(2)+'\nTotal: $'+total.toFixed(2)+'\nEach of '+people+': $'+each.toFixed(2);
           utilityOutput.classList.remove('hidden');
+        } else if (slug === 'timestamp-converter') {
+          const v = utilityInput.value.trim();
+          const now = Math.floor(Date.now()/1000);
+          let epoch, label;
+          if(!v){ epoch = now; label='(now)'; }
+          else if(/^\d{13}$/.test(v)){ epoch = Math.floor(parseInt(v)/1000); label='ms'; }
+          else if(/^\d+$/.test(v)){ epoch = parseInt(v); label='s'; }
+          else { const d = new Date(v); if(isNaN(d)) throw new Error('Enter epoch seconds/ms or a date string'); epoch = Math.floor(d.getTime()/1000); label='parsed from date'; }
+          const d = new Date(epoch*1000);
+          utilityOutput.textContent =
+            'Input: '+v+' '+label+'\n'+
+            'Epoch (seconds): '+epoch+'\n'+
+            'Epoch (millis): '+(epoch*1000)+'\n'+
+            'ISO 8601: '+d.toISOString()+'\n'+
+            'Local: '+d.toString()+'\n'+
+            'UTC: '+d.toUTCString()+'\n'+
+            'Relative: '+Math.round((Date.now()-epoch*1000)/86400000)+' days ago';
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'fancy-font-generator') {
+          const text = utilityInput.value || 'Hello';
+          const maps = {
+            'Bold': {a:'𝐀',z:'𝐚',A:0x1D400,d:0x1D41A},
+            'Italic': {A:0x1D434,d:0x1D44E},
+            'Bold Italic': {A:0x1D468,d:0x1D482},
+            'Script': {A:0x1D49C,d:0x1D4B6},
+            'Bold Script': {A:0x1D4D0,d:0x1D4EA},
+            'Fraktur': {A:0x1D504,d:0x1D51E},
+            'Double-Struck': {A:0x1D538,d:0x1D552},
+            'Sans': {A:0x1D5A0,d:0x1D5BA},
+            'Sans Bold': {A:0x1D5D4,d:0x1D5EE},
+            'Monospace': {A:0x1D670,d:0x1D68A},
+          };
+          function toStyle(ch, upperBase, lowerBase){
+            const code = ch.codePointAt(0);
+            if(code>=65 && code<=90) return String.fromCodePoint(upperBase + (code-65));
+            if(code>=97 && code<=122) return String.fromCodePoint(lowerBase + (code-97));
+            return ch;
+          }
+          let out = '';
+          for(const [name,m] of Object.entries(maps)){
+            const converted = Array.from(text).map(ch=>toStyle(ch,m.A,m.d)).join('');
+            out += name+': '+converted+'\n';
+          }
+          // Bubble and square via transliteration tables
+          const bubble = 'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ';
+          const square = '🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉';
+          function mapTable(text, table){
+            return Array.from(text).map(ch=>{
+              const c=ch.toUpperCase().codePointAt(0);
+              return (c>=65&&c<=90)? table[c-65] : ch;
+            }).join('');
+          }
+          out += 'Bubble: '+mapTable(text,bubble)+'\n';
+          out += 'Square: '+mapTable(text,square);
+          utilityOutput.textContent = out;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'json-to-typescript') {
+          const json = utilityInput.value.trim();
+          if(!json) throw new Error('Paste JSON first');
+          const obj = JSON.parse(json);
+          const lines = [];
+          let ifaceCount = 0;
+          function typeName(v){
+            if(v===null) return 'null';
+            if(Array.isArray(v)) return 'array';
+            switch(typeof v){ case 'string': return 'string'; case 'number': return 'number'; case 'boolean': return 'boolean'; default: return 'object'; }
+          }
+          function pascal(s){ return s.replace(/(^|[-_ ])(\w)/g, (_,__,c)=>c.toUpperCase()).replace(/[^\w]/g,''); }
+          function genInterface(name, o){
+            ifaceCount++;
+            lines.push('export interface '+name+' {');
+            for(const [k,v] of Object.entries(o)){
+              const key = /^[A-Za-z_$][\w$]*$/.test(k) ? k : JSON.stringify(k);
+              if(v===null) lines.push('  '+key+': null;');
+              else if(Array.isArray(v)){
+                if(v.length && typeof v[0]==='object' && v[0]!==null){
+                  const child = pascal(k.replace(/s$/,''))||'Item';
+                  genInterface(child, v[0]);
+                  lines.push('  '+key+': '+child+'[];');
+                } else lines.push('  '+key+': '+typeName(v[0]!==undefined?v[0]:null)+'[];');
+              }
+              else if(typeof v==='object'){
+                const child = pascal(k)||'Nested';
+                genInterface(child, v);
+                lines.push('  '+key+': '+child+';');
+              }
+              else lines.push('  '+key+': '+typeName(v)+';');
+            }
+            lines.push('}');
+            lines.push('');
+          }
+          if(Array.isArray(obj)){
+            if(obj.length && typeof obj[0]==='object' && obj[0]!==null) genInterface('Root', obj[0]);
+            else lines.push('export type Root = '+JSON.stringify(obj.map(x=>typeof x))+'[];');
+          } else if(typeof obj==='object' && obj!==null) genInterface('Root', obj);
+          else lines.push('export type Root = '+typeof obj+';');
+          utilityOutput.textContent = lines.join('\n');
+          utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([lines.join('\n')],{type:'text/plain'}); resultName='types.ts'; downloadBtn.classList.remove('hidden');
+          setStatus('Generated '+ifaceCount+' interface(s)');
+        } else if (slug === 'tdee-calculator') {
+          // Input: gender(M/F) age weightKg heightCm activity(1.2-1.9)
+          const parts = utilityInput.value.trim().split(/[\s,]+/);
+          if(parts.length<5) throw new Error('Format: M 30 70 175 1.55  (gender age weightKg heightCm activity)');
+          const male = parts[0].toUpperCase().startsWith('M');
+          const age=+parts[1], w=+parts[2], h=+parts[3], act=+parts[4];
+          if(!age||!w||!h||!act) throw new Error('All values required');
+          const bmr = Math.round(10*w + 6.25*h - 5*age + (male?5:-161));
+          const tdee = Math.round(bmr*act);
+          const macros = (cals,p,c,f)=> Math.round(cals*0.40/4)+'g carbs / '+Math.round(cals*p/4)+'g protein / '+Math.round(cals*f/9)+'g fat';
+          utilityOutput.textContent =
+            'BMR: '+bmr+' kcal\n'+
+            'TDEE (maintenance): '+tdee+' kcal\n\n'+
+            'Cut (-500): '+(tdee-500)+' kcal - '+macros(tdee-500,0.40,0.35)+'\n'+
+            'Maintain: '+tdee+' kcal - '+macros(tdee,0.40,0.30)+'\n'+
+            'Bulk (+500): '+(tdee+500)+' kcal - '+macros(tdee+500,0.40,0.25)+'\n\n'+
+            'Activity levels: 1.2 sedentary / 1.375 light / 1.55 moderate / 1.725 active / 1.9 athlete';
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'meta-tag-generator') {
+          // Input format on separate lines: title | description | url | image
+          const L = utilityInput.value.split('\n').map(s=>s.trim());
+          const title=L[0]||'My Site', desc=L[1]||'Description here', url=L[2]||'https://example.com', img=L[3]||url+'/og.png';
+          const snippet =
+'<title>'+title+'</title>\n'+
+'<meta name="description" content="'+desc+'" />\n'+
+'<meta name="robots" content="index, follow" />\n'+
+'<link rel="canonical" href="'+url+'" />\n\n'+
+'<!-- Open Graph -->\n'+
+'<meta property="og:type" content="website" />\n'+
+'<meta property="og:title" content="'+title+'" />\n'+
+'<meta property="og:description" content="'+desc+'" />\n'+
+'<meta property="og:url" content="'+url+'" />\n'+
+'<meta property="og:image" content="'+img+'" />\n\n'+
+'<!-- Twitter -->\n'+
+'<meta name="twitter:card" content="summary_large_image" />\n'+
+'<meta name="twitter:title" content="'+title+'" />\n'+
+'<meta name="twitter:description" content="'+desc+'" />\n'+
+'<meta name="twitter:image" content="'+img+'" />';
+          utilityOutput.textContent = snippet;
+          utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([snippet],{type:'text/html'}); resultName='meta-tags.html'; downloadBtn.classList.remove('hidden');
+          setStatus('Meta tags generated');
+        } else if (slug === 'morse-code-translator') {
+          const MORSE = {A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','.':'.-.-.-',',':'--..--','?':'..--..','!':'-.-.--','/':'-..-.','@':'.--.-.','-':'-....-'};
+          const REV = {}; for(const [k,v] of Object.entries(MORSE)) REV[v]=k;
+          const input = utilityInput.value.trim() || 'SOS';
+          let out;
+          if(/[.-]/.test(input) && !/[a-z]/i.test(input.replace(/[.-]/g,''))){
+            out = input.split('/').map(w=> w.trim().split(/\s+/).map(c=>REV[c]||'?').join('')).join(' ');
+          } else {
+            out = input.toUpperCase().split('').map(ch=> ch===' '?' / ': (MORSE[ch]||'')).join(' ').replace(/\s+/g,' ').trim();
+          }
+          utilityOutput.textContent = out;
+          utilityOutput.classList.remove('hidden');
+          // Audio playback button
+          const playBtn=document.createElement('button');
+          playBtn.textContent='▶ Play Morse audio';
+          playBtn.className='mt-3 bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-4 py-2 rounded-full text-sm font-bold';
+          playBtn.onclick=()=>{
+            const ctx=new (window.AudioContext||window.webkitAudioContext)();
+            const unit=0.08; let t=ctx.currentTime;
+            for(const sym of out){
+              if(sym==='.'){ tone(ctx,t,unit); t+=unit*1.5; }
+              else if(sym==='-'){ tone(ctx,t,unit*3); t+=unit*3.5; }
+              else if(sym===' '){ t+=unit*1.5; }
+              else if(sym==='/'){ t+=unit*4; }
+            }
+            function tone(c,start,dur){ const o=c.createOscillator(), g=c.createGain(); o.frequency.value=600; o.connect(g); g.connect(c.destination); g.gain.setValueAtTime(0.15,start); g.gain.exponentialRampToValueAtTime(0.001,start+dur); o.start(start); o.stop(start+dur); }
+          };
+          utilityOutput.appendChild(document.createElement('br'));
+          utilityOutput.appendChild(playBtn);
+        } else if (slug === 'url-slug-generator') {
+          const title = utilityInput.value.trim() || 'My Great Article Title!';
+          const slugText = title.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g,'')
+            .trim()
+            .replace(/[\s-]+/g,'-');
+          utilityOutput.textContent = slugText + '\n\nLength: '+slugText.length+' chars'+(slugText.length>75?' (consider trimming - long URLs)':'');
+          utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([slugText],{type:'text/plain'}); resultName='slug.txt'; downloadBtn.classList.remove('hidden');
+        } else if (slug === 'password-strength-checker') {
+          const pw = utilityInput.value;
+          if(!pw) throw new Error('Type a password to analyze (it never leaves your device)');
+          let charset=0;
+          if(/[a-z]/.test(pw)) charset+=26;
+          if(/[A-Z]/.test(pw)) charset+=26;
+          if(/[0-9]/.test(pw)) charset+=10;
+          if(/[^a-zA-Z0-9]/.test(pw)) charset+=33;
+          const entropy = Math.round(pw.length * Math.log2(charset||1));
+          const guesses = Math.pow(2, entropy);
+          const seconds = guesses / 1e10; // 10 billion guesses/sec offline attack
+          const fmtTime = s=>{
+            if(s<1) return 'instantly';
+            const u=[['years',31536000],['days',86400],['hours',3600],['minutes',60],['seconds',1]];
+            for(const [name,div] of u){ if(s>=div) return Math.round(s/div).toLocaleString()+' '+name; }
+            return s+' seconds';
+          };
+          const common=/^(password|123456|qwerty|letmein|admin|welcome)/i.test(pw);
+          const score = common?0: entropy<28?1: entropy<36?2: entropy<60?3:4;
+          const labels=['Very weak','Weak','Fair','Strong','Very strong'];
+          const colors=['#dc2626','#ea580c','#ca8a04','#16a34a','#059669'];
+          utilityOutput.innerHTML =
+            '<div style="font-size:18px;font-weight:900;color:'+colors[score]+'">'+labels[score]+'</div>'+
+            '<div style="margin-top:8px">Entropy: '+entropy+' bits</div>'+
+            '<div>Charset size: '+charset+'</div>'+
+            '<div>Length: '+pw.length+'</div>'+
+            '<div>Offline crack estimate (10^10 guesses/s): '+fmtTime(seconds)+'</div>'+
+            (common?'<div style="color:#dc2626;margin-top:6px">⚠ Starts with an extremely common password pattern</div>':'')+
+            '<div style="height:10px;background:#e2e8f0;border-radius:99px;margin-top:10px;overflow:hidden"><div style="width:'+((score+1)/5*100)+'%;height:100%;background:'+colors[score]+'"></div></div>';
+          utilityOutput.classList.remove('hidden');
+          setStatus('Analyzed locally - nothing sent anywhere');
+        } else if (slug === 'gif-studio') {
+          // Hub: route based on inputs
+          if(files.length===0) throw new Error('Select images or a video first');
+          setStatus('Loading ffmpeg...');
+          const { FFmpeg } = await import('/ffmpeg/index.js');
+          const { toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
+          const ffmpeg = new FFmpeg();
+          const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+          await ffmpeg.load({ coreURL: await toBlobURL(baseURL+'/ffmpeg-core.js','text/javascript'), wasmURL: await toBlobURL(baseURL+'/ffmpeg-core.wasm','application/wasm'), workerURL: '/ffmpeg/worker.js' });
+          const delay=parseInt(document.getElementById('gifDelay').value)||20;
+          const size=document.getElementById('gifSize').value;
+          const scale = size==='original' ? '' : ',scale='+size+':-1:flags=lanczos';
+          const allImages = files.every(f=>f.type.startsWith('image/'));
+          if(allImages && files.length>1){
+            for(let i=0;i<files.length;i++) await ffmpeg.writeFile('input'+i+'.jpg', new Uint8Array(await files[i].arrayBuffer()));
+            const list = files.map((_,i)=> "file 'input"+i+".jpg'\nduration "+(delay/100)).join('\n');
+            await ffmpeg.writeFile('list.txt', list);
+            await ffmpeg.exec(['-f','concat','-safe','0','-i','list.txt','-vf','fps=10'+scale,'-loop','0','output.gif']);
+            resultName='made.gif';
+          } else {
+            const f=files[0];
+            await ffmpeg.writeFile('input', new Uint8Array(await f.arrayBuffer()));
+            if(f.type.startsWith('video/')){
+              await ffmpeg.exec(['-i','input','-vf','fps=10'+scale,'-loop','0','output.gif']);
+              resultName='video.gif';
+            } else {
+              // single GIF: optimize/resize
+              await ffmpeg.writeFile('input.gif', new Uint8Array(await f.arrayBuffer()));
+              await ffmpeg.exec(['-i','input.gif','-vf',(scale?'scale='+size+':-1:flags=lanczos':'scale=iw*0.9:ih*0.9'),'output.gif']);
+              resultName='optimized.gif';
+            }
+          }
+          const data=await ffmpeg.readFile('output.gif');
+          resultBlob=new Blob([data],{type:'image/gif'});
+          downloadBtn.classList.remove('hidden');
+          setStatus('GIF ready - '+formatBytes(resultBlob.size));
+          const url=URL.createObjectURL(resultBlob); const img=new Image(); img.src=url; img.style.maxWidth='100%';
+          const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(img); prev.classList.remove('hidden');
+        } else if (slug === 'calculators') {
+          // Hub: parse mode command
+          const raw = utilityInput.value.trim();
+          if(!raw) throw new Error('Type a command e.g. "pct 20 of 150" or "loan 100000 5% 30y"');
+          const sp = raw.split(/\s+/);
+          const mode = sp[0].toLowerCase();
+          let out='';
+          if(mode==='age' && sp[1]){
+            const birth=new Date(sp[1]); const now=new Date();
+            let age=now.getFullYear()-birth.getFullYear();
+            const m=now.getMonth()-birth.getMonth();
+            if(m<0||(m===0&&now.getDate()<birth.getDate())) age--;
+            out='Age: '+age+' years';
+          } else if(mode==='bmi' && sp.length>=3){
+            const bmi=(+sp[1])/((+sp[2]/100)**2);
+            out='BMI: '+bmi.toFixed(1)+' ('+(bmi<18.5?'Underweight':bmi<25?'Normal':bmi<30?'Overweight':'Obese')+')';
+          } else if(mode==='pct' && sp.length>=4){
+            out=sp[1]+'% of '+sp[3]+' = '+(parseFloat(sp[3])*parseFloat(sp[1])/100);
+          } else if(mode==='loan' && sp.length>=4){
+            const P=parseFloat(sp[1]), r=parseFloat(sp[2].replace('%',''))/100/12, n=(parseFloat(sp[3].replace('y',''))||30)*12;
+            const pay=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+            out='Monthly: $'+pay.toFixed(2)+'\nTotal paid: $'+(pay*n).toFixed(2)+'\nInterest: $'+(pay*n-P).toFixed(2);
+          } else if(mode==='sci'){
+            const expr=raw.slice(4).replace(/sin/g,'Math.sin').replace(/cos/g,'Math.cos').replace(/tan/g,'Math.tan').replace(/log/g,'Math.log10').replace(/ln/g,'Math.log').replace(/sqrt/g,'Math.sqrt');
+            out='= '+Function('"use strict"; return ('+expr+')')();
+          } else if(mode==='unit' && sp.length>=4){
+            const val=+sp[1], from=sp[2], to=sp[3]; let res=val;
+            if(from==='km'&&to==='m') res=val*1000; else if(from==='m'&&to==='km') res=val/1000;
+            else if(from==='lb'&&to==='kg') res=val*0.453592; else if(from==='kg'&&to==='lb') res=val/0.453592;
+            else if(from==='c'&&to==='f') res=val*9/5+32; else if(from==='f'&&to==='c') res=(val-32)*5/9;
+            out=val+' '+from+' = '+res.toFixed(4)+' '+to;
+          } else if(mode==='contrast' && raw.includes('vs')){
+            const mm=raw.match(/(#[0-9A-Fa-f]{6})\s*vs\s*(#[0-9A-Fa-f]{6})/);
+            if(!mm) throw new Error('Use: contrast #000000 vs #ffffff');
+            const lum=h=>{const a=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4));return 0.2126*a[0]+0.7152*a[1]+0.0722*a[2];};
+            const l1=lum(mm[1]),l2=lum(mm[2]);const ratio=((Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05));
+            out='Contrast: '+ratio.toFixed(2)+'\nAA: '+(ratio>=4.5?'PASS':'FAIL')+'\nAAA: '+(ratio>=7?'PASS':'FAIL');
+          } else {
+            throw new Error('Unknown mode. Try: age <date> | bmi <kg> <cm> | pct <x> of <y> | loan <P> <r%> <yrs> | sci <expr> | unit <v> <from> <to> | contrast #hex vs #hex');
+          }
+          utilityOutput.textContent=out; utilityOutput.classList.remove('hidden');
+        } else if (slug === 'image-watermark') {
+          if(!files.length) throw new Error('Select image(s)');
+          const text=document.getElementById('memeTop').value || '© Watermark';
+          const outs=[];
+          for(const f of files){
+            const bmp=await createImageBitmap(f);
+            const canvas=document.createElement('canvas'); canvas.width=bmp.width; canvas.height=bmp.height;
+            const ctx=canvas.getContext('2d'); ctx.drawImage(bmp,0,0);
+            const fontSize=Math.max(16, Math.round(canvas.width/25));
+            ctx.font='bold '+fontSize+'px sans-serif';
+            ctx.fillStyle='rgba(255,255,255,0.45)';
+            ctx.strokeStyle='rgba(0,0,0,0.25)';
+            ctx.lineWidth=Math.max(1,fontSize/12);
+            ctx.textAlign='right'; ctx.textBaseline='bottom';
+            const x=canvas.width-fontSize, y=canvas.height-fontSize*0.6;
+            ctx.strokeText(text,x,y); ctx.fillText(text,x,y);
+            // diagonal tiled watermark
+            ctx.save();
+            ctx.globalAlpha=0.08;
+            ctx.rotate(-Math.PI/6);
+            ctx.textAlign='left';
+            for(let yy=-canvas.height; yy<canvas.height*2; yy+=fontSize*4){
+              for(let xx=-canvas.width; xx<canvas.width*2; xx+=text.length*fontSize*0.7+fontSize*4){
+                ctx.fillText(text,xx,yy);
+              }
+            }
+            ctx.restore();
+            const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));
+            outs.push(new File([blob],'watermarked-'+f.name.replace(/\.[^.]+$/,'.png'),{type:'image/png'}));
+          }
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name; }
+          else { const {default:JSZip}=await import('jszip'); const zip=new JSZip(); outs.forEach(o=>zip.file(o.name,o)); resultBlob=await zip.generateAsync({type:'blob'}); resultName='watermarked.zip'; }
+          downloadBtn.classList.remove('hidden');
+          setStatus('Watermarked '+files.length+' image(s)');
+          if(outs.length===1){ const url=URL.createObjectURL(resultBlob); const img=new Image(); img.src=url; img.style.maxWidth='100%'; const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(img); prev.classList.remove('hidden'); }
         } else if (slug === 'pdf-pro') {
           const delStr = document.getElementById('deletePages')?.value.trim();
           const reorderStr = document.getElementById('reorderInput')?.value.trim();

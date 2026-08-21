@@ -174,36 +174,6 @@
     "icon": "🌫️"
   },
   {
-    "slug": "gif-maker",
-    "title": "GIF Maker",
-    "description": "Images → GIF (ezgif.com/maker clone) - delay/crossfade.",
-    "icon": "🎞️"
-  },
-  {
-    "slug": "video-to-gif",
-    "title": "Video to GIF",
-    "description": "Video → GIF, trim, fps 10/15, scale.",
-    "icon": "🎬"
-  },
-  {
-    "slug": "gif-optimizer",
-    "title": "GIF Optimizer",
-    "description": "Compress GIF, reduce colors, lossy.",
-    "icon": "🗜️"
-  },
-  {
-    "slug": "gif-resizer",
-    "title": "GIF Resizer",
-    "description": "Resize/crop GIF - canvas.",
-    "icon": "📐"
-  },
-  {
-    "slug": "gif-splitter",
-    "title": "GIF Splitter",
-    "description": "GIF → frames (PNG zip).",
-    "icon": "✂️"
-  },
-  {
     "slug": "base64",
     "title": "Base64 Tool",
     "description": "Encode/decode Base64 text & files.",
@@ -274,18 +244,6 @@
     "title": "Barcode Generator",
     "description": "Generate barcodes (CODE128, EAN) + QR.",
     "icon": "📊"
-  },
-  {
-    "slug": "unit-converter",
-    "title": "Unit Converter",
-    "description": "Length/weight/temp + currency (offline).",
-    "icon": "⚖️"
-  },
-  {
-    "slug": "age-calculator",
-    "title": "Age/BMI Calculator",
-    "description": "Age from DOB + BMI chart.",
-    "icon": "🎂"
   },
   {
     "slug": "pomodoro-timer",
@@ -360,12 +318,6 @@
     "icon": "🌍"
   },
   {
-    "slug": "contrast-checker",
-    "title": "Contrast Checker",
-    "description": "WCAG contrast AA/AAA checker.",
-    "icon": "◐"
-  },
-  {
     "slug": "gradient-generator",
     "title": "Gradient Generator",
     "description": "CSS gradient maker - preview, copy.",
@@ -382,18 +334,6 @@
     "title": "Text to Handwriting",
     "description": "Text → handwriting image - canvas.",
     "icon": "✍️"
-  },
-  {
-    "slug": "percentage-calc",
-    "title": "Percentage Calc",
-    "description": "Percentage calculator - quick.",
-    "icon": "%"
-  },
-  {
-    "slug": "loan-calc",
-    "title": "Loan Calculator",
-    "description": "Loan payment + interest - chart.",
-    "icon": "💰"
   },
   {
     "slug": "countdown-timer",
@@ -430,12 +370,6 @@
     "title": "Audio Recorder",
     "description": "Record audio via mic - webm/mp3.",
     "icon": "🎤"
-  },
-  {
-    "slug": "scientific-calc",
-    "title": "Scientific Calc",
-    "description": "Scientific calculator - sin, log, etc.",
-    "icon": "🧮"
   },
   {
     "slug": "text-to-speech",
@@ -562,5 +496,71 @@
     "title": "Split Bill Calculator",
     "description": "Bill + tip + tax split between friends.",
     "icon": "🧾"
+  },
+  {
+    "slug": "gif-studio",
+    "title": "GIF Studio",
+    "description": "Make, convert, optimize, resize and split GIFs - all in one place.",
+    "icon": "🎞️"
+  },
+  {
+    "slug": "calculators",
+    "title": "Calculator Hub",
+    "description": "Age, BMI, percentage, loan, scientific, unit converter and more.",
+    "icon": "🧮"
+  },
+  {
+    "slug": "timestamp-converter",
+    "title": "Timestamp Converter",
+    "description": "Epoch to date and back - seconds or milliseconds.",
+    "icon": "⏱️"
+  },
+  {
+    "slug": "fancy-font-generator",
+    "title": "Fancy Font Generator",
+    "description": "Unicode text styles for bios: bold, italic, script, bubble.",
+    "icon": "✒️"
+  },
+  {
+    "slug": "json-to-typescript",
+    "title": "JSON to TypeScript",
+    "description": "Paste JSON, get TypeScript interfaces instantly.",
+    "icon": "🧩"
+  },
+  {
+    "slug": "image-watermark",
+    "title": "Image Watermark",
+    "description": "Add text watermarks to photos - position, size, opacity.",
+    "icon": "🏷️"
+  },
+  {
+    "slug": "tdee-calculator",
+    "title": "TDEE & Calorie Calculator",
+    "description": "BMR, TDEE and macros from age, height, weight, activity.",
+    "icon": "🔥"
+  },
+  {
+    "slug": "meta-tag-generator",
+    "title": "Meta Tag Generator",
+    "description": "SEO + Open Graph + Twitter card tags with preview.",
+    "icon": "🏷️"
+  },
+  {
+    "slug": "morse-code-translator",
+    "title": "Morse Code Translator",
+    "description": "Text to Morse and back, with audio playback.",
+    "icon": "📡"
+  },
+  {
+    "slug": "url-slug-generator",
+    "title": "URL Slug Generator",
+    "description": "Clean URL slugs from any title - SEO friendly.",
+    "icon": "🔗"
+  },
+  {
+    "slug": "password-strength-checker",
+    "title": "Password Strength Checker",
+    "description": "Entropy, crack-time estimate and weakness checks.",
+    "icon": "💪"
   }
 ]

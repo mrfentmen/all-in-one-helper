@@ -287,3 +287,23 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - Build: 100 pages exactly
 - Old PDF tool URLs redirect via _redirects (production; preview server ignores them)
 
+
+## [1.3.0] - 2026-08-21 - GIF Studio + Calculator Hub + 9 New Tools
+
+### Added
+- **GIF Studio hub** (/tools/gif-studio): images-to-GIF, video-to-GIF, optimize, resize in one page; ffmpeg ESM now self-hosted at /ffmpeg/ (fixes cross-origin Worker blocking)
+- **Calculator Hub** (/tools/calculators): age, BMI, percentage, loan, scientific, unit, contrast via simple commands
+- **9 new tools**: timestamp-converter, fancy-font-generator (10 Unicode styles), json-to-typescript (nested interfaces), image-watermark (text + tiled diagonal), tdee-calculator (BMR/TDEE/macros), meta-tag-generator (SEO+OG+Twitter), morse-code-translator (with Web Audio playback), url-slug-generator, password-strength-checker (entropy/crack-time)
+- 22 new 301 redirects for consolidated URLs
+
+### Fixed
+- ffmpeg.wasm cross-origin Worker failure: @ffmpeg/ffmpeg ESM now served same-origin from /ffmpeg/ (classes.js/worker.js/utils.js etc); all 7 handlers patched
+- textDevSlugs TDZ crash on new tool pages
+- calculators/image-watermark visibility + file-check exemptions
+- Command palette test updated for gif-studio rename
+
+### Verified
+- E2E: 150/150 passed in 48.3s
+- Build: exactly 100 pages (94 tools + 6)
+- OG images regenerated (95 files)
+

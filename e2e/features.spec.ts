@@ -47,9 +47,9 @@ test.describe('Command palette', () => {
     await expect(page.locator('#cmdPalette')).toBeVisible();
     await page.fill('#paletteInput', 'gif');
     await page.waitForTimeout(200);
-    await expect(page.locator('#paletteResults')).toContainText('GIF Maker');
+    await expect(page.locator('#paletteResults')).toContainText('GIF Studio');
     await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/\/tools\/gif-maker/);
+    await expect(page).toHaveURL(/\/tools\/gif-studio/);
   });
   test('Escape closes', async ({ page }) => {
     await page.goto('/');
