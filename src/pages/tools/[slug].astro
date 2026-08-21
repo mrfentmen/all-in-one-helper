@@ -7,9 +7,6 @@ export async function getStaticPaths() {
 }
 
 const { tool } = Astro.props;
-const isPdf = tool.category === 'pdf';
-const isImage = tool.category === 'image';
-const isUtility = tool.category === 'utility';
 ---
 
 <Layout title={tool.title} description={tool.longDescription}>
@@ -48,6 +45,30 @@ const isUtility = tool.category === 'utility';
             </div>
           </div>
 
+          <div id="pdfControls" class="mt-4 hidden space-y-3">
+            <div id="splitCtrl" class="hidden"><label class="text-xs font-bold">Pages to keep (e.g. 1,3-5 or 1-3)</label><input id="splitRange" class="mt-1 w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm outline-none focus:border-slate-900" placeholder="1,3-5" /></div>
+            <div id="rotateCtrl" class="hidden flex gap-2"><label class="text-xs font-bold">Rotate:</label><select id="rotateAngle" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select><input id="deleteRange" placeholder="Delete pages (e.g. 2,4)" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div>
+            <div id="watermarkCtrl" class="hidden space-y-2"><input id="watermarkText" placeholder="Watermark text (e.g. CONFIDENTIAL)" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /><label class="flex items-center gap-2 text-xs"><input id="pageNumbers" type="checkbox" /> Add page numbers</label></div>
+            <div id="unlockCtrl" class="hidden"><input id="pdfPassword" type="password" placeholder="PDF password" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /></div>
+            <div id="jpgToPdfCtrl" class="hidden flex gap-2"><select id="pdfPageSize" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="auto">Auto (image size)</option><option value="A4">A4</option></select><select id="pdfOrientation" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
+          </div>
+
+          <div id="imageControls" class="mt-4 hidden space-y-3">
+            <div id="compressCtrl" class="hidden"><label class="text-xs font-bold">Quality: <span id="qualityVal">0.7</span></label><input id="imageQuality" type="range" min="0.1" max="1" step="0.1" value="0.7" class="w-full" /></div>
+            <div id="convertCtrl" class="hidden flex gap-2 items-center"><label class="text-xs font-bold">Convert to:</label><select id="convertFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WEBP</option></select></div>
+            <div id="resizeCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="resizeW" type="number" placeholder="Width" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="resizeH" type="number" placeholder="Height" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div><div class="flex gap-2"><select id="resizePreset" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="">Custom</option><option value="1280x720">YouTube 1280×720</option><option value="1080x1080">Instagram 1080×1080</option><option value="1920x1080">Full HD 1920×1080</option></select><label class="flex items-center gap-1 text-xs"><input id="keepAspect" type="checkbox" checked /> Keep aspect</label></div></div>
+            <div id="upscaleCtrl" class="hidden"><label class="text-xs font-bold">Scale:</label><select id="upscaleFactor" class="ml-2 border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="2">2×</option><option value="4">4×</option></select></div>
+          </div>
+
+          <div id="videoControls" class="mt-4 hidden space-y-3">
+            <div class="flex gap-2"><select id="videoFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="mp4">MP4</option><option value="webm">WEBM</option><option value="mp3">MP3 (audio only)</option></select><input id="videoTrimStart" placeholder="Start sec (e.g. 0)" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="videoTrimEnd" placeholder="End sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div>
+            <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-2">Video processing is heavy — limit 100MB, may take a minute, runs in Web Worker. Your file never leaves device.</div>
+          </div>
+
+          <div id="audioControls" class="mt-4 hidden space-y-3">
+            <div class="flex gap-2"><input id="audioStart" placeholder="Start sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="audioEnd" placeholder="End sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><select id="audioFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="mp3">MP3</option><option value="wav">WAV</option></select></div>
+          </div>
+
           <div class="mt-4 flex flex-wrap gap-3">
             <button id="actionBtn" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition disabled:opacity-40 disabled:cursor-not-allowed">Run — {tool.shortTitle}</button>
             <button id="downloadBtn" class="hidden bg-[#FFDD00] text-black border-2 border-black px-6 py-3 rounded-full font-bold text-sm">⬇ Download result</button>
@@ -59,8 +80,26 @@ const isUtility = tool.category === 'utility';
             <pre id="utilityOutput" class="mt-3 bg-slate-900 text-emerald-300 p-4 rounded-xl text-sm overflow-auto hidden"></pre>
           </div>
 
+          <div id="resumeArea" class="mt-6 hidden space-y-3">
+            <div class="grid sm:grid-cols-2 gap-3">
+              <input id="resumeName" placeholder="Full Name" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumeTitle" placeholder="Job Title" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumeEmail" placeholder="Email" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumePhone" placeholder="Phone" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
+            </div>
+            <textarea id="resumeSummary" rows="3" placeholder="Summary" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
+            <textarea id="resumeExp" rows="4" placeholder="Experience (e.g. Company — Role — Years — Description, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
+            <textarea id="resumeEdu" rows="3" placeholder="Education (e.g. University — Degree — Year, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
+            <input id="resumeSkills" placeholder="Skills (comma separated)" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
+            <div class="flex gap-2"><select id="resumeTemplate" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="1">Template 1 — Clean</option><option value="2">Template 2 — Bold</option></select></div>
+          </div>
+
           <div id="qrArea" class="mt-6 hidden text-center">
             <input id="qrInput" placeholder="https://example.com or any text" class="w-full border border-slate-200 rounded-full px-4 py-3 text-sm outline-none focus:border-slate-900" />
+            <div class="mt-3 flex gap-2 items-center justify-center">
+              <label class="text-xs">Size</label><input id="qrSize" type="number" value="300" class="w-20 border border-slate-200 rounded-full px-2 py-1 text-sm" />
+              <input id="qrFg" type="color" value="#000000" class="w-8 h-8 rounded" /><input id="qrBg" type="color" value="#ffffff" class="w-8 h-8 rounded" />
+            </div>
             <div class="mt-4 flex gap-2 justify-center">
               <button id="qrBtn" class="bg-slate-900 text-white px-6 py-2 rounded-full font-bold text-sm">Generate QR</button>
               <button id="qrDownload" class="hidden bg-[#FFDD00] border-2 border-black px-4 py-2 rounded-full font-bold text-sm">Download PNG</button>
@@ -68,29 +107,28 @@ const isUtility = tool.category === 'utility';
             <canvas id="qrCanvas" class="mx-auto mt-4 hidden border border-slate-200 rounded-xl"></canvas>
           </div>
 
+          <div id="colorArea" class="mt-6 hidden">
+            <div class="flex gap-3 items-center"><input type="color" id="colorPick" value="#FFDD00" class="w-16 h-12 rounded-xl border" /><input id="colorHex" value="#FFDD00" class="flex-1 border border-slate-200 rounded-full px-4 py-2.5 text-sm font-mono" /><button id="colorCopy" class="bg-slate-900 text-white px-4 py-2 rounded-full text-sm">Copy</button></div>
+            <div id="colorVals" class="mt-3 text-xs font-mono bg-white border border-slate-200 rounded-xl p-3"></div>
+          </div>
+
           <div id="resultInfo" class="mt-4 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
             <div class="font-bold text-emerald-800">✓ Done — file never left your device</div>
             <div class="text-emerald-700 mt-1">Verify in Network tab: 0 bytes uploaded. <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="underline font-bold">Buy us a coffee?</a></div>
           </div>
+
+          <div id="previewArea" class="mt-4 hidden"><canvas id="previewCanvas" class="w-full border border-slate-200 rounded-xl"></canvas></div>
         </div>
 
         <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6">
           <h2 class="font-black">How to use {tool.title} without uploading</h2>
           <ol class="mt-3 list-decimal list-inside text-sm text-slate-600 space-y-2 leading-relaxed">
             <li>Click the dropzone or drag files — they stay in your browser's RAM.</li>
-            <li>Click "Run" — processing happens in a Web Worker via <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pdf-lib / Canvas / WASM</code> on your device.</li>
+            <li>Click "Run" — processing happens via <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pdf-lib / Canvas / WASM</code> on your device.</li>
             <li>Download result. Check DevTools → Network: no POST, no upload.</li>
           </ol>
           <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
             <strong>Privacy:</strong> There is no <code>/upload</code> endpoint. We couldn't see your files even if we tried — the site is static on Cloudflare Pages.
-          </div>
-          <div class="mt-6">
-            <h3 class="font-bold text-sm">FAQ</h3>
-            <div class="mt-2 space-y-3 text-sm">
-              <div><div class="font-semibold">Is it really free?</div><div class="text-slate-600">Yes. 22 tools, no paywall, no watermarks. Ad + Buy Me a Coffee funded.</div></div>
-              <div><div class="font-semibold">What about large files?</div><div class="text-slate-600">Browser limit ~50-100MB. For larger, use desktop. We show friendly error, never crash.</div></div>
-              <div><div class="font-semibold">Why BMC?</div><div class="text-slate-600">Domain costs $10/year. Coffee funds better WASM models. Optional: <a href="https://www.buymeacoffee.com/contactae2b" class="underline">contactae2b</a></div></div>
-            </div>
           </div>
         </div>
       </div>
@@ -116,9 +154,6 @@ const isUtility = tool.category === 'utility';
           <div class="text-sm mt-1">We run on $0 + domain. Your coffee keeps tools free & private.</div>
           <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="mt-3 inline-flex bg-black text-white px-4 py-2 rounded-full text-sm font-bold">☕ Buy me a coffee</a>
         </div>
-        <div data-ad-slot="below" class="h-[120px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-xs bg-white">
-          Below-tool custom banner (banners.json)
-        </div>
       </div>
     </div>
   </div>
@@ -141,99 +176,221 @@ const isUtility = tool.category === 'utility';
     const qrBtn = document.getElementById('qrBtn');
     const qrCanvas = document.getElementById('qrCanvas');
     const qrDownload = document.getElementById('qrDownload');
+    const resumeArea = document.getElementById('resumeArea');
+    const colorArea = document.getElementById('colorArea');
+    const pdfControls = document.getElementById('pdfControls');
+    const imageControls = document.getElementById('imageControls');
+    const videoControls = document.getElementById('videoControls');
+    const audioControls = document.getElementById('audioControls');
 
     let files = [];
     let resultBlob = null;
     let resultName = 'result';
 
-    const utilitySlugs = ['word-counter','json-formatter','password-generator','color-picker'];
-    const qrSlugs = ['qr-generator'];
-    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background'];
+    const utilitySlugs = ['word-counter','json-formatter','password-generator'];
     const pdfSlugs = ['merge-pdf','split-pdf','compress-pdf','pdf-to-jpg','jpg-to-pdf','rotate-pdf','extract-text','watermark-pdf','unlock-pdf'];
+    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background'];
+    const videoSlugs = ['video-compress'];
+    const audioSlugs = ['audio-tools'];
 
     if (utilitySlugs.includes(slug)) {
       utilityArea.classList.remove('hidden');
       dropzone.style.display = 'none';
-      actionBtn.textContent = 'Run';
       if (slug === 'word-counter') utilityInput.placeholder = 'Paste text to count words...';
       if (slug === 'json-formatter') utilityInput.placeholder = '{"hello":"world"}';
-      if (slug === 'password-generator') { utilityInput.placeholder = 'Click Run to generate password'; utilityInput.value = ''; }
-      if (slug === 'color-picker') { utilityInput.placeholder = '#FFDD00 or pick via input'; utilityArea.innerHTML += '<input type="color" id="colorPick" value="#FFDD00" class="mt-3 w-full h-12 rounded-xl border" /><div id="colorVals" class="mt-2 text-xs font-mono"></div>'; }
+      if (slug === 'password-generator') utilityInput.placeholder = 'Click Run to generate 16-char password (or type length like 24)';
     }
-    if (qrSlugs.includes(slug)) {
+    if (slug === 'qr-generator') {
       qrArea.classList.remove('hidden');
       dropzone.style.display = 'none';
       actionBtn.style.display = 'none';
+    }
+    if (slug === 'color-picker') {
+      colorArea.classList.remove('hidden');
+      dropzone.style.display = 'none';
+      actionBtn.textContent = 'Copy HEX';
+    }
+    if (slug === 'resume-builder') {
+      resumeArea.classList.remove('hidden');
+      dropzone.style.display = 'none';
+      actionBtn.textContent = 'Generate PDF Resume';
+    }
+    if (pdfSlugs.includes(slug)) {
+      pdfControls.classList.remove('hidden');
+      if (slug === 'split-pdf') document.getElementById('splitCtrl').classList.remove('hidden');
+      if (slug === 'rotate-pdf') document.getElementById('rotateCtrl').classList.remove('hidden');
+      if (slug === 'watermark-pdf') document.getElementById('watermarkCtrl').classList.remove('hidden');
+      if (slug === 'unlock-pdf') document.getElementById('unlockCtrl').classList.remove('hidden');
+      if (slug === 'jpg-to-pdf') document.getElementById('jpgToPdfCtrl').classList.remove('hidden');
+    }
+    if (imageSlugs.includes(slug)) {
+      imageControls.classList.remove('hidden');
+      if (slug === 'compress-image') document.getElementById('compressCtrl').classList.remove('hidden');
+      if (slug === 'convert-image') document.getElementById('convertCtrl').classList.remove('hidden');
+      if (slug === 'resize-image') document.getElementById('resizeCtrl').classList.remove('hidden');
+      if (slug === 'upscale-image') document.getElementById('upscaleCtrl').classList.remove('hidden');
+    }
+    if (videoSlugs.includes(slug)) videoControls.classList.remove('hidden');
+    if (audioSlugs.includes(slug)) audioControls.classList.remove('hidden');
+
+    // Image quality slider
+    const qSlider = document.getElementById('imageQuality');
+    const qVal = document.getElementById('qualityVal');
+    qSlider?.addEventListener('input', e => qVal.textContent = e.target.value);
+    // Resize preset
+    document.getElementById('resizePreset')?.addEventListener('change', e => {
+      const v = e.target.value;
+      if (!v) return;
+      const [w,h] = v.split('x');
+      document.getElementById('resizeW').value = w;
+      document.getElementById('resizeH').value = h;
+    });
+    // Color picker live
+    const colorPick = document.getElementById('colorPick');
+    const colorHex = document.getElementById('colorHex');
+    const colorVals = document.getElementById('colorVals');
+    function updateColor(c){
+      try{
+        const hex = c.trim();
+        if(!/^#([0-9A-F]{3}){1,2}$/i.test(hex)) return;
+        let r=0,g=0,b=0;
+        if(hex.length===4){ r=parseInt(hex[1]+hex[1],16); g=parseInt(hex[2]+hex[2],16); b=parseInt(hex[3]+hex[3],16); }
+        else { r=parseInt(hex.slice(1,3),16); g=parseInt(hex.slice(3,5),16); b=parseInt(hex.slice(5,7),16); }
+        const hsl = rgbToHsl(r,g,b);
+        colorVals.innerHTML = `HEX: ${hex} — RGB: ${r},${g},${b} — HSL: ${hsl.h},${hsl.s}%,${hsl.l}%<br><span style="display:inline-block;width:100%;height:24px;background:${hex};border-radius:9999px;border:2px solid #000;margin-top:8px"></span>`;
+      }catch{}
+    }
+    function rgbToHsl(r,g,b){ r/=255; g/=255; b/=255; const max=Math.max(r,g,b),min=Math.min(r,g,b); let h,s,l=(max+min)/2; if(max===min){ h=s=0; } else { const d=max-min; s=l>0.5? d/(2-max-min): d/(max+min); switch(max){ case r: h=(g-b)/d+(g<b?6:0); break; case g: h=(b-r)/d+2; break; case b: h=(r-g)/d+4; break; } h/=6; } return {h:Math.round(h*360), s:Math.round(s*100), l:Math.round(l*100)}; }
+    if(colorPick && colorHex){
+      const sync = () => { colorHex.value = colorPick.value; updateColor(colorPick.value); };
+      colorPick.addEventListener('input', sync);
+      colorHex.addEventListener('input', () => { colorPick.value = colorHex.value; updateColor(colorHex.value); });
+      updateColor(colorPick.value);
+      document.getElementById('colorCopy')?.addEventListener('click', () => { navigator.clipboard.writeText(colorHex.value); setStatus('Copied '+colorHex.value); });
     }
 
     dropzone?.addEventListener('click', () => fileInput.click());
     dropzone?.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('border-slate-900'); });
     dropzone?.addEventListener('dragleave', () => dropzone.classList.remove('border-slate-900'));
-    dropzone?.addEventListener('drop', e => {
-      e.preventDefault();
-      dropzone.classList.remove('border-slate-900');
-      handleFiles(e.dataTransfer.files);
-    });
+    dropzone?.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('border-slate-900'); handleFiles(e.dataTransfer.files); });
     fileInput?.addEventListener('change', e => handleFiles(e.target.files));
     clearBtn?.addEventListener('click', () => { files=[]; updateList(); });
 
-    function handleFiles(list) {
-      files = Array.from(list);
-      updateList();
-    }
-    function updateList() {
+    function handleFiles(list){ files = Array.from(list); updateList(); }
+    function updateList(){
       if (!files.length) { fileList.classList.add('hidden'); return; }
       fileList.classList.remove('hidden');
       fileUl.innerHTML = files.map(f => `<li class="flex justify-between border border-slate-200 rounded-full px-3 py-1 text-xs"><span>${f.name}</span><span>${(f.size/1024).toFixed(1)} KB</span></li>`).join('');
     }
     function setStatus(m){ status.textContent=m; }
-    function formatBytes(b){
-      if(b===0) return '0 B';
-      const k=1024, s=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(k));
-      return parseFloat((b/Math.pow(k,i)).toFixed(1))+' '+s[i];
-    }
-    function download(blob, name){
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url),1000);
-      resultInfo.classList.remove('hidden');
-    }
+    function formatBytes(b){ if(b===0) return '0 B'; const k=1024, s=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(k)); return parseFloat((b/Math.pow(k,i)).toFixed(1))+' '+s[i]; }
+    function download(blob, name){ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000); resultInfo.classList.remove('hidden'); }
     downloadBtn.addEventListener('click', () => { if(resultBlob) download(resultBlob, resultName); });
+
+    function parsePageRanges(str, max){
+      if(!str.trim()) return null;
+      const pages = new Set();
+      str.split(',').forEach(part=>{
+        part=part.trim();
+        if(part.includes('-')){
+          const [s,e]=part.split('-').map(n=>parseInt(n));
+          for(let i=Math.max(1,s); i<=Math.min(e,max); i++) pages.add(i);
+        } else {
+          const n=parseInt(part);
+          if(n>=1 && n<=max) pages.add(n);
+        }
+      });
+      return Array.from(pages).sort((a,b)=>a-b).map(n=>n-1);
+    }
 
     actionBtn.addEventListener('click', async () => {
       resultInfo.classList.add('hidden');
       downloadBtn.classList.add('hidden');
-      // UTILITY LOGIC
+      resultBlob=null;
+
       if (slug === 'word-counter') {
         const t = utilityInput.value || '';
         const words = t.trim()? t.trim().split(/\s+/).length:0;
         const chars = t.length;
         const charsNoSpace = t.replace(/\s/g,'').length;
         const sentences = t.split(/[.!?]+/).filter(s=>s.trim()).length;
-        utilityOutput.textContent = `Words: ${words}\nChars: ${chars} (${charsNoSpace} no spaces)\nSentences: ${sentences}\nReading: ${Math.ceil(words/200)} min`;
+        const paras = t.split(/\n+/).filter(s=>s.trim()).length;
+        utilityOutput.textContent = `Words: ${words}\nChars: ${chars} (${charsNoSpace} no spaces)\nSentences: ${sentences}\nParagraphs: ${paras}\nReading: ${Math.ceil(words/200)} min · Speaking: ${Math.ceil(words/130)} min`;
         utilityOutput.classList.remove('hidden');
         return;
       }
       if (slug === 'json-formatter') {
-        try { const o=JSON.parse(utilityInput.value); utilityOutput.textContent = JSON.stringify(o,null,2); utilityOutput.classList.remove('hidden'); resultBlob=new Blob([utilityOutput.textContent],{type:'application/json'}); resultName='formatted.json'; downloadBtn.classList.remove('hidden'); downloadBtn.onclick=()=>download(resultBlob,resultName);
+        try { const o=JSON.parse(utilityInput.value); utilityOutput.textContent = JSON.stringify(o,null,2); utilityOutput.classList.remove('hidden'); resultBlob=new Blob([utilityOutput.textContent],{type:'application/json'}); resultName='formatted.json'; downloadBtn.classList.remove('hidden');
         } catch(e){ utilityOutput.textContent='Error: '+e.message; utilityOutput.classList.remove('hidden');}
         return;
       }
       if (slug === 'password-generator') {
-        const len=16; const charset="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let p=""; for(let i=0;i<len;i++) p+=charset[Math.floor(Math.random()*charset.length)]; utilityInput.value=p; utilityOutput.textContent=p; utilityOutput.classList.remove('hidden'); navigator.clipboard.writeText(p); setStatus('Generated & copied to clipboard');
+        let len = parseInt(utilityInput.value) || 16;
+        if(len<4) len=4; if(len>128) len=128;
+        const charset="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let p=""; for(let i=0;i<len;i++) p+=charset[Math.floor(Math.random()*charset.length)]; utilityInput.value=p; utilityOutput.textContent=p + `\nLength: ${len} — Strength: ${len>=16?'Strong':len>=12?'Medium':'Weak'}`; utilityOutput.classList.remove('hidden'); navigator.clipboard.writeText(p).catch(()=>{}); setStatus('Generated & copied');
         return;
       }
       if (slug === 'color-picker') {
-        const pick=document.getElementById('colorPick');
-        const vals=document.getElementById('colorVals');
-        const c= pick? pick.value : utilityInput.value;
-        if(/^#([0-9A-F]{3}){1,2}$/i.test(c.trim())){
-          const hex=c.trim(); vals.textContent = hex + ' — Copy: ' + hex;
-          vals.style.color=hex; vals.style.fontWeight='800';
-        }
+        const hex = document.getElementById('colorHex').value.trim();
+        navigator.clipboard.writeText(hex).catch(()=>{}); setStatus('Copied '+hex); updateColor(hex); return;
+      }
+      if (slug === 'resume-builder') {
+        const name = document.getElementById('resumeName').value || 'Your Name';
+        const title = document.getElementById('resumeTitle').value || 'Professional Title';
+        const email = document.getElementById('resumeEmail').value || 'email@example.com';
+        const phone = document.getElementById('resumePhone').value || '+1 234 567 890';
+        const summary = document.getElementById('resumeSummary').value || 'Summary...';
+        const exp = document.getElementById('resumeExp').value || '';
+        const edu = document.getElementById('resumeEdu').value || '';
+        const skills = document.getElementById('resumeSkills').value || '';
+        const template = document.getElementById('resumeTemplate').value;
+        setStatus('Generating PDF...');
+        actionBtn.disabled=true;
+        try {
+          const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+          const pdf = await PDFDocument.create();
+          const page = pdf.addPage([595,842]);
+          const { width, height } = page.getSize();
+          const font = await pdf.embedFont(StandardFonts.Helvetica);
+          const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+          let y = height-50;
+          // Header
+          page.drawRectangle({x:0, y:y-10, width:width, height:70, color: template==='2'? rgb(0.06,0.09,0.16): rgb(0.98,0.98,0.97)});
+          page.drawText(name, {x:40, y:y+20, size:22, font:bold, color: rgb(0.06,0.09,0.16)});
+          page.drawText(title, {x:40, y:y+4, size:10, font, color: rgb(0.3,0.3,0.3)});
+          y-=40;
+          page.drawText(`${email}  •  ${phone}`, {x:40, y:y, size:8, font, color: rgb(0.4,0.4,0.4)});
+          y-=20;
+          page.drawLine({start:{x:40,y:y}, end:{x:width-40,y:y}, thickness:1, color: rgb(0.9,0.9,0.9)});
+          y-=16;
+          function drawSection(titleText, content, isList=false){
+            if(!content) return;
+            if(y<80){ /* add new page if needed */ }
+            page.drawText(titleText, {x:40, y:y, size:11, font:bold, color: rgb(0.06,0.09,0.16)});
+            y-=14;
+            const lines = isList? content.split('\n').filter(s=>s.trim()) : content.split('\n');
+            for(let line of lines){
+              if(!line.trim()) continue;
+              // simple word wrap at 90 chars
+              while(line.length>90){ const chunk=line.slice(0,90); page.drawText('• '+chunk, {x:48, y:y, size:8, font}); y-=10; line=line.slice(90); if(y<40) break; }
+              page.drawText((isList?'• ':'')+line.slice(0,90), {x:isList?48:40, y:y, size:8, font, color: rgb(0.2,0.2,0.2)}); y-=10; if(y<40) break;
+            }
+            y-=8;
+          }
+          drawSection('SUMMARY', summary, false);
+          drawSection('EXPERIENCE', exp, true);
+          drawSection('EDUCATION', edu, true);
+          drawSection('SKILLS', skills, false);
+          page.drawText('Generated with All-in-One Helper — all-in-one-helper.pages.dev — Files never leave device', {x:40, y:30, size:6, font, color: rgb(0.6,0.6,0.6)});
+          const out = await pdf.save();
+          resultBlob = new Blob([out], {type:'application/pdf'}); resultName = name.replace(/\s+/g,'_')+'_Resume.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus('Resume PDF ready — '+formatBytes(resultBlob.size));
+        } catch(e){ setStatus('Error: '+e.message); }
+        finally{ actionBtn.disabled=false; }
         return;
       }
-      // FILE TOOLS
+      if (slug === 'qr-generator') return;
+
       if (!files.length) { setStatus('Please select files first'); return; }
       setStatus('Processing 100% in browser…');
       actionBtn.disabled=true;
@@ -242,43 +399,304 @@ const isUtility = tool.category === 'utility';
           const { PDFDocument } = await import('pdf-lib');
           const merged = await PDFDocument.create();
           for (const f of files) {
+            if(f.size>50*1024*1024) throw new Error(f.name+' too large (50MB limit)');
             const bytes = await f.arrayBuffer();
             const pdf = await PDFDocument.load(bytes);
             const pages = await merged.copyPages(pdf, pdf.getPageIndices());
             pages.forEach(p => merged.addPage(p));
           }
           const out = await merged.save();
-          resultBlob = new Blob([out], {type:'application/pdf'});
-          resultName='merged.pdf';
-          downloadBtn.classList.remove('hidden');
-          setStatus(`Done — ${formatBytes(resultBlob.size)} — click Download`);
+          resultBlob = new Blob([out], {type:'application/pdf'}); resultName='merged.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus(`Done — ${formatBytes(resultBlob.size)} — click Download`);
+        } else if (slug === 'split-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF to split');
+          const rangeStr = document.getElementById('splitRange').value.trim();
+          const { PDFDocument } = await import('pdf-lib');
+          const bytes = await files[0].arrayBuffer();
+          const src = await PDFDocument.load(bytes);
+          const total = src.getPageCount();
+          if(!rangeStr){
+            // split into individual pages zip
+            const { default: JSZip } = await import('jszip');
+            const zip = new JSZip();
+            for(let i=0;i<total;i++){
+              const outPdf = await PDFDocument.create();
+              const [p] = await outPdf.copyPages(src,[i]);
+              outPdf.addPage(p);
+              const outBytes = await outPdf.save();
+              zip.file(`page-${i+1}.pdf`, outBytes);
+            }
+            resultBlob = await zip.generateAsync({type:'blob'}); resultName='split-pages.zip';
+          } else {
+            const indices = parsePageRanges(rangeStr, total);
+            if(!indices || indices.length===0) throw new Error('Invalid range. Use e.g. 1,3-5');
+            const outPdf = await PDFDocument.create();
+            const pages = await outPdf.copyPages(src, indices);
+            pages.forEach(p=> outPdf.addPage(p));
+            const outBytes = await outPdf.save();
+            resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='split.pdf';
+          }
+          downloadBtn.classList.remove('hidden'); setStatus(`Split done — ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'compress-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const { PDFDocument } = await import('pdf-lib');
+          const bytes = await files[0].arrayBuffer();
+          const src = await PDFDocument.load(bytes);
+          // Re-save with object streams (removes unused, compresses)
+          const outBytes = await src.save({ useObjectStreams: true, addDefaultPage: false });
+          // If not smaller, at least report
+          resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='compressed.pdf';
+          const saved = bytes.byteLength - outBytes.byteLength;
+          downloadBtn.classList.remove('hidden'); setStatus(`Compressed: ${formatBytes(bytes.byteLength)} → ${formatBytes(outBytes.byteLength)} ${saved>0? '(saved '+formatBytes(saved)+')':'(re-saved, may be similar)'}`);
+        } else if (slug === 'pdf-to-jpg') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const pdfjs = await import('pdfjs-dist');
+          // Use worker via CDN or disable
+          pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+          const bytes = await files[0].arrayBuffer();
+          const loadingTask = pdfjs.getDocument({ data: new Uint8Array(bytes), useWorkerFetch:true });
+          const pdf = await loadingTask.promise;
+          const { default: JSZip } = await import('jszip');
+          const zip = new JSZip();
+          for(let i=1;i<=pdf.numPages;i++){
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 2 });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width; canvas.height = viewport.height;
+            const ctx = canvas.getContext('2d');
+            await page.render({ canvasContext: ctx, viewport }).promise;
+            const blob = await new Promise(r=> canvas.toBlob(r,'image/jpeg',0.85));
+            const arr = await blob.arrayBuffer();
+            zip.file(`page-${i}.jpg`, arr);
+          }
+          if(pdf.numPages===1){
+            const single = zip.file('page-1.jpg');
+            const ab = await single.async('arraybuffer');
+            resultBlob = new Blob([ab], {type:'image/jpeg'}); resultName='page-1.jpg';
+          } else {
+            resultBlob = await zip.generateAsync({type:'blob'}); resultName='pdf-images.zip';
+          }
+          downloadBtn.classList.remove('hidden'); setStatus(`Converted ${pdf.numPages} page(s) to JPG`);
+        } else if (slug === 'jpg-to-pdf') {
+          const { PDFDocument } = await import('pdf-lib');
+          const outPdf = await PDFDocument.create();
+          const pageSize = document.getElementById('pdfPageSize').value;
+          const orientation = document.getElementById('pdfOrientation').value;
+          for(const f of files){
+            const bytes = await f.arrayBuffer();
+            let img;
+            if(f.type.includes('png')) img = await outPdf.embedPng(bytes);
+            else img = await outPdf.embedJpg(bytes);
+            const dims = img.scale(1);
+            let pw = dims.width, ph = dims.height;
+            if(pageSize==='A4'){ pw=595; ph=842; if(orientation==='landscape'){ [pw,ph]=[ph,pw]; } }
+            const page = outPdf.addPage([pw,ph]);
+            // Fit image centered
+            const scale = Math.min(pw/dims.width, ph/dims.height);
+            const w = dims.width*scale, h=dims.height*scale;
+            page.drawImage(img, {x:(pw-w)/2, y:(ph-h)/2, width:w, height:h});
+          }
+          const outBytes = await outPdf.save();
+          resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='images.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus(`Created PDF with ${files.length} image(s) — ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'rotate-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const angle = parseInt(document.getElementById('rotateAngle').value);
+          const delRange = document.getElementById('deleteRange').value.trim();
+          const { PDFDocument, degrees } = await import('pdf-lib');
+          const bytes = await files[0].arrayBuffer();
+          const pdf = await PDFDocument.load(bytes);
+          const total = pdf.getPageCount();
+          // Delete
+          if(delRange){
+            const delIdx = parsePageRanges(delRange, total);
+            // Remove in reverse to keep indices valid
+            delIdx.sort((a,b)=>b-a).forEach(idx=> pdf.removePage(idx));
+          }
+          // Rotate remaining
+          pdf.getPages().forEach(p=> {
+            const cur = p.getRotation().angle;
+            p.setRotation(degrees(cur + angle));
+          });
+          const outBytes = await pdf.save();
+          resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='rotated.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus(`Rotated ${angle}° ${delRange? 'and deleted '+delRange:''} — ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'extract-text') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const pdfjs = await import('pdfjs-dist');
+          pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+          const bytes = await files[0].arrayBuffer();
+          const pdf = await (pdfjs.getDocument({ data: new Uint8Array(bytes) }).promise);
+          let fullText='';
+          for(let i=1;i<=pdf.numPages;i++){
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            const strings = content.items.map(it=> it.str);
+            fullText += strings.join(' ') + '\n\n';
+          }
+          utilityArea.classList.remove('hidden');
+          utilityInput.value = fullText.slice(0,50000);
+          utilityOutput.textContent = `Extracted ${fullText.length} chars from ${pdf.numPages} pages`;
+          utilityOutput.classList.remove('hidden');
+          resultBlob = new Blob([fullText], {type:'text/plain'}); resultName='extracted.txt';
+          downloadBtn.classList.remove('hidden'); setStatus(`Extracted text from ${pdf.numPages} pages`);
+        } else if (slug === 'watermark-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const text = document.getElementById('watermarkText').value.trim() || 'CONFIDENTIAL';
+          const addNumbers = document.getElementById('pageNumbers').checked;
+          const { PDFDocument, rgb, degrees, StandardFonts } = await import('pdf-lib');
+          const bytes = await files[0].arrayBuffer();
+          const pdf = await PDFDocument.load(bytes);
+          const font = await pdf.embedFont(StandardFonts.HelveticaBold);
+          pdf.getPages().forEach((page, idx)=>{
+            const { width, height } = page.getSize();
+            // Watermark diagonal
+            page.drawText(text, {x: width/2 - 100, y: height/2, size: 40, font, color: rgb(0.9,0.2,0.2), opacity:0.15, rotate: degrees(-45)});
+            if(addNumbers){
+              page.drawText(`${idx+1} / ${pdf.getPageCount()}`, {x: width/2-20, y: 20, size:10, font, color: rgb(0.5,0.5,0.5)});
+            }
+          });
+          const outBytes = await pdf.save();
+          resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='watermarked.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus('Watermark added');
+        } else if (slug === 'unlock-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const pwd = document.getElementById('pdfPassword').value;
+          if(!pwd) throw new Error('Enter password');
+          const { PDFDocument } = await import('pdf-lib');
+          const bytes = await files[0].arrayBuffer();
+          let pdf;
+          try{ pdf = await PDFDocument.load(bytes, { password: pwd }); } catch{ throw new Error('Wrong password or PDF not encrypted'); }
+          const outBytes = await pdf.save();
+          resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='unlocked.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus('Unlocked — password removed');
         } else if (slug === 'compress-image') {
+          const q = parseFloat(document.getElementById('imageQuality').value);
           const imageCompression = (await import('browser-image-compression')).default;
           const outs=[];
           for (const f of files) {
-            const c = await imageCompression(f, {maxSizeMB:1, maxWidthOrHeight:1920, useWebWorker:true});
+            if(f.size>20*1024*1024) throw new Error(f.name+' too large (20MB limit for images)');
+            const c = await imageCompression(f, {maxSizeMB:1, maxWidthOrHeight:1920, useWebWorker:true, initialQuality: q});
             outs.push(c);
           }
           if (outs.length===1){ resultBlob=outs[0]; resultName='compressed-'+outs[0].name;} else {
             const { default: JSZip } = await import('jszip');
             const zip=new JSZip(); outs.forEach(o=> zip.file('compressed-'+o.name, o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='compressed-images.zip';
           }
-          downloadBtn.classList.remove('hidden');
-          setStatus(`Compressed ${files.length} image(s) — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Compressed ${files.length} image(s) — ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'remove-background') {
+          if(files.length!==1) throw new Error('Select 1 image');
+          setStatus('Loading AI model (~30MB, cached after first)...');
+          const { removeBackground } = await import('@imgly/background-removal');
+          const outBlob = await removeBackground(files[0]);
+          resultBlob = outBlob; resultName = files[0].name.replace(/\.[^.]+$/, '.png');
+          downloadBtn.classList.remove('hidden'); setStatus(`Background removed — ${formatBytes(resultBlob.size)} — download PNG`);
+          // preview
+          const url = URL.createObjectURL(resultBlob);
+          const img = new Image(); img.src=url; img.style.maxWidth='100%'; img.style.borderRadius='12px';
+          const preview = document.getElementById('previewArea');
+          preview.innerHTML=''; preview.appendChild(img); preview.classList.remove('hidden');
         } else if (slug === 'convert-image') {
-          // simple canvas convert to PNG
+          const fmt = document.getElementById('convertFormat').value;
           const outs=[];
           for (const f of files){
             const bmp= await createImageBitmap(f);
             const canvas=document.createElement('canvas'); canvas.width=bmp.width; canvas.height=bmp.height;
             const ctx=canvas.getContext('2d'); ctx.drawImage(bmp,0,0);
-            const blob= await new Promise(r=> canvas.toBlob(r,'image/png'));
-            outs.push(new File([blob], f.name.replace(/\.[^.]+$/,'.png'), {type:'image/png'}));
+            const blob= await new Promise(r=> canvas.toBlob(r, fmt, 0.92));
+            const ext = fmt.split('/')[1].replace('jpeg','jpg');
+            outs.push(new File([blob], f.name.replace(/\.[^.]+$/, '.'+ext), {type: fmt}));
           }
           if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='converted.zip';}
-          downloadBtn.classList.remove('hidden'); setStatus('Converted to PNG — download');
+          downloadBtn.classList.remove('hidden'); setStatus(`Converted ${files.length} image(s) to ${fmt} — download`);
+        } else if (slug === 'resize-image') {
+          const w = parseInt(document.getElementById('resizeW').value);
+          const h = parseInt(document.getElementById('resizeH').value);
+          if(!w && !h) throw new Error('Enter width or height');
+          const outs=[];
+          for(const f of files){
+            const bmp=await createImageBitmap(f);
+            let nw=w||Math.round(bmp.width * (h/bmp.height));
+            let nh=h||Math.round(bmp.height * (w/bmp.width));
+            if(document.getElementById('keepAspect').checked && w && h){
+              const scale=Math.min(w/bmp.width, h/bmp.height);
+              nw=Math.round(bmp.width*scale); nh=Math.round(bmp.height*scale);
+            }
+            const canvas=document.createElement('canvas'); canvas.width=nw; canvas.height=nh;
+            const ctx=canvas.getContext('2d'); ctx.imageSmoothingQuality='high'; ctx.drawImage(bmp,0,0,nw,nh);
+            const blob=await new Promise(r=> canvas.toBlob(r,f.type||'image/png',0.92));
+            outs.push(new File([blob], 'resized-'+f.name, {type:'image/png'}));
+          }
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='resized.zip';}
+          downloadBtn.classList.remove('hidden'); setStatus(`Resized ${files.length} image(s)`);
+        } else if (slug === 'upscale-image') {
+          const factor=parseInt(document.getElementById('upscaleFactor').value)||2;
+          const outs=[];
+          for(const f of files){
+            const bmp=await createImageBitmap(f);
+            const canvas=document.createElement('canvas'); canvas.width=bmp.width*factor; canvas.height=bmp.height*factor;
+            const ctx=canvas.getContext('2d'); ctx.imageSmoothingQuality='high'; ctx.drawImage(bmp,0,0,canvas.width,canvas.height);
+            const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
+            outs.push(new File([blob], `upscaled-${factor}x-`+f.name.replace(/\.[^.]+$/, '.png'), {type:'image/png'}));
+          }
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='upscaled.zip';}
+          downloadBtn.classList.remove('hidden'); setStatus(`Upscaled ${files.length} image(s) ${factor}×`);
+        } else if (slug === 'video-compress') {
+          if(files.length!==1) throw new Error('Select 1 video');
+          const f=files[0];
+          if(f.size>100*1024*1024) throw new Error('Video too large (100MB limit)');
+          const fmt=document.getElementById('videoFormat').value;
+          const start=document.getElementById('videoTrimStart').value.trim();
+          const end=document.getElementById('videoTrimEnd').value.trim();
+          setStatus('Loading ffmpeg (~30MB, first time)...');
+          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
+          const { toBlobURL } = await import('@ffmpeg/util');
+          const ffmpeg = new FFmpeg();
+          ffmpeg.on('log', ({message})=>{ if(message.includes('time=')) setStatus('Encoding '+message.slice(-20)); });
+          const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.writeFile('input', new Uint8Array(await f.arrayBuffer()));
+          let args = [];
+          if(start || end){
+            if(start) args.push('-ss', start);
+            if(end) args.push('-to', end);
+            args.push('-i', 'input');
+          } else {
+            args.push('-i', 'input');
+          }
+          if(fmt==='mp3') args.push('-vn','-q:a','2','output.mp3');
+          else if(fmt==='webm') args.push('-c:v','libvpx','-b:v','1M','output.webm');
+          else args.push('-c:v','libx264','-crf','28','-preset','fast','output.mp4');
+          await ffmpeg.exec(args);
+          const outName = fmt==='mp3'? 'output.mp3': fmt==='webm'? 'output.webm':'output.mp4';
+          const data = await ffmpeg.readFile(outName);
+          resultBlob = new Blob([data], {type: fmt==='mp3'? 'audio/mpeg': 'video/'+fmt}); resultName='converted.'+fmt;
+          downloadBtn.classList.remove('hidden'); setStatus(`Video ${fmt.toUpperCase()} ready — ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'audio-tools') {
+          if(files.length!==1) throw new Error('Select 1 audio');
+          const f=files[0];
+          const start=document.getElementById('audioStart').value.trim();
+          const end=document.getElementById('audioEnd').value.trim();
+          const fmt=document.getElementById('audioFormat').value;
+          setStatus('Loading ffmpeg...');
+          const { FFmpeg } = await import('@ffmpeg/ffmpeg');
+          const { toBlobURL } = await import('@ffmpeg/util');
+          const ffmpeg = new FFmpeg();
+          const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+          await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
+          await ffmpeg.writeFile('input', new Uint8Array(await f.arrayBuffer()));
+          let args = [];
+          if(start) args.push('-ss', start);
+          if(end) args.push('-to', end);
+          args.push('-i','input');
+          if(fmt==='wav') args.push('output.wav'); else args.push('-q:a','2','output.mp3');
+          await ffmpeg.exec(args);
+          const outName = fmt==='wav'? 'output.wav':'output.mp3';
+          const data = await ffmpeg.readFile(outName);
+          resultBlob = new Blob([data], {type: fmt==='wav'? 'audio/wav':'audio/mpeg'}); resultName='edited.'+fmt;
+          downloadBtn.classList.remove('hidden'); setStatus(`Audio ${fmt.toUpperCase()} ready`);
         } else {
-          setStatus('Tool coming soon — logic will be added in next deploy. Try Merge PDF / Compress Image / Word Counter / QR today.');
+          setStatus('Unknown tool');
         }
       } catch(e){
         console.error(e);
@@ -289,14 +707,15 @@ const isUtility = tool.category === 'utility';
     // QR
     qrBtn?.addEventListener('click', async () => {
       const text = qrInput.value.trim() || 'https://example.com';
+      const size = parseInt(document.getElementById('qrSize').value)||300;
+      const fg = document.getElementById('qrFg').value;
+      const bg = document.getElementById('qrBg').value;
       const QRCode = (await import('qrcode')).default;
       const canvas = qrCanvas;
       canvas.classList.remove('hidden');
-      await QRCode.toCanvas(canvas, text, { width: 300, margin: 2 });
+      await QRCode.toCanvas(canvas, text, { width: size, margin: 2, color:{dark:fg, light:bg} });
       qrDownload.classList.remove('hidden');
-      qrDownload.onclick = () => {
-        canvas.toBlob(b => download(b, 'qr.png'));
-      };
+      qrDownload.onclick = () => { canvas.toBlob(b => download(b, 'qr.png')); };
     });
   </script>
 </Layout>

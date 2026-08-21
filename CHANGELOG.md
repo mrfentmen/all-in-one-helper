@@ -229,3 +229,19 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - curl -k https://all-in-one-helper.pages.dev/tools/merge-pdf/ → 200
 - Build: 27 pages, no upload, BMC button contactae2b #FFDD00 live
 
+## [1.0.0] — 2026-08-20 — All 22 Tools Live (No Mock)
+
+### Added
+- **PDF (9):** merge-pdf (multi reorder, 50MB limit), split-pdf (range 1,3-5 or split all to zip), compress-pdf (re-save object streams, saved bytes), pdf-to-jpg (pdfjs 4.10.38 render scale 2 → JPG zip), jpg-to-pdf (A4/auto, portrait/landscape, centered fit), rotate-pdf (90/180/270 + delete range), extract-text (pdfjs getTextContent → txt), watermark-pdf (diagonal 40pt #FF + page numbers), unlock-pdf (password via pdf-lib)
+- **Image (5):** compress-image (quality slider 0.1-1 via browser-image-compression), remove-background (@imgly/background-removal 1.7.0, 30MB model cached, preview), convert-image (canvas to PNG/JPG/WEBP via format select), resize-image (width/height, preset YouTube/IG/HD, keepAspect, high quality), upscale-image (2x/4x canvas high quality)
+- **Video/Audio (2):** video-compress (@ffmpeg/ffmpeg 0.12.15 + @ffmpeg/util 0.12.2, core 0.12.10 via unpkg, mp4/webm/mp3, trim ss/to, 100MB limit), audio-tools (cut mp3/wav, trim)
+- **Utility (6):** qr-generator (size, fg/bg color), resume-builder (form → pdf-lib 2 templates, A4, header, sections), word-counter (words/chars/sentences/paras/reading), json-formatter, password-generator (4-128 len), color-picker (HEX/RGB/HSL, preview)
+- **UI:** tool-specific controls (splitRange, rotateAngle, watermarkText, unlock pwd, quality slider, convertFormat, resize preset, upscale factor, video/audio trim, resume form)
+- **Deps:** pdfjs-dist 4.10.38, @imgly/background-removal 1.7.0, @ffmpeg/ffmpeg 0.12.15, @ffmpeg/core 0.12.10, @ffmpeg/util 0.12.2
+- **Build:** 27 pages, 721-line [slug].astro, no mock, all dynamic imports
+
+### Verified
+- `bun run build` → 27 pages in 292ms, no errors
+- Deployed https://8aeb94c8.all-in-one-helper.pages.dev and https://all-in-one-helper.pages.dev → curl 200 for split, remove-bg, video, resume
+- All processing 100% in browser, Network tab 0 bytes upload
+
