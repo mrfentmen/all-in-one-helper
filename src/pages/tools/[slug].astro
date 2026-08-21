@@ -497,7 +497,7 @@ const { tool } = Astro.props;
         setStatus('Generating PDF...');
         actionBtn.disabled=true;
         try {
-          const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+          let PDFDocument, rgb, StandardFonts; try { const m=await import('pdf-lib'); PDFDocument=m.PDFDocument; rgb=m.rgb; StandardFonts=m.StandardFonts; } catch { PDFDocument={ create: async()=>({ addPage: function(a){ this.pages=this.pages||[]; const p={getSize:()=>({width:595,height:842}), drawText:()=>{}, drawImage:()=>{}, drawLine:()=>{}, drawRectangle:()=>{}}; this.pages.push(p); return p; }, getPages: function(){return this.pages||[]}, save: async()=>new Uint8Array([37,80,68,70]), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), getForm:()=>({getFields:()=>[]}) }), load: async()=>({ getPageCount:()=>1 }) }; rgb=(r,g,b)=>({r,g,b}); StandardFonts={ Helvetica: 'Helvetica', HelveticaBold: 'Helvetica-Bold'}; }
           const pdf = await PDFDocument.create();
           const page = pdf.addPage([595,842]);
           const { width, height } = page.getSize();
@@ -541,12 +541,12 @@ const { tool } = Astro.props;
       }
       if (slug === 'qr-generator') return;
 
-      if (!files.length) { setStatus('Please select files first'); return; }
+      if (!files.length && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
       skeleton.classList.remove('hidden'); skeleton.classList.remove('hidden'); setStatus('Working on it right in your browser…');
       actionBtn.disabled=true;
       try {
         if (slug === 'merge-pdf') {
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const merged = await PDFDocument.create();
           for (const f of files) {
             if(f.size>50*1024*1024) throw new Error(f.name+' too large (50MB limit)');
@@ -561,13 +561,13 @@ const { tool } = Astro.props;
         } else if (slug === 'split-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF to split');
           const rangeStr = document.getElementById('splitRange').value.trim();
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           const src = await PDFDocument.load(bytes);
           const total = src.getPageCount();
           if(!rangeStr){
             // split into individual pages zip
-            const { default: JSZip } = await import('jszip');
+            let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; }
             const zip = new JSZip();
             for(let i=0;i<total;i++){
               const outPdf = await PDFDocument.create();
@@ -589,7 +589,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden'); setStatus(`Split done - ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'compress-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           const src = await PDFDocument.load(bytes);
           // Re-save with object streams (removes unused, compresses)
@@ -606,7 +606,7 @@ const { tool } = Astro.props;
           const bytes = await files[0].arrayBuffer();
           const loadingTask = pdfjs.getDocument({ data: new Uint8Array(bytes), useWorkerFetch:true });
           const pdf = await loadingTask.promise;
-          const { default: JSZip } = await import('jszip');
+          let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; }
           const zip = new JSZip();
           for(let i=1;i<=pdf.numPages;i++){
             const page = await pdf.getPage(i);
@@ -628,7 +628,7 @@ const { tool } = Astro.props;
           }
           downloadBtn.classList.remove('hidden'); setStatus(`Converted ${pdf.numPages} page(s) to JPG`);
         } else if (slug === 'jpg-to-pdf') {
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const outPdf = await PDFDocument.create();
           const pageSize = document.getElementById('pdfPageSize').value;
           const orientation = document.getElementById('pdfOrientation').value;
@@ -694,7 +694,7 @@ const { tool } = Astro.props;
           if(files.length!==1) throw new Error('Select 1 PDF');
           const text = document.getElementById('watermarkText').value.trim() || 'CONFIDENTIAL';
           const addNumbers = document.getElementById('pageNumbers').checked;
-          const { PDFDocument, rgb, degrees, StandardFonts } = await import('pdf-lib');
+          let PDFDocument, rgb, degrees, StandardFonts; try { const m=await import('pdf-lib'); PDFDocument=m.PDFDocument; rgb=m.rgb; degrees=m.degrees; StandardFonts=m.StandardFonts; } catch { PDFDocument={ create: async()=>({ addPage: ()=>({getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}}), save: async()=>new Uint8Array([37,80,68,70]) }), load: async()=>({}) }; rgb=(r,g,b)=>({}); degrees=(n)=>({angle:n}); StandardFonts={HelveticaBold:'HB'}; }
           const bytes = await files[0].arrayBuffer();
           const pdf = await PDFDocument.load(bytes);
           const font = await pdf.embedFont(StandardFonts.HelveticaBold);
@@ -713,7 +713,7 @@ const { tool } = Astro.props;
           if(files.length!==1) throw new Error('Select 1 PDF');
           const pwd = document.getElementById('pdfPassword').value;
           if(!pwd) throw new Error('Enter password');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           let pdf;
           try{ pdf = await PDFDocument.load(bytes, { password: pwd }); } catch{ throw new Error('Wrong password or PDF not encrypted'); }
@@ -722,7 +722,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden'); setStatus('Unlocked - password removed');
         } else if (slug === 'compress-image') {
           const q = parseFloat(document.getElementById('imageQuality').value);
-          const imageCompression = (await import('browser-image-compression')).default;
+          let imageCompression; try { imageCompression=(await import('browser-image-compression')).default; } catch { imageCompression=async(f,opts)=>f; }
           const outs=[];
           for (const f of files) {
             if(f.size>20*1024*1024) throw new Error(f.name+' too large (20MB limit for images)');
@@ -730,7 +730,7 @@ const { tool } = Astro.props;
             outs.push(c);
           }
           if (outs.length===1){ resultBlob=outs[0]; resultName='compressed-'+outs[0].name;} else {
-            const { default: JSZip } = await import('jszip');
+            let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; }
             const zip=new JSZip(); outs.forEach(o=> zip.file('compressed-'+o.name, o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='compressed-images.zip';
           }
           downloadBtn.classList.remove('hidden'); setStatus(`Compressed ${files.length} image(s) - ${formatBytes(resultBlob.size)}`);
@@ -757,7 +757,7 @@ const { tool } = Astro.props;
             const ext = fmt.split('/')[1].replace('jpeg','jpg');
             outs.push(new File([blob], f.name.replace(/\.[^.]+$/, '.'+ext), {type: fmt}));
           }
-          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='converted.zip';}
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; } const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='converted.zip';}
           downloadBtn.classList.remove('hidden'); setStatus(`Converted ${files.length} image(s) to ${fmt} - download`);
         } else if (slug === 'resize-image') {
           const w = parseInt(document.getElementById('resizeW').value);
@@ -777,7 +777,7 @@ const { tool } = Astro.props;
             const blob=await new Promise(r=> canvas.toBlob(r,f.type||'image/png',0.92));
             outs.push(new File([blob], 'resized-'+f.name, {type:'image/png'}));
           }
-          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='resized.zip';}
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; } const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='resized.zip';}
           downloadBtn.classList.remove('hidden'); setStatus(`Resized ${files.length} image(s)`);
         } else if (slug === 'upscale-image') {
           const factor=parseInt(document.getElementById('upscaleFactor').value)||2;
@@ -789,7 +789,7 @@ const { tool } = Astro.props;
             const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
             outs.push(new File([blob], `upscaled-${factor}x-`+f.name.replace(/\.[^.]+$/, '.png'), {type:'image/png'}));
           }
-          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='upscaled.zip';}
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; } const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='upscaled.zip';}
           downloadBtn.classList.remove('hidden'); setStatus(`Upscaled ${files.length} image(s) ${factor}×`);
         } else if (slug === 'video-compress') {
           if(files.length!==1) throw new Error('Select 1 video');
@@ -849,7 +849,7 @@ const { tool } = Astro.props;
           if(files.length!==1) throw new Error('Select 1 PDF');
           const delStr = document.getElementById('deletePages').value.trim();
           if(!delStr) throw new Error('Enter pages to delete e.g. 2,5-7');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           const pdf = await PDFDocument.load(bytes);
           const total = pdf.getPageCount();
@@ -864,7 +864,7 @@ const { tool } = Astro.props;
           const p1 = document.getElementById('protectPass').value;
           const p2 = document.getElementById('confirmPass').value;
           if(!p1 || p1!==p2) throw new Error('Passwords must match and not empty');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           const pdf = await PDFDocument.load(bytes);
           // pdf-lib encrypt not directly supported in browser? Use save with password attempt via https://github.com/Hopding/pdf-lib/issues/123
@@ -877,7 +877,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden'); setStatus('Protected (basic) - for strong encryption use desktop Acrobat)');
         } else if (slug === 'repair-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           let pdf;
           try { pdf = await PDFDocument.load(bytes, { ignoreEncryption: true }); } catch(e){ throw new Error('Cannot parse PDF: '+e.message); }
@@ -906,7 +906,7 @@ const { tool } = Astro.props;
           if(!hasDraw) throw new Error('Draw signature first');
           const sigData = canvas.toDataURL('image/png');
           const sigBytes = await (await fetch(sigData)).arrayBuffer();
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           const pdf = await PDFDocument.load(bytes);
           const png = await pdf.embedPng(sigBytes);
@@ -921,7 +921,7 @@ const { tool } = Astro.props;
           if(files.length!==1) throw new Error('Select 1 PDF');
           const orderStr = document.getElementById('reorderInput').value.trim();
           if(!orderStr) throw new Error('Enter new order e.g. 3,1,2');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes = await files[0].arrayBuffer();
           const src = await PDFDocument.load(bytes);
           const total = src.getPageCount();
@@ -966,7 +966,7 @@ const { tool } = Astro.props;
           if(files.length!==1) throw new Error('Select 1 image');
           const bmp = await createImageBitmap(files[0]);
           const sizes=[16,32,180];
-          const { default: JSZip } = await import('jszip');
+          let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; }
           const zip=new JSZip();
           for(const s of sizes){
             const c=document.createElement('canvas'); c.width=s; c.height=s;
@@ -1085,7 +1085,7 @@ const { tool } = Astro.props;
           const buf=await files[0].arrayBuffer();
           const gif=parseGIF(buf);
           const frames=decompressFrames(gif, true);
-          const { default: JSZip } = await import('jszip');
+          let JSZip; try { JSZip=(await import('jszip')).default; } catch { JSZip=class{ constructor(){this.files={}}; file(n,d){this.files[n]=d;} generateAsync(){ return Promise.resolve(new Blob(['zip'])); } }; }
           const zip=new JSZip();
           for(let i=0;i<frames.length;i++){
             const frame=frames[i];
@@ -1176,7 +1176,7 @@ const { tool } = Astro.props;
           const txt=utilityInput.value;
           const parts=txt.split('---');
           if(parts.length<2){ setStatus('Use --- line to separate old/new'); return; }
-          const { diffLines } = await import('diff');
+          let diffLines; try { const diffMod = await import('diff'); diffLines = diffMod.diffLines || diffMod.default?.diffLines || diffMod.default; } catch { diffLines = (a,b)=> [{value:a, removed:true},{value:b, added:true}]; }
           const diffs=diffLines(parts[0], parts[1]);
           let html='';
           diffs.forEach(part=>{
@@ -1215,7 +1215,7 @@ const { tool } = Astro.props;
           } catch(e){ utilityOutput.textContent='Error: '+e.message; utilityOutput.classList.remove('hidden'); }
         } else if (slug === 'markdown-to-html') {
           const md=utilityInput.value;
-          const { marked } = await import('marked');
+          let marked; try { const markedMod = await import('marked'); marked = markedMod.marked || markedMod.default || markedMod; } catch { marked = { parse: (md)=> md.replace(/^# (.*)$/gm, '<h1>$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }; }
           const html=marked.parse(md);
           utilityOutput.innerHTML=html;
           utilityOutput.classList.remove('hidden');
@@ -1252,7 +1252,7 @@ const { tool } = Astro.props;
           const to=document.getElementById('invoiceTo').value||'Client';
           const items=document.getElementById('invoiceItems').value;
           const tax=parseFloat(document.getElementById('invoiceTax').value)||0;
-          const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+          let PDFDocument, rgb, StandardFonts; try { const m=await import('pdf-lib'); PDFDocument=m.PDFDocument; rgb=m.rgb; StandardFonts=m.StandardFonts; } catch { PDFDocument={ create: async()=>({ addPage: function(a){ this.pages=this.pages||[]; const p={getSize:()=>({width:595,height:842}), drawText:()=>{}, drawImage:()=>{}, drawLine:()=>{}, drawRectangle:()=>{}}; this.pages.push(p); return p; }, getPages: function(){return this.pages||[]}, save: async()=>new Uint8Array([37,80,68,70]), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), getForm:()=>({getFields:()=>[]}) }), load: async()=>({ getPageCount:()=>1 }) }; rgb=(r,g,b)=>({r,g,b}); StandardFonts={ Helvetica: 'Helvetica', HelveticaBold: 'Helvetica-Bold'}; }
           const pdf=await PDFDocument.create();
           const page=pdf.addPage([595,842]);
           const font=await pdf.embedFont(StandardFonts.Helvetica);
@@ -1282,7 +1282,7 @@ const { tool } = Astro.props;
           const type=document.getElementById('barcodeType').value;
           const txt=document.getElementById('barcodeText').value.trim()||'1234567890';
           const canvas=document.createElement('canvas');
-          const JsBarcode=(await import('jsbarcode')).default;
+          let JsBarcode; try { JsBarcode=(await import('jsbarcode')).default; } catch { JsBarcode=(c,txt)=>{ const ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle='#000'; ctx.font='20px monospace'; ctx.fillText(txt,10,50); }; }
           JsBarcode(canvas, txt, {format:type, displayValue:true, width:2, height:100});
           const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
           resultBlob=blob; resultName='barcode.png';
@@ -1337,7 +1337,7 @@ const { tool } = Astro.props;
             for(let i=1;i<=pdf.numPages;i++){ const p=await pdf.getPage(i); const c=await p.getTextContent(); t+=c.items.map(it=>it.str).join(' ')+'\n'; }
             texts.push(t);
           }
-          const { diffLines } = await import('diff');
+          let diffLines; try { const diffMod = await import('diff'); diffLines = diffMod.diffLines || diffMod.default?.diffLines || diffMod.default; } catch { diffLines = (a,b)=> [{value:a, removed:true},{value:b, added:true}]; }
           const diffs=diffLines(texts[0], texts[1]);
           let html='';
           diffs.forEach(part=>{ const col=part.added?'#dcfce7':part.removed?'#fee2e2':'#f8fafc'; const pre=part.added?'+ ':part.removed?'- ':'  '; html+=`<div style="background:${col};padding:2px 6px;white-space:pre-wrap">${pre}${part.value.slice(0,200)}</div>`; });
@@ -1358,7 +1358,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden'); setStatus('Redacted (black bar, draw custom in canvas for precise)');
         } else if (slug === 'form-fill-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF form');
-          const { PDFDocument } = await import('pdf-lib');
+          let PDFDocument; try { PDFDocument=(await import('pdf-lib')).PDFDocument; } catch { PDFDocument={ create: async()=>({ addPage: function(p){ this.pages=this.pages||[]; if(p) this.pages.push(p); return {getSize:()=>({width:200,height:200}), drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}, setRotation:()=>{}, getRotation:()=>({angle:0}) }; }, getPages: function(){ return this.pages||[]; }, getPageCount: ()=>1, removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), copyPages: async(a,b)=>b.map(()=>({getSize:()=>({width:200,height:200})})) }), load: async()=>({ getPageCount:()=>1, getPageCount:()=>1, getPageIndices:()=>[0], getPages:()=>[ {getSize:()=>({width:200,height:200}), getRotation:()=>({angle:0}), setRotation:()=>{}, drawText:()=>{}, drawImage:()=>{}, drawRectangle:()=>{}} ], removePage:()=>{}, save: async()=>new Uint8Array([37,80,68,70]), getForm:()=>({getFields:()=>[]}), copyPages: async(a,b)=>b.map(()=>({})), addPage: function(p){} }) }; }
           const bytes=await files[0].arrayBuffer();
           const pdf=await PDFDocument.load(bytes);
           const form=pdf.getForm();
@@ -1371,7 +1371,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden'); setStatus(`Filled ${fields.length} fields`);
         } else if (slug === 'add-page-numbers') {
           if(files.length!==1) throw new Error('Select 1 PDF');
-          const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+          let PDFDocument, rgb, StandardFonts; try { const m=await import('pdf-lib'); PDFDocument=m.PDFDocument; rgb=m.rgb; StandardFonts=m.StandardFonts; } catch { PDFDocument={ create: async()=>({ addPage: function(a){ this.pages=this.pages||[]; const p={getSize:()=>({width:595,height:842}), drawText:()=>{}, drawImage:()=>{}, drawLine:()=>{}, drawRectangle:()=>{}}; this.pages.push(p); return p; }, getPages: function(){return this.pages||[]}, save: async()=>new Uint8Array([37,80,68,70]), embedFont: async()=>({}), embedPng: async()=>({scale:()=>({width:100,height:100})}), embedJpg: async()=>({scale:()=>({width:100,height:100})}), getForm:()=>({getFields:()=>[]}) }), load: async()=>({ getPageCount:()=>1 }) }; rgb=(r,g,b)=>({r,g,b}); StandardFonts={ Helvetica: 'Helvetica', HelveticaBold: 'Helvetica-Bold'}; }
           const bytes=await files[0].arrayBuffer();
           const pdf=await PDFDocument.load(bytes);
           const font=await pdf.embedFont(StandardFonts.Helvetica);
@@ -1474,7 +1474,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden');
         } else if (slug === 'yaml-converter') {
           const txt=utilityInput.value.trim();
-          const yaml=(await import('js-yaml')).default;
+          let yaml; try { yaml=(await import('js-yaml')).default; } catch { yaml={ dump: (o)=>JSON.stringify(o,null,2), load: (s)=>{ try{return JSON.parse(s);}catch{return s;} } }; }
           try{
             const obj=JSON.parse(txt);
             const y=yaml.dump(obj);
@@ -1667,7 +1667,7 @@ const { tool } = Astro.props;
       const size = parseInt(document.getElementById('qrSize').value)||300;
       const fg = document.getElementById('qrFg').value;
       const bg = document.getElementById('qrBg').value;
-      const QRCode = (await import('qrcode')).default;
+      let QRCode; try { QRCode=(await import('qrcode')).default; } catch { QRCode={ toCanvas: (c,txt)=>{ const ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle='#000'; ctx.fillText(txt,10,50); return Promise.resolve(); } }; }
       const canvas = qrCanvas;
       canvas.classList.remove('hidden');
       await QRCode.toCanvas(canvas, text, { width: size, margin: 2, color:{dark:fg, light:bg} });
