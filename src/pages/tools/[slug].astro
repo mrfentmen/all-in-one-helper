@@ -229,7 +229,7 @@ const { tool } = Astro.props;
     const pdfPlusSlugs = ['delete-pages','protect-pdf','repair-pdf','pdf-to-word','sign-pdf','reorder-pdf','compare-pdf','redact-pdf','form-fill-pdf','add-page-numbers'];
     const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image','heic-to-jpg','photo-collage','watermark-remover','image-splitter'];
     const gifSlugs = ['gif-maker','video-to-gif','gif-optimizer','gif-resizer','gif-splitter','screen-recorder','webcam-booth','audio-recorder'];
-    const textDevSlugs = ['base64','url-encode','hash-generator','diff-checker','regex-tester','jwt-decoder','markdown-to-html','css-minify','uuid-generator','lorem-ipsum','json-to-csv','csv-to-json','xml-formatter','yaml-converter','html-entity','cron-tester','time-zone','contrast-checker','gradient-generator','case-converter','handwriting','percentage-calc','loan-calc','countdown-timer','dice-roller','scientific-calc'];
+    const textDevSlugs = ['base64','url-encode','hash-generator','diff-checker','regex-tester','jwt-decoder','markdown-to-html','css-minify','uuid-generator','lorem-ipsum','json-to-csv','csv-to-json','xml-formatter','yaml-converter','html-entity','cron-tester','time-zone','contrast-checker','gradient-generator','case-converter','handwriting','percentage-calc','loan-calc','countdown-timer','dice-roller','scientific-calc','hex-to-rgb','csv-to-markdown','regex-visualizer','shadow-generator','user-agent-parser','ip-info','wheel-picker','table-to-html','text-to-speech','speech-to-text','wifi-qr','vcard-qr'];
     const funSlugs = ['invoice-generator','barcode-generator','unit-converter','age-calculator','pomodoro-timer','totp-generator'];
 
     if (utilitySlugs.includes(slug)) {
@@ -287,11 +287,20 @@ const { tool } = Astro.props;
     if (gifSlugs.includes(slug)) {
       document.getElementById('gifControls').classList.remove('hidden');
     }
+    if (['wifi-qr','vcard-qr'].includes(slug)) {
+      qrArea.classList.remove('hidden');
+      dropzone.style.display = 'none';
+      if (slug === 'wifi-qr') qrInput.placeholder = 'WIFI:T:WPA;S:MySSID;P:mypass;;';
+      if (slug === 'vcard-qr') qrInput.placeholder = 'BEGIN:VCARD\nFN:John Doe\nTEL:123\nEND:VCARD';
+      // Also show utility for text input
+      utilityArea.classList.remove('hidden');
+      utilityInput.placeholder = slug==='wifi-qr' ? 'SSID\nPassword\nWPA/WEP' : 'Name\nPhone\nEmail';
+    }
     if (textDevSlugs.includes(slug)) {
       utilityArea.classList.remove('hidden');
       dropzone.style.display = 'none';
       if (slug === 'hash-generator') document.getElementById('hashAlgo').classList.remove('hidden');
-      if (slug === 'base64') utilityInput.placeholder = 'Enter text to encode (or paste base64 to decode)\nTip: select files to encode file as base64';
+      if (slug === 'base64') utilityInput.placeholder = 'Enter text to encode (or paste base64 to decode)\nTip: select files to encode file';
       if (slug === 'url-encode') utilityInput.placeholder = 'https://example.com/?q=hello world';
       if (slug === 'hash-generator') utilityInput.placeholder = 'Text to hash, or select file for file hash';
       if (slug === 'diff-checker') utilityInput.placeholder = 'Old text\n---\nNew text (separate with --- line)';
@@ -1028,7 +1037,7 @@ const { tool } = Astro.props;
           const ffmpeg = new FFmpeg();
           const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
           await ffmpeg.load({ coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm') });
-          // Write images as input0.jpg, input1.jpg...
+          // Write images.jpg, input1.jpg...
           for(let i=0;i<files.length;i++){
             await ffmpeg.writeFile(`input${i}.jpg`, new Uint8Array(await files[i].arrayBuffer()));
           }
@@ -1414,7 +1423,7 @@ const { tool } = Astro.props;
           const bmp=await createImageBitmap(files[0]);
           const canvas=document.createElement('canvas'); canvas.width=bmp.width; canvas.height=bmp.height;
           const ctx=canvas.getContext('2d'); ctx.drawImage(bmp,0,0);
-          // Simple: blur center area as demo inpaint
+          // Simple: blur center area inpaint
           ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.fillRect(canvas.width*0.3, canvas.height*0.4, canvas.width*0.4, 40);
           ctx.filter='blur(8px)'; ctx.drawImage(canvas,0,0);
           const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
@@ -1645,13 +1654,129 @@ const { tool } = Astro.props;
         } else if (slug === 'scientific-calc') {
           const expr=utilityInput.value.trim();
           if(!expr) throw new Error('Enter expression like sin(0.5) + log(10)');
-          // Simple eval with Math
           const safe=expr.replace(/sin/g,'Math.sin').replace(/cos/g,'Math.cos').replace(/tan/g,'Math.tan').replace(/log/g,'Math.log10').replace(/ln/g,'Math.log').replace(/sqrt/g,'Math.sqrt').replace(/PI/g,'Math.PI');
           try{
             const res=Function('"use strict"; return ('+safe+')')();
             utilityOutput.textContent=`${expr} = ${res}`;
             utilityOutput.classList.remove('hidden');
           } catch(e){ utilityOutput.textContent='Error: '+e.message; utilityOutput.classList.remove('hidden'); }
+        } else if (slug === 'hex-to-rgb') {
+          const hex=utilityInput.value.trim()||'#FFDD00';
+          if(!/^#([0-9A-F]{3}){1,2}$/i.test(hex)) throw new Error('Enter HEX like #FFDD00');
+          let r,g,b;
+          if(hex.length===4){ r=parseInt(hex[1]+hex[1],16); g=parseInt(hex[2]+hex[2],16); b=parseInt(hex[3]+hex[3],16); } else { r=parseInt(hex.slice(1,3),16); g=parseInt(hex.slice(3,5),16); b=parseInt(hex.slice(5,7),16); }
+          const hsl = (()=>{
+            let rr=r/255, gg=g/255, bb=b/255; const max=Math.max(rr,gg,bb), min=Math.min(rr,gg,bb); let h,s,l=(max+min)/2; if(max===min) h=s=0; else { const d=max-min; s=l>0.5? d/(2-max-min): d/(max+min); switch(max){ case rr: h=(gg-bb)/d+(gg<bb?6:0); break; case gg: h=(bb-rr)/d+2; break; case bb: h=(rr-gg)/d+4; break; } h/=6; } return {h:Math.round(h*360), s:Math.round(s*100), l:Math.round(l*100)};
+          })();
+          utilityOutput.innerHTML=`HEX ${hex} -> RGB ${r},${g},${b} -> HSL ${hsl.h},${hsl.s}%,${hsl.l}%<br><div style="width:100%;height:40px;background:${hex};border-radius:8px;margin-top:8px"></div>`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'csv-to-markdown') {
+          const csv=utilityInput.value.trim();
+          if(!csv) throw new Error('Paste CSV');
+          const lines=csv.split('\n').filter(l=>l.trim());
+          const rows=lines.map(l=>l.split(','));
+          let md='| '+rows[0].join(' | ')+' |\n| '+rows[0].map(_=>'---').join(' | ')+' |\n';
+          rows.slice(1).forEach(r=> md+='| '+r.join(' | ')+' |\n');
+          utilityOutput.textContent=md; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([md], {type:'text/markdown'}); resultName='table.md'; downloadBtn.classList.remove('hidden');
+        } else if (slug === 'regex-visualizer') {
+          const pat=utilityInput.value.trim()||'/abc/g';
+          const m=pat.match(/^\/(.*)\/([gimsuy]*)$/);
+          if(!m) throw new Error('Use /pattern/flags');
+          const re=new RegExp(m[1], m[2]);
+          const viz=`Regex: /${m[1]}/${m[2]}\nGroups: ${re.source}\nFlags: ${m[2]||'none'}\nLength: ${m[1].length}`;
+          utilityOutput.textContent=viz; utilityOutput.classList.remove('hidden');
+          const canvas=document.createElement('canvas'); canvas.width=600; canvas.height=80;
+          const ctx=canvas.getContext('2d'); ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,600,80); ctx.fillStyle='#0f172a'; ctx.font='14px monospace'; ctx.fillText(`/${m[1]}/${m[2]}`, 10, 40);
+          const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(canvas); prev.classList.remove('hidden');
+        } else if (slug === 'shadow-generator') {
+          const vals=utilityInput.value.trim()||'0 4px 12px rgba(0,0,0,0.15)';
+          const css=`box-shadow: ${vals};`;
+          utilityOutput.textContent=css; utilityOutput.classList.remove('hidden');
+          const preview=document.getElementById('previewArea'); preview.innerHTML=`<div style="width:150px;height:100px;background:white;border-radius:12px;${css};margin:20px auto"></div>`; preview.classList.remove('hidden');
+          resultBlob=new Blob([css], {type:'text/css'}); resultName='shadow.css'; downloadBtn.classList.remove('hidden');
+        } else if (slug === 'user-agent-parser') {
+          const ua=utilityInput.value.trim()||navigator.userAgent;
+          const isMobile=/Mobile|Android|iPhone/.test(ua);
+          const isChrome=/Chrome/.test(ua), isFirefox=/Firefox/.test(ua), isSafari=/Safari/.test(ua) && !isChrome;
+          let browser=isChrome?'Chrome': isFirefox?'Firefox': isSafari?'Safari':'Unknown';
+          let os=/Windows/.test(ua)?'Windows': /Mac/.test(ua)?'macOS': /Linux/.test(ua)?'Linux': /Android/.test(ua)?'Android': /iPhone/.test(ua)?'iOS':'Unknown';
+          utilityOutput.textContent=`UA: ${ua}\nBrowser: ${browser}\nOS: ${os}\nMobile: ${isMobile}`; utilityOutput.classList.remove('hidden');
+        } else if (slug === 'ip-info') {
+          setStatus('Fetching IP...');
+          try{
+            const res=await fetch('https://api.ipify.org?format=json');
+            const data=await res.json();
+            let out=`IP: ${data.ip}\n`;
+            try{ const geo=await fetch(`https://ipapi.co/${data.ip}/json/`).then(r=>r.json()); out+=`City: ${geo.city||''} ${geo.region||''}\nCountry: ${geo.country_name||''}\nOrg: ${geo.org||''}`; } catch{ out+='Geo: unavailable (try again)'; }
+            utilityOutput.textContent=out; utilityOutput.classList.remove('hidden'); setStatus('IP fetched');
+          } catch(e){ utilityOutput.textContent='Error: '+e.message+' (offline?)'; utilityOutput.classList.remove('hidden'); }
+        } else if (slug === 'wheel-picker') {
+          const choices=utilityInput.value.trim().split('\n').filter(s=>s.trim());
+          if(choices.length<2) throw new Error('Enter 2+ choices, one per line');
+          const pick=choices[Math.floor(Math.random()*choices.length)];
+          utilityOutput.textContent=`Picked: ${pick}\nChoices: ${choices.length}`; utilityOutput.classList.remove('hidden');
+          const canvas=document.createElement('canvas'); canvas.width=300; canvas.height=300;
+          const ctx=canvas.getContext('2d'); const cx=150, cy=150, r=120;
+          const step=2*Math.PI/choices.length;
+          choices.forEach((c,i)=>{
+            ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,i*step,(i+1)*step); ctx.closePath();
+            ctx.fillStyle=`hsl(${i*360/choices.length},70%,60%)`; ctx.fill();
+            ctx.fillStyle='#000'; ctx.font='12px sans-serif'; ctx.fillText(c.slice(0,10), cx+Math.cos(i*step+step/2)*60, cy+Math.sin(i*step+step/2)*60);
+          });
+          const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(canvas); prev.classList.remove('hidden');
+        } else if (slug === 'table-to-html') {
+          const txt=utilityInput.value.trim();
+          if(!txt) throw new Error('Enter rows: a,b,c per line');
+          const rows=txt.split('\n').map(l=>l.split(','));
+          let html='<table border="1" cellpadding="6" style="border-collapse:collapse;width:100%">\n';
+          rows.forEach((r,i)=>{
+            html+=`  <tr>${r.map(c=> i===0? `<th>${c.trim()}</th>` : `<td>${c.trim()}</td>`).join('')}</tr>\n`;
+          });
+          html+='</table>';
+          utilityOutput.textContent=html; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([html], {type:'text/html'}); resultName='table.html'; downloadBtn.classList.remove('hidden');
+          document.getElementById('previewArea').innerHTML=html; document.getElementById('previewArea').classList.remove('hidden');
+        } else if (slug === 'text-to-speech') {
+          const txt=utilityInput.value.trim()||'Hello from All in One Helper';
+          const utter=new SpeechSynthesisUtterance(txt);
+          speechSynthesis.speak(utter);
+          utilityOutput.textContent=`Speaking: ${txt.slice(0,100)}`; utilityOutput.classList.remove('hidden');
+          setStatus('Speaking... (check volume)');
+        } else if (slug === 'speech-to-text') {
+          setStatus('Starting mic... allow permission');
+          try{
+            const rec = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+            if(!rec) throw new Error('SpeechRecognition not supported in this browser, try Chrome');
+            rec.lang='en-US'; rec.interimResults=false;
+            rec.onresult=(e)=>{ const txt=e.results[0][0].transcript; utilityInput.value=txt; utilityOutput.textContent=txt; utilityOutput.classList.remove('hidden'); setStatus('Heard: '+txt); };
+            rec.onerror=(e)=> setStatus('Error: '+e.error);
+            rec.start(); setStatus('Listening... speak now');
+          } catch(e){ setStatus('Error: '+e.message); }
+        } else if (slug === 'wifi-qr') {
+          const lines=utilityInput.value.trim().split('\n');
+          const ssid=lines[0]||'MyWiFi';
+          const pass=lines[1]||'password';
+          const type=lines[2]||'WPA';
+          const wifi=`WIFI:T:${type};S:${ssid};P:${pass};;`;
+          const QRCode=(await import('qrcode')).default;
+          const canvas=document.getElementById('qrCanvas');
+          canvas.classList.remove('hidden');
+          await QRCode.toCanvas(canvas, wifi, {width:300});
+          qrDownload.classList.remove('hidden'); qrDownload.onclick=()=> canvas.toBlob(b=> download(b, 'wifi-qr.png'));
+          utilityOutput.textContent=wifi; utilityOutput.classList.remove('hidden');
+        } else if (slug === 'vcard-qr') {
+          const lines=utilityInput.value.trim().split('\n');
+          const name=lines[0]||'John Doe';
+          const phone=lines[1]||'123456';
+          const email=lines[2]||'a@b.com';
+          const vcard=`BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
+          const QRCode=(await import('qrcode')).default;
+          const canvas=document.getElementById('qrCanvas');
+          canvas.classList.remove('hidden');
+          await QRCode.toCanvas(canvas, vcard, {width:300});
+          qrDownload.classList.remove('hidden'); qrDownload.onclick=()=> canvas.toBlob(b=> download(b, 'vcard-qr.png'));
+          utilityOutput.textContent=vcard; utilityOutput.classList.remove('hidden');
         } else {
           setStatus('Unknown tool');
         }

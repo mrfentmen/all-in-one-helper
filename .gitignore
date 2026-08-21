@@ -21,3 +21,6 @@ pnpm-debug.log*
 .DS_Store
 # jetbrains
 .idea/
+test-results/
+playwright-report/
+playwright/.cache/

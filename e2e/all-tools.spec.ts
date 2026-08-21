@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 import { tools } from '../src/data/tools';
 
 test.describe('Homepage', () => {
-  test('loads with 82 tools, no infinite scroll, search and tabs', async ({ page }) => {
+  test('loads with 94 tools, no infinite scroll, search and tabs', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/All-in-One Helper/);
     // Check total count
-    await expect(page.locator('#toolCount')).toContainText('82 TOOLS');
+    await expect(page.locator('#toolCount')).toContainText('94 TOOLS');
     // Check tabs exist and not infinite scroll - should have pagination
     await expect(page.locator('#tabs')).toBeVisible();
     await expect(page.locator('[data-tab="pdf"]')).toBeVisible();
@@ -16,7 +16,7 @@ test.describe('Homepage', () => {
     await page.waitForTimeout(500);
     await expect(page.locator('#skeletonGrid')).toBeHidden();
     await expect(page.locator('#toolsGrid')).toBeVisible();
-    // Check pagination: should show 12 initially, not all 82
+    // Check pagination: should show 12 initially, not all 94
     const visibleCards = page.locator('[data-tool-card]:visible');
     await expect(visibleCards).toHaveCount(12);
     // Check Show more button
@@ -31,7 +31,7 @@ test.describe('Homepage', () => {
     const filtered = page.locator('[data-tool-card]:visible');
     const count = await filtered.count();
     expect(count).toBeGreaterThan(0);
-    expect(count).toBeLessThan(82);
+    expect(count).toBeLessThan(94);
     // Check ad banners with contact
     await expect(page.locator('text=Your ad here').first()).toBeVisible();
     await expect(page.locator('text=contactae2000@gmail.com').first()).toBeVisible();
