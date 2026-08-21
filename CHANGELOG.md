@@ -212,3 +212,20 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - Task T-407 for BMC integration (async load, fallback static link).
 - Updated SOURCE_OF_TRUTH Section 6 to Inventory C, PLAN Phase 4 to T-401..T-407.
 
+## [0.2.0] — 2026-08-20 — Phase 0 Deployed
+
+### Added
+- Live at https://all-in-one-helper.pages.dev and https://005c6970.all-in-one-helper.pages.dev (Cloudflare Pages project `all-in-one-helper`, account ee32aa05d0ccfff9085adf3406874497)
+- 27 static pages built: index + 22 tools + 4 legal (privacy/terms/contact/support)
+- GitHub repo https://github.com/mrfentmen/all-in-one-helper pushed (force, 2 commits)
+- Wrangler deploy via `CLOUDFLARE_API_TOKEN` (cfut_...) — 32 files uploaded
+
+### Changed
+- README.md replaced Astro starter with project README + live URLs
+- Tailwind 4.3.3 → 3.4.1 for @astrojs/tailwind compat
+
+### Verified
+- curl -k https://all-in-one-helper.pages.dev/ → 200
+- curl -k https://all-in-one-helper.pages.dev/tools/merge-pdf/ → 200
+- Build: 27 pages, no upload, BMC button contactae2b #FFDD00 live
+
