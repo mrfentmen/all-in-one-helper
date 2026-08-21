@@ -1,4 +1,5 @@
 ---
+import { tools } from '../data/tools';
 interface Props {
   title: string;
   description: string;
@@ -6,6 +7,7 @@ interface Props {
 }
 const { title, description, canonical } = Astro.props;
 const siteName = "All-in-One Helper";
+const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, desc:t.description, icon:t.icon, cat:t.category})));
 ---
 
 <!doctype html>
@@ -40,6 +42,13 @@ const siteName = "All-in-One Helper";
           <a href="/#video" class="hover:text-slate-900">Video</a>
           <a href="/#utility" class="hover:text-slate-900">Utilities</a>
         </nav>
+        <div class="hidden md:flex items-center gap-2 flex-1 max-w-xs mx-4">
+          <div class="relative w-full">
+            <input id="globalSearch" type="search" placeholder="Search 82 tools — press /" class="w-full border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 bg-white" />
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+            <div id="globalSearchResults" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-lg max-h-[60vh] overflow-auto z-50"></div>
+          </div>
+        </div>
         <div class="flex items-center gap-2">
           <div data-ad-slot="header" class="hidden lg:flex h-9 px-3 items-center text-[11px] rounded-full bg-slate-200 animate-pulse w-28" aria-busy="true"><span class="sr-only">Loading ad</span></div>
           <div class="hidden lg:flex"><div class="bg-[#FFDD00] border-2 border-black px-3 py-1.5 rounded-full text-[11px] font-black">📢 Your ad here - <a href="mailto:contactae2000@gmail.com" class="underline">contactae2000@gmail.com</a></div></div>
@@ -48,6 +57,15 @@ const siteName = "All-in-One Helper";
       </div>
     </header>
 
+    <div class="md:hidden bg-white border-b border-slate-200">
+      <div class="max-w-6xl mx-auto px-4 py-3">
+        <div class="relative">
+          <input id="globalSearchMobile" type="search" placeholder="Search 82 tools..." class="w-full border border-slate-200 rounded-full pl-9 pr-3 py-2.5 text-sm outline-none focus:border-slate-900 bg-[#FCFCF9]" />
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+          <div id="globalSearchMobileResults" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-lg max-h-[50vh] overflow-auto z-50"></div>
+        </div>
+      </div>
+    </div>
     <div class="border-b border-slate-200 bg-amber-50">
       <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2 text-[13px] text-slate-700">
         <span class="hidden sm:inline bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-full tracking-widest">PRIVATE</span>
@@ -101,5 +119,79 @@ const siteName = "All-in-One Helper";
     </footer>
 
     <script is:inline type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="contactae2b" data-color="#FFDD00" data-emoji="" data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+    <script is:inline define:vars={{ toolsJson }}>
+      const TOOLS = JSON.parse(toolsJson);
+      const inputs = [document.getElementById('globalSearch'), document.getElementById('globalSearchMobile')].filter(Boolean);
+      const resultsMap = {
+        'globalSearch': document.getElementById('globalSearchResults'),
+        'globalSearchMobile': document.getElementById('globalSearchMobileResults')
+      };
+      let recentSearches = [];
+      try { recentSearches = JSON.parse(localStorage.getItem('helper_searches')||'[]'); } catch {}
+      function saveSearch(q){
+        recentSearches = [q, ...recentSearches.filter(x=>x!==q)].slice(0,5);
+        localStorage.setItem('helper_searches', JSON.stringify(recentSearches));
+      }
+      function render(list, q, results){
+        if(!list.length){
+          results.innerHTML = `<div class="p-4 text-sm text-slate-500">No tools for "${q}" — try <a href="/search?q=${encodeURIComponent(q)}" class="underline">full search</a></div>`;
+          return;
+        }
+        results.innerHTML = list.map(t=> `<a href="/tools/${t.slug}" class="flex items-center gap-3 p-3 hover:bg-slate-50 border-b border-slate-100 last:border-0"><span class="w-8 h-8 rounded-lg bg-slate-900 text-white grid place-items-center text-sm">${t.icon}</span><div><div class="font-bold text-sm">${t.title}</div><div class="text-xs text-slate-500 line-clamp-1">${t.desc}</div></div></a>`).join('') + `<a href="/search?q=${encodeURIComponent(q)}" class="block p-3 text-center text-xs font-bold bg-[#FFDD00] border-t border-slate-200">View all results for "${q}" →</a>`;
+      }
+      function makeOnInput(input, results){
+        return function(){
+          const q = input.value.trim().toLowerCase();
+          // sync other input
+          inputs.forEach(i=>{ if(i!==input) i.value=input.value; });
+          if(!q){
+            if(recentSearches.length){
+              results.innerHTML = `<div class="p-2 text-xs font-bold text-slate-500">Recent</div>` + recentSearches.map(s=> `<a href="/search?q=${encodeURIComponent(s)}" class="block px-3 py-2 text-sm hover:bg-slate-50">${s}</a>`).join('');
+              results.classList.remove('hidden');
+            } else {
+              results.classList.add('hidden');
+            }
+            return;
+          }
+          const filtered = TOOLS.filter(t=> t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.slug.includes(q)).slice(0,6);
+          render(filtered, q, results);
+          results.classList.remove('hidden');
+        };
+      }
+      inputs.forEach(input=>{
+        const results = resultsMap[input.id];
+        const handler = makeOnInput(input, results);
+        input.addEventListener('input', handler);
+        input.addEventListener('focus', handler);
+        input.addEventListener('keydown', e=>{
+          if(e.key==='Enter'){
+            const q=input.value.trim();
+            if(q){ saveSearch(q); location.href=`/search?q=${encodeURIComponent(q)}`; }
+          }
+          if(e.key==='Escape') results.classList.add('hidden');
+        });
+      });
+      document.addEventListener('click', e=>{
+        const isSearch = e.target.closest('#globalSearch') || e.target.closest('#globalSearchResults') || e.target.closest('#globalSearchMobile') || e.target.closest('#globalSearchMobileResults');
+        if(!isSearch){
+          Object.values(resultsMap).forEach(r=> r?.classList.add('hidden'));
+        }
+      });
+      document.addEventListener('keydown', e=>{
+        if((e.key==='/' && !e.target.matches('input, textarea')) || (e.metaKey && e.key==='k')){
+          e.preventDefault();
+          document.getElementById('globalSearch')?.focus();
+        }
+      });
+      // Also push recent for tool pages via cache
+      const slug = location.pathname.split('/').pop();
+      if(slug && TOOLS.find(t=>t.slug===slug)){
+        try {
+          const r=JSON.parse(localStorage.getItem('helper_recent')||'[]');
+          const f=r.filter(s=>s!==slug); f.unshift(slug);
+          localStorage.setItem('helper_recent', JSON.stringify(f.slice(0,5)));
+        } catch {}
+      }
+    </script>
   </body>
 </html>
