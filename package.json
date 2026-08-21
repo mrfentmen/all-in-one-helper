@@ -16,10 +16,18 @@
     "@imgly/background-removal": "^1.7.0",
     "astro": "^7.2.4",
     "browser-image-compression": "^2.0.2",
+    "diff": "^9.0.0",
+    "docx": "^9.7.1",
+    "gif.js": "^0.2.0",
+    "gifuct-js": "^2.1.2",
+    "jsbarcode": "^3.12.3",
     "jszip": "^3.10.1",
+    "marked": "^18.0.10",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "4",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "spark-md5": "^3.0.2",
+    "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
