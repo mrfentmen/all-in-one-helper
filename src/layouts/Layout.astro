@@ -24,7 +24,6 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#0f172a" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous" is:inline></script>
   </head>
   <body class="min-h-screen bg-[#FCFCF9] text-slate-900 flex flex-col font-sans antialiased">
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
@@ -36,21 +35,15 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
             <div class="text-[11px] text-slate-500 font-medium tracking-wide">PRIVATE - FREE - NO UPLOAD</div>
           </div>
         </a>
-        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-          <a href="/#pdf" class="hover:text-slate-900">PDF</a>
-          <a href="/#image" class="hover:text-slate-900">Image</a>
-          <a href="/#video" class="hover:text-slate-900">Video</a>
-          <a href="/#utility" class="hover:text-slate-900">Utilities</a>
-        </nav>
+
         <div class="hidden md:flex items-center gap-2 flex-1 max-w-xs mx-4">
           <div class="relative w-full">
-            <input id="globalSearch" type="search" placeholder="Search 82 tools — press /" class="w-full border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 bg-white" />
+            <input id="globalSearch" type="search" placeholder="Search 82 tools - press /" class="w-full border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 bg-white" />
             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
             <div id="globalSearchResults" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-lg max-h-[60vh] overflow-auto z-50"></div>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <div data-ad-slot="header" class="hidden lg:flex h-9 px-3 items-center text-[11px] rounded-full bg-slate-200 animate-pulse w-28" aria-busy="true"><span class="sr-only">Loading ad</span></div>
           <div class="hidden lg:flex"><div class="bg-[#FFDD00] border-2 border-black px-3 py-1.5 rounded-full text-[11px] font-black">📢 Your ad here - <a href="mailto:contactae2000@gmail.com" class="underline">contactae2000@gmail.com</a></div></div>
           <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 bg-[#FFDD00] text-black border border-black px-4 py-2 rounded-full text-sm font-bold hover:brightness-95 transition">☕ Buy me a coffee</a>
         </div>
@@ -77,10 +70,9 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
       <slot />
     </main>
 
-    <div class="max-w-6xl mx-auto px-4 py-4 grid md:grid-cols-2 gap-4">
-      <div data-ad-slot="footer-1" class="h-[90px] rounded-xl bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 bg-[length:200%_100%] animate-pulse grid place-items-center text-slate-500 text-xs" style="animation: shimmer 1.5s infinite;" aria-busy="true">Loading ad…</div>
-      <div data-ad-slot="footer-2" class="h-[90px] rounded-xl border-2 border-dashed border-slate-900 bg-[#FFDD00] grid place-items-center text-center p-2">
-        <div><div class="font-black text-sm">📢 Your Ad Here</div><div class="text-xs">2-4 slots per page - <a href="mailto:contactae2000@gmail.com" class="underline font-bold">contactae2000@gmail.com</a> - $50/mo</div></div>
+    <div class="max-w-6xl mx-auto px-4 py-4">
+      <div class="h-[70px] rounded-xl border-2 border-dashed border-slate-900 bg-[#FFDD00] grid place-items-center text-center p-2">
+        <div><div class="font-black text-sm">📢 Your Ad Here</div><div class="text-xs">Contact <a href="mailto:contactae2000@gmail.com" class="underline font-bold">contactae2000@gmail.com</a> - $50/mo per slot</div></div>
       </div>
     </div>
     <style>
@@ -134,7 +126,7 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
       }
       function render(list, q, results){
         if(!list.length){
-          results.innerHTML = `<div class="p-4 text-sm text-slate-500">No tools for "${q}" — try <a href="/search?q=${encodeURIComponent(q)}" class="underline">full search</a></div>`;
+          results.innerHTML = `<div class="p-4 text-sm text-slate-500">No tools for "${q}" - try <a href="/search?q=${encodeURIComponent(q)}" class="underline">full search</a></div>`;
           return;
         }
         results.innerHTML = list.map(t=> `<a href="/tools/${t.slug}" class="flex items-center gap-3 p-3 hover:bg-slate-50 border-b border-slate-100 last:border-0"><span class="w-8 h-8 rounded-lg bg-slate-900 text-white grid place-items-center text-sm">${t.icon}</span><div><div class="font-bold text-sm">${t.title}</div><div class="text-xs text-slate-500 line-clamp-1">${t.desc}</div></div></a>`).join('') + `<a href="/search?q=${encodeURIComponent(q)}" class="block p-3 text-center text-xs font-bold bg-[#FFDD00] border-t border-slate-200">View all results for "${q}" →</a>`;
