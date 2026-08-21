@@ -108,8 +108,8 @@ test.describe('All tools load', () => {
 });
 
 test.describe('Text tools actual logic', () => {
-  test('word-counter works', async ({ page }) => {
-    await page.goto('/tools/word-counter');
+  test('text-tools word count works', async ({ page }) => {
+    await page.goto('/tools/text-tools');
     await page.fill('#utilityInput', 'Hello world test');
     await page.click('#actionBtn');
     await expect(page.locator('#utilityOutput')).toContainText('Words: 3');
@@ -161,13 +161,15 @@ test.describe('Text tools actual logic', () => {
     await page.click('#actionBtn');
     await expect(page.locator('#utilityOutput')).toContainText('-');
   });
-  test('lorem-ipsum', async ({ page }) => {
-    await page.goto('/tools/lorem-ipsum');
+  test('lorem via text-tools', async ({ page }) => {
+    await page.goto('/tools/text-tools');
+    await page.selectOption('#textMode', 'lorem');
     await page.click('#actionBtn');
     await expect(page.locator('#utilityOutput')).toContainText('Lorem ipsum');
   });
-  test('case-converter', async ({ page }) => {
-    await page.goto('/tools/case-converter');
+  test('case conversion via text-tools', async ({ page }) => {
+    await page.goto('/tools/text-tools');
+    await page.selectOption('#textMode', 'upper');
     await page.fill('#utilityInput', 'hello world');
     await page.click('#actionBtn');
     await expect(page.locator('#utilityOutput')).toContainText('HELLO WORLD');

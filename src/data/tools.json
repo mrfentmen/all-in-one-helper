@@ -84,18 +84,6 @@
     "icon": "🔍"
   },
   {
-    "slug": "video-compress",
-    "title": "Video Compress",
-    "description": "Compress & convert MP4 ↔ WEBM in browser (ffmpeg.wasm).",
-    "icon": "🎬"
-  },
-  {
-    "slug": "audio-tools",
-    "title": "Audio Cutter",
-    "description": "Cut MP3, convert MP3 ↔ WAV - in browser.",
-    "icon": "🎵"
-  },
-  {
     "slug": "qr-generator",
     "title": "QR Generator",
     "description": "Text/URL → QR with logo, colors, PNG/SVG download.",
@@ -106,12 +94,6 @@
     "title": "Resume Builder",
     "description": "Form → beautiful PDF resume, 2 templates, export.",
     "icon": "📋"
-  },
-  {
-    "slug": "word-counter",
-    "title": "Word Counter",
-    "description": "Count words, chars, sentences, reading time - instant.",
-    "icon": "🔢"
   },
   {
     "slug": "json-formatter",
@@ -228,12 +210,6 @@
     "icon": "🆔"
   },
   {
-    "slug": "lorem-ipsum",
-    "title": "Lorem Ipsum",
-    "description": "Generate Lorem - paras/sentences/words.",
-    "icon": "📄"
-  },
-  {
     "slug": "invoice-generator",
     "title": "Invoice Generator",
     "description": "Create invoice PDF - items/tax/logo.",
@@ -324,18 +300,6 @@
     "icon": "🌈"
   },
   {
-    "slug": "case-converter",
-    "title": "Case Converter",
-    "description": "Upper, lower, title, camel, snake.",
-    "icon": "Aa"
-  },
-  {
-    "slug": "handwriting",
-    "title": "Text to Handwriting",
-    "description": "Text → handwriting image - canvas.",
-    "icon": "✍️"
-  },
-  {
     "slug": "countdown-timer",
     "title": "Countdown Timer",
     "description": "Countdown to date - live.",
@@ -352,24 +316,6 @@
     "title": "TOTP 2FA",
     "description": "Generate TOTP codes - otpauth.",
     "icon": "🔐"
-  },
-  {
-    "slug": "screen-recorder",
-    "title": "Screen Recorder",
-    "description": "Record screen via MediaRecorder - download.",
-    "icon": "🔴"
-  },
-  {
-    "slug": "webcam-booth",
-    "title": "Webcam Booth",
-    "description": "Take photo via webcam - filters.",
-    "icon": "📷"
-  },
-  {
-    "slug": "audio-recorder",
-    "title": "Audio Recorder",
-    "description": "Record audio via mic - webm/mp3.",
-    "icon": "🎤"
   },
   {
     "slug": "text-to-speech",
@@ -486,12 +432,6 @@
     "icon": "🔢"
   },
   {
-    "slug": "line-tools",
-    "title": "Line Tools",
-    "description": "Remove duplicates, sort, number, trim lines.",
-    "icon": "📋"
-  },
-  {
     "slug": "split-bill",
     "title": "Split Bill Calculator",
     "description": "Bill + tip + tax split between friends.",
@@ -562,5 +502,65 @@
     "title": "Password Strength Checker",
     "description": "Entropy, crack-time estimate and weakness checks.",
     "icon": "💪"
+  },
+  {
+    "slug": "text-tools",
+    "title": "Text Tools Hub",
+    "description": "Word count, case conversion, line cleanup, lorem and more.",
+    "icon": "📝"
+  },
+  {
+    "slug": "media-studio",
+    "title": "Media Studio",
+    "description": "Record screen/webcam/audio, compress video, cut audio - all local.",
+    "icon": "🎬"
+  },
+  {
+    "slug": "subtitle-editor",
+    "title": "Subtitle Editor",
+    "description": "Create, edit, shift and convert SRT/VTT subtitles.",
+    "icon": "💬"
+  },
+  {
+    "slug": "video-toolkit",
+    "title": "Video Toolkit",
+    "description": "Merge, trim, rotate, reverse, speed up and extract from video.",
+    "icon": "🎥"
+  },
+  {
+    "slug": "passport-photo",
+    "title": "Passport Photo Maker",
+    "description": "Crop photos to US/EU passport and visa specs.",
+    "icon": "🛂"
+  },
+  {
+    "slug": "email-signature",
+    "title": "Email Signature Generator",
+    "description": "Professional HTML email signatures - copy into Gmail/Outlook.",
+    "icon": "✉️"
+  },
+  {
+    "slug": "certificate-maker",
+    "title": "Certificate Maker",
+    "description": "Award certificates with borders - print or save PNG.",
+    "icon": "🏆"
+  },
+  {
+    "slug": "business-card",
+    "title": "Business Card Maker",
+    "description": "Front/back business cards exported as print-ready PDFs.",
+    "icon": "💼"
+  },
+  {
+    "slug": "noise-remover",
+    "title": "Audio Noise Remover",
+    "description": "Remove background hiss/noise from audio and video.",
+    "icon": "🔇"
+  },
+  {
+    "slug": "voice-changer",
+    "title": "Voice Changer",
+    "description": "Chipmunk, deep, robot and slow-mo voice effects.",
+    "icon": "🎭"
   }
 ]

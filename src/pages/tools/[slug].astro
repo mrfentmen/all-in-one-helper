@@ -77,7 +77,7 @@ const { tool } = Astro.props;
           </div>
 
           <div id="textDevControls" class="mt-4 hidden space-y-2">
-            <div class="flex gap-2 flex-wrap"><button id="swapBtn" type="button" class="hidden text-xs border border-slate-200 px-3 py-1 rounded-full">Swap</button><select id="hashAlgo" class="hidden border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1 text-sm"><option value="SHA-256">SHA-256</option><option value="SHA-1">SHA-1</option><option value="MD5">MD5</option></select></div>
+            <div class="flex gap-2 flex-wrap"><button id="swapBtn" type="button" class="hidden text-xs border border-slate-200 px-3 py-1 rounded-full">Swap</button><select id="hashAlgo" class="hidden border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1 text-sm"><option value="SHA-256">SHA-256</option><option value="SHA-1">SHA-1</option><option value="MD5">MD5</option></select><select id="textMode" class="hidden border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1 text-sm bg-white dark:bg-slate-800"><option value="wc">Word count</option><option value="dedupe">Remove duplicate lines</option><option value="sortaz">Sort A-Z</option><option value="title">Title Case</option><option value="upper">UPPERCASE</option><option value="lower">lowercase</option><option value="camel">camelCase</option><option value="snake">snake_case</option><option value="kebab">kebab-case</option><option value="lorem">Lorem ipsum</option></select><button id="subShiftBtn" type="button" class="hidden text-xs border border-slate-200 dark:border-slate-700 px-3 py-1 rounded-full bg-white dark:bg-slate-800">Shift +1s</button></div>
           </div>
 
           <div id="funControls" class="mt-4 hidden space-y-3">
@@ -86,6 +86,52 @@ const { tool } = Astro.props;
             <div id="unitCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="unitValue" type="number" value="1" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><select id="unitFrom" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="km">km</option><option value="m">m</option><option value="lb">lb</option><option value="kg">kg</option><option value="c">°C</option><option value="f">°F</option></select><span class="self-center">→</span><select id="unitTo" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="m">m</option><option value="km">km</option><option value="kg">kg</option><option value="lb">lb</option><option value="f">°F</option><option value="c">°C</option></select></div><div id="unitResult" class="text-sm font-bold"></div></div>
             <div id="ageCtrl" class="hidden space-y-2"><input id="ageDob" type="date" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm" /><div class="flex gap-2"><input id="bmiH" type="number" placeholder="Height cm" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><input id="bmiW" type="number" placeholder="Weight kg" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /></div><div id="ageResult" class="text-sm"></div></div>
             <div id="pomodoroCtrl" class="hidden text-center"><div id="pomDisplay" class="text-4xl font-black">25:00</div><div class="flex gap-2 justify-center mt-2"><button id="pomStart" class="bg-slate-900 text-white px-4 py-2 rounded-full text-sm">Start</button><button id="pomReset" class="border border-slate-200 px-4 py-2 rounded-full text-sm">Reset</button></div><div id="pomStatus" class="text-xs text-slate-500 mt-1">Ready</div></div>
+          </div>
+
+          <div id="v13Controls" class="mt-4 hidden space-y-3">
+            <div id="vtOpCtrl" class="hidden space-y-2">
+              <label class="text-xs font-bold">Operation:</label>
+              <select id="vtOp" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800">
+                <option value="trim">Trim</option><option value="merge">Merge (multi-select)</option><option value="rotate90">Rotate 90°</option>
+                <option value="reverse">Reverse</option><option value="fast">Speed 2×</option><option value="slow">Slow 0.5×</option>
+                <option value="audio">Extract audio (MP3)</option><option value="frames">Extract frames (PNG zip)</option>
+              </select>
+              <div class="flex gap-2"><input id="vtStart" placeholder="Start sec" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800" /><input id="vtEnd" placeholder="End sec" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800" /></div>
+            </div>
+            <div id="passportCtrl" class="hidden">
+              <label class="text-xs font-bold">Spec:</label>
+              <select id="ppSpec" class="ml-2 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800">
+                <option value="us">US 2×2in (600×600px)</option>
+                <option value="eu">EU 35×45mm (413×531px)</option>
+                <option value="visa">Visa 2×2in on 4x6in sheet</option>
+              </select>
+            </div>
+            <div id="sigCtrl" class="hidden space-y-2">
+              <div class="grid sm:grid-cols-2 gap-2">
+                <input id="sigName" placeholder="Full name" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="sigTitle" placeholder="Job title" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="sigCompany" placeholder="Company" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="sigPhone" placeholder="Phone" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+              </div>
+              <button id="sigCopy" type="button" class="bg-[#FFDD00] border-2 border-black px-4 py-2 rounded-full text-xs font-black">Copy HTML signature</button>
+            </div>
+            <div id="certCtrl" class="hidden space-y-2">
+              <div class="grid sm:grid-cols-2 gap-2">
+                <input id="certRecipient" placeholder="Recipient name" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="certAward" placeholder="Award e.g. Certificate of Excellence" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+              </div>
+              <div class="flex gap-2"><button id="certPng" type="button" class="border border-slate-900 dark:border-slate-300 px-4 py-2 rounded-full text-xs font-bold">Download PNG</button></div>
+            </div>
+            <div id="nrCtrl" class="hidden flex gap-2 items-center">
+              <label class="text-xs font-bold">Strength:</label>
+              <select id="nrLevel" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800"><option value="light">Light</option><option value="medium" selected>Medium</option><option value="strong">Strong</option></select>
+            </div>
+            <div id="vcCtrl" class="hidden flex gap-2 items-center">
+              <label class="text-xs font-bold">Effect:</label>
+              <select id="vcPreset" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800">
+                <option value="chipmunk">Chipmunk (high)</option><option value="deep">Deep (low)</option><option value="robot">Robot</option><option value="slowmo">Slow motion</option>
+              </select>
+            </div>
           </div>
 
           <div id="videoControls" class="mt-4 hidden space-y-3">
@@ -238,7 +284,7 @@ const { tool } = Astro.props;
 
     const utilitySlugs = ['word-counter','json-formatter','password-generator'];
     const pdfSlugs = ['merge-pdf','split-pdf','compress-pdf','pdf-to-jpg','jpg-to-pdf','rotate-pdf','extract-text','watermark-pdf','unlock-pdf'];
-    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background','image-watermark'];
+    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background','image-watermark','passport-photo'];
     const videoSlugs = ['video-compress'];
     const audioSlugs = ['audio-tools'];
     const pdfPlusSlugs = ['delete-pages','protect-pdf','repair-pdf','pdf-to-word','sign-pdf','reorder-pdf','compare-pdf','redact-pdf','form-fill-pdf','add-page-numbers'];
@@ -247,6 +293,38 @@ const { tool } = Astro.props;
     if (isPdfPro) {
       document.getElementById('pdfPlusControls').classList.remove('hidden');
       ['deleteCtrl','protectCtrl','signCtrl','reorderCtrl'].forEach(id=> document.getElementById(id)?.classList.remove('hidden'));
+    }
+    const isMediaStudio = slug === 'media-studio';
+    const isVideoToolkit = slug === 'video-toolkit';
+    if (slug === 'gif-studio') {
+      document.getElementById('gifControls').classList.remove('hidden');
+    }
+    if (isMediaStudio) {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById('nrCtrl').classList.remove('hidden');
+      document.getElementById('vcCtrl').classList.remove('hidden');
+    }
+    if (isVideoToolkit) {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById('vtOpCtrl').classList.remove('hidden');
+    }
+    if (slug === 'noise-remover') {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById('nrCtrl').classList.remove('hidden');
+    }
+    if (slug === 'voice-changer') {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById('vcCtrl').classList.remove('hidden');
+    }
+    if (slug === 'passport-photo') {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById('passportCtrl').classList.remove('hidden');
+    }
+    if (['email-signature','certificate-maker'].includes(slug)) {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById(slug === 'email-signature' ? 'sigCtrl' : 'certCtrl').classList.remove('hidden');
+      dropzone.style.display = 'none';
+      utilityArea.classList.add('hidden');
     }
     if (slug === 'gif-studio') {
       document.getElementById('gifControls').classList.remove('hidden');
@@ -265,12 +343,14 @@ const { tool } = Astro.props;
       if (slug === 'exif-viewer') utilityInput.placeholder = '(optional) expected info - results shown below';
     }
 
-    const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image','heic-to-jpg','photo-collage','watermark-remover','image-splitter','image-watermark'];
+    const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image','heic-to-jpg','photo-collage','watermark-remover','image-splitter','image-watermark','passport-photo'];
     const gifSlugs = ['gif-maker','video-to-gif','gif-optimizer','gif-resizer','gif-splitter','screen-recorder','webcam-booth','audio-recorder'];
     const textDevSlugs = ['base64','url-encode','hash-generator','diff-checker','regex-tester','jwt-decoder','markdown-to-html','css-minify','uuid-generator','lorem-ipsum','json-to-csv','csv-to-json','xml-formatter','yaml-converter','html-entity','cron-tester','time-zone','contrast-checker','gradient-generator','case-converter','handwriting','percentage-calc','loan-calc','countdown-timer','dice-roller','scientific-calc','hex-to-rgb','csv-to-markdown','regex-visualizer','shadow-generator','user-agent-parser','ip-info','wheel-picker','table-to-html','text-to-speech','speech-to-text','wifi-qr','vcard-qr'];
     const funSlugs = ['invoice-generator','barcode-generator','unit-converter','age-calculator','pomodoro-timer','totp-generator'];
     textDevSlugs.push('encrypt-file','checksum-verifier','subnet-calculator','base-converter','line-tools','split-bill');
     textDevSlugs.push('timestamp-converter','fancy-font-generator','json-to-typescript','tdee-calculator','meta-tag-generator','morse-code-translator','url-slug-generator','password-strength-checker');
+    textDevSlugs.push('subtitle-editor','email-signature','certificate-maker','business-card','text-tools');
+    if (slug === 'noise-remover' || slug === 'voice-changer') { /* ffmpeg file tools */ }
     const isGifStudio = slug === 'gif-studio';
     const isCalcHub = slug === 'calculators';
 
@@ -345,8 +425,11 @@ const { tool } = Astro.props;
     }
     if (textDevSlugs.includes(slug)) {
       utilityArea.classList.remove('hidden');
+      document.getElementById('textDevControls').classList.remove('hidden');
       dropzone.style.display = 'none';
       if (slug === 'hash-generator') document.getElementById('hashAlgo').classList.remove('hidden');
+    if (slug === 'text-tools') document.getElementById('textMode').classList.remove('hidden');
+    if (slug === 'subtitle-editor') document.getElementById('subShiftBtn').classList.remove('hidden');
       if (slug === 'base64') utilityInput.placeholder = 'Enter text to encode (or paste base64 to decode)\nTip: select files to encode file';
       if (slug === 'url-encode') utilityInput.placeholder = 'https://example.com/?q=hello world';
       if (slug === 'hash-generator') utilityInput.placeholder = 'Text to hash, or select file for file hash';
@@ -387,6 +470,16 @@ const { tool } = Astro.props;
       document.getElementById('resizeW').value = w;
       document.getElementById('resizeH').value = h;
     });
+    // Text tools mode + subtitle shift
+    const textModeSel=document.getElementById('textMode');
+    if(textModeSel) textModeSel.addEventListener('change',e=>{ const u=document.getElementById('utilityInput'); if(u) u.dataset.mode=e.target.value; });
+    let subShift=0;
+    document.getElementById('subShiftBtn')?.addEventListener('click',()=>{
+      subShift += 1;
+      const u=document.getElementById('utilityInput');
+      if(u){ u.dataset.shift=String(subShift); setStatus('Will shift +'+subShift+'s - press Run to apply'); }
+    });
+
     // Signature canvas drawing
     const signCanvas = document.getElementById('signCanvas');
     if(signCanvas){
@@ -669,7 +762,7 @@ const { tool } = Astro.props;
       }
       if (slug === 'qr-generator') return;
 
-      if (!files.length && slug!=='calculators' && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
+      if (!files.length && slug!=='calculators' && !['media-studio','email-signature','certificate-maker'].includes(slug) && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
       skeleton.classList.remove('hidden'); skeleton.classList.remove('hidden'); setStatus('Working on it right in your browser…');
       actionBtn.disabled=true;
       try {
@@ -2375,6 +2468,199 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden');
           setStatus('Watermarked '+files.length+' image(s)');
           if(outs.length===1){ const url=URL.createObjectURL(resultBlob); const img=new Image(); img.src=url; img.style.maxWidth='100%'; const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(img); prev.classList.remove('hidden'); }
+        } else if (slug === 'text-tools') {
+          const raw = utilityInput.value;
+          const sp = raw.split('\n');
+          const mode = (utilityInput.dataset.mode || document.getElementById('textMode')?.value || 'wc');
+          let out='';
+          if(mode==='dedupe') out=Array.from(new Set(sp)).join('\n')+`\n\n(${sp.length} -> ${Array.from(new Set(sp)).length} lines)`;
+          else if(mode==='sortaz') out=[...sp].sort().join('\n');
+          else if(mode==='title') out=raw.replace(/\w\S*/g, w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase());
+          else if(mode==='upper') out=raw.toUpperCase();
+          else if(mode==='lower') out=raw.toLowerCase();
+          else if(mode==='camel') out=raw.replace(/(?:^\w|[A-Z]|\b\w)/g,(w,i)=>i===0?w.toLowerCase():w.toUpperCase()).replace(/\s+/g,'');
+          else if(mode==='snake') out=raw.trim().replace(/\s+/g,'_').toLowerCase();
+          else if(mode==='kebab') out=raw.trim().replace(/\s+/g,'-').toLowerCase();
+          else if(mode==='lorem'){ const n=Math.min(parseInt(raw)||3,20); const L='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'; out=Array(n).fill(L).join('\n\n'); }
+          else { // wc default
+            const words=raw.trim()?raw.trim().split(/\s+/).length:0;
+            const sentences=raw.split(/[.!?]+/).filter(s=>s.trim()).length;
+            out=`Words: ${words}\nCharacters: ${raw.length} (${raw.replace(/\s/g,'').length} no spaces)\nSentences: ${sentences}\nParagraphs: ${sp.filter(s=>s.trim()).length}\nReading: ${Math.ceil(words/200)} min`;
+          }
+          utilityOutput.textContent=out; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([out],{type:'text/plain'}); resultName='text-output.txt'; downloadBtn.classList.remove('hidden');
+          setStatus('Text processed: '+mode);
+        } else if (slug === 'subtitle-editor') {
+          const raw=utilityInput.value.trim();
+          if(!raw) throw new Error('Paste SRT/VTT content or create cues below');
+          let srt = raw;
+          // detect VTT -> SRT
+          const isVtt = raw.startsWith('WEBVTT');
+          if(isVtt) srt = raw.replace(/^WEBVTT.*\n/,'').replace(/(\d{2}:\d{2}:\d{2})\.(\d{3})/g,'$1,$2');
+          // shift option via data attr
+          const shift = parseFloat(utilityInput.dataset.shift||'0');
+          if(shift){
+            srt = srt.replace(/(\d{2}):(\d{2}):(\d{2}),(\d{3})/g,(_,h,m,s,ms)=>{
+              let total=(+h)*3600+(+m)*60+(+s)+(+ms)/1000+shift;
+              total=Math.max(0,total);
+              const H=String(Math.floor(total/3600)).padStart(2,'0'), M=String(Math.floor(total%3600/60)).padStart(2,'0'), S=String(Math.floor(total%60)).padStart(2,'0'), MS=String(Math.round(total%1*1000)).padStart(3,'0');
+              return `${H}:${M}:${S},${MS}`;
+            });
+          }
+          // validate + count
+          const cues=(srt.match(/-->[\s\S]*?(?=\n\n|$)/g)||[]).length;
+          const vttOut = 'WEBVTT\n\n'+srt.replace(/,(\d{3})/g,'.$1');
+          utilityOutput.textContent=`Cues: ${cues}${shift?' (shifted '+shift+'s)':''}\nValid structure: ${cues>0?'yes':'check format'}\n\n--- SRT ---\n${srt}\n\n--- VTT ---\n${vttOut}`;
+          utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([srt],{type:'text/plain'}); resultName='subtitles.srt'; downloadBtn.classList.remove('hidden');
+          setStatus(`Subtitles processed - ${cues} cues`);
+        } else if (slug === 'email-signature') {
+          const g=id=>document.getElementById(id)?.value||'';
+          const name=g('sigName')||'Your Name', title=g('sigTitle')||'Title', company=g('sigCompany')||'Company', phone=g('sigPhone')||'+1 234 567 890';
+          const html=`<table style="font-family:Arial,sans-serif;font-size:13px;color:#333"><tr><td style="border-left:3px solid #FFDD00;padding-left:12px"><span style="font-size:15px;font-weight:bold">${name}</span><br><span style="color:#666">${title} · ${company}</span><br><span>📞 ${phone}</span></td></tr></table>`;
+          utilityArea.classList.remove('hidden');
+          utilityOutput.innerHTML='<div style="font-weight:bold;margin-bottom:6px">Preview:</div>'+html+'<div style="margin-top:10px;font-weight:bold">HTML copied to clipboard!</div>';
+          utilityOutput.classList.remove('hidden');
+          try{ await navigator.clipboard.writeText(html); }catch{}
+          resultBlob=new Blob([html],{type:'text/html'}); resultName='signature.html'; downloadBtn.classList.remove('hidden');
+          setStatus('Signature generated & copied');
+        } else if (slug === 'certificate-maker') {
+          const recipient=document.getElementById('certRecipient')?.value||'Recipient Name';
+          const award=document.getElementById('certAward')?.value||'Certificate of Achievement';
+          const canvas=document.createElement('canvas'); canvas.width=1600; canvas.height=1130; // A4 landscape-ish
+          const ctx=canvas.getContext('2d');
+          ctx.fillStyle='#FFFDF5'; ctx.fillRect(0,0,canvas.width,canvas.height);
+          ctx.strokeStyle='#FFDD00'; ctx.lineWidth=16; ctx.strokeRect(30,30,canvas.width-60,canvas.height-60);
+          ctx.strokeStyle='#0f172a'; ctx.lineWidth=4; ctx.strokeRect(58,58,canvas.width-116,canvas.height-116);
+          ctx.textAlign='center';
+          ctx.fillStyle='#FFDD00'; ctx.font='bold 40px serif'; ctx.fillText('★',canvas.width/2,150);
+          ctx.fillStyle='#0f172a'; ctx.font='bold 64px serif'; ctx.fillText(award,canvas.width/2,280);
+          ctx.font='32px serif'; ctx.fillStyle='#475569'; ctx.fillText('This certificate is proudly presented to',canvas.width/2,400);
+          ctx.fillStyle='#b91c1c'; ctx.font='bold 88px "Brush Script MT", cursive'; ctx.fillText(recipient,canvas.width/2,540);
+          ctx.strokeStyle='#94a3b8'; ctx.beginPath(); ctx.moveTo(canvas.width/2-350,570); ctx.lineTo(canvas.width/2+350,570); ctx.stroke();
+          ctx.fillStyle='#475569'; ctx.font='28px serif';
+          ctx.fillText('Date: '+new Date().toLocaleDateString(),canvas.width/2-350,720);
+          ctx.fillText('Signature',canvas.width/2+350,720);
+          resultBlob=await new Promise(r=>canvas.toBlob(r,'image/png')); resultName='certificate.png';
+          downloadBtn.classList.remove('hidden');
+          const prev=document.getElementById('previewArea'); prev.innerHTML=''; const img=new Image(); img.src=URL.createObjectURL(resultBlob); img.style.maxWidth='100%'; prev.appendChild(img); prev.classList.remove('hidden');
+          setStatus('Certificate ready - PNG or Ctrl/Cmd+S');
+        } else if (slug === 'passport-photo') {
+          if(files.length!==1) throw new Error('Select 1 photo');
+          const spec=document.getElementById('ppSpec').value;
+          const specs={us:[600,600],eu:[413,531],visa:[1200,600]};
+          const [W,H]=specs[spec];
+          const bmp=await createImageBitmap(files[0]);
+          const canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H;
+          const ctx=canvas.getContext('2d');
+          ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+          // center-top crop to fill
+          const scale=Math.max(W/bmp.width,H/bmp.height);
+          const dw=bmp.width*scale, dh=bmp.height*scale;
+          ctx.drawImage(bmp,(W-dw)/2,Math.min(0,(H-dh)/2*0.5),dw,dh);
+          // guide overlay lines (head zone)
+          ctx.strokeStyle='rgba(255,0,0,0.35)'; ctx.setLineDash([6,6]);
+          ctx.strokeRect(W*0.25,H*0.08,W*0.5,H*0.55); // head box
+          ctx.beginPath(); ctx.moveTo(0,H*0.65); ctx.lineTo(W,H*0.65); ctx.stroke(); // chin line
+          ctx.setLineDash([]);
+          resultBlob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',0.95)); resultName='passport-photo-'+spec+'.jpg';
+          downloadBtn.classList.remove('hidden');
+          const prev=document.getElementById('previewArea'); prev.innerHTML=''; const img=new Image(); img.src=URL.createObjectURL(resultBlob); img.style.maxWidth='100%'; img.style.border='2px dashed red'; prev.appendChild(img); prev.classList.remove('hidden');
+          setStatus(`Cropped to ${W}x${H}px - align face inside guide`);
+        } else if (slug === 'noise-remover') {
+          if(files.length!==1) throw new Error('Select an audio or video file');
+          const level=document.getElementById('nrLevel').value;
+          const aff={'light':'afftdn=nr=6:nf=-25','medium':'afftdn=nr=12:nf=-40','strong':'afftdn=nr=24:nf=-70'}[level];
+          const f=files[0];
+          if(f.size>150*1024*1024) throw new Error('File too large (150MB limit)');
+          setStatus('Loading ffmpeg...');
+          const FFmpegMod=await import('/ffmpeg/index.js'); const ffmpeg=new FFmpegMod.FFmpeg();
+          const { toBlobURL }=await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
+          const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+          await ffmpeg.load({ coreURL: await toBlobURL(baseURL+'/ffmpeg-core.js','text/javascript'), wasmURL: await toBlobURL(baseURL+'/ffmpeg-core.wasm','application/wasm'), workerURL:'/ffmpeg/worker.js' });
+          const isVideo=f.type.startsWith('video/');
+          await ffmpeg.writeFile('input',new Uint8Array(await f.arrayBuffer()));
+          const ext=isVideo?'mp4':'wav';
+          if(isVideo) await ffmpeg.exec(['-i','input','-af',aff,'-c:v','copy','output.mp4']);
+          else await ffmpeg.exec(['-i','input','-af',aff,'output.wav']);
+          const data=await ffmpeg.readFile('output.'+ext);
+          resultBlob=new Blob([data],{type:isVideo?'video/mp4':'audio/wav'}); resultName='denoised.'+ext;
+          downloadBtn.classList.remove('hidden');
+          setStatus(`Noise reduced (${level}) - ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'voice-changer') {
+          if(files.length!==1) throw new Error('Select an audio file');
+          const preset=document.getElementById('vcPreset').value;
+          const filters={chipmunk:'asetrate=44100*1.6,aresample=44100,atempo=0.9',deep:'asetrate=44100*0.65,aresample=44100,atempo=1.15',robot:'asetrate=44100*0.9,aresample=44100,vibrato=f=8:d=0.8',slowmo:'asetrate=44100,atempo=0.6'}[preset];
+          setStatus('Loading ffmpeg...');
+          const FFmpegMod=await import('/ffmpeg/index.js'); const ffmpeg=new FFmpegMod.FFmpeg();
+          const { toBlobURL }=await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
+          const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+          await ffmpeg.load({ coreURL: await toBlobURL(baseURL+'/ffmpeg-core.js','text/javascript'), wasmURL: await toBlobURL(baseURL+'/ffmpeg-core.wasm','application/wasm'), workerURL:'/ffmpeg/worker.js' });
+          await ffmpeg.writeFile('input',new Uint8Array(await files[0].arrayBuffer()));
+          await ffmpeg.exec(['-i','input','-af',filters,'output.wav']);
+          const data=await ffmpeg.readFile('output.wav');
+          resultBlob=new Blob([data],{type:'audio/wav'}); resultName=preset+'-voice.wav';
+          downloadBtn.classList.remove('hidden');
+          setStatus(`${preset} effect applied - ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'media-studio') {
+          // Hub with recording modes
+          const mode=utilityInput.dataset.mediaMode||'screen';
+          setStatus('Starting '+mode+'... allow permission when prompted');
+          try{
+            let stream;
+            if(mode==='webcam') stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+            else if(mode==='mic') stream=await navigator.mediaDevices.getUserMedia({audio:true});
+            else stream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
+            const rec=new MediaRecorder(stream);
+            const chunks=[]; rec.ondataavailable=e=>chunks.push(e.data);
+            rec.onstop=()=>{ resultBlob=new Blob(chunks,{type:mode==='mic'?'audio/webm':'video/webm'}); resultName='recording.webm'; downloadBtn.classList.remove('hidden'); setStatus('Recording saved - download now'); stream.getTracks().forEach(t=>t.stop()); };
+            rec.start(); setStatus('Recording... press Download/Stop to finish');
+            downloadBtn.classList.remove('hidden'); downloadBtn.textContent='⏹ Stop recording';
+            downloadBtn.onclick=()=>{ if(rec.state!=='inactive'){ rec.stop(); downloadBtn.textContent='⬇ Download result'; downloadBtn.onclick=()=>download(resultBlob,resultName); } };
+          } catch(e){ setStatus('Error: '+(e.message||'permission denied')); }
+        } else if (slug === 'video-toolkit') {
+          if(!files.length) throw new Error('Select video file(s)');
+          const op=document.getElementById('vtOp').value;
+          setStatus('Loading ffmpeg...');
+          const FFmpegMod=await import('/ffmpeg/index.js'); const ffmpeg=new FFmpegMod.FFmpeg();
+          const { toBlobURL }=await import('https://unpkg.com/@ffmpeg/util@0.12.2/dist/esm/index.js');
+          const baseURL='https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+          await ffmpeg.load({ coreURL: await toBlobURL(baseURL+'/ffmpeg-core.js','text/javascript'), wasmURL: await toBlobURL(baseURL+'/ffmpeg-core.wasm','application/wasm'), workerURL:'/ffmpeg/worker.js' });
+          if(op==='merge'){
+            if(files.length<2) throw new Error('Select 2+ videos to merge');
+            for(let i=0;i<files.length;i++) await ffmpeg.writeFile('in'+i+'.mp4',new Uint8Array(await files[i].arrayBuffer()));
+            await ffmpeg.writeFile('list.txt',files.map((_,i)=>`file 'in${i}.mp4'`).join('\n'));
+            await ffmpeg.exec(['-f','concat','-safe','0','-i','list.txt','-c','copy','output.mp4']);
+            resultName='merged.mp4';
+          } else {
+            if(files.length!==1) throw new Error('Select 1 video');
+            const f=files[0];
+            if(f.size>150*1024*1024) throw new Error('Video too large (150MB)');
+            await ffmpeg.writeFile('input',new Uint8Array(await f.arrayBuffer()));
+            const start=document.getElementById('vtStart').value.trim(), end=document.getElementById('vtEnd').value.trim();
+            let args=['-i','input'];
+            if(op==='trim'){ if(start) args.push('-ss',start); if(end) args.push('-to',end); args.push('-c','copy','output.mp4'); resultName='trimmed.mp4'; }
+            else if(op==='rotate90'){ args.push('-vf','transpose=1','output.mp4'); resultName='rotated.mp4'; }
+            else if(op==='reverse'){ args.push('-vf','reverse','-af','areverse','output.mp4'); resultName='reversed.mp4'; }
+            else if(op==='fast'){ args.push('-vf','setpts=0.5*PTS','-af','atempo=2','output.mp4'); resultName='fast.mp4'; }
+            else if(op==='slow'){ args.push('-vf','setpts=2*PTS','-af','atempo=0.5','output.mp4'); resultName='slow.mp4'; }
+            else if(op==='audio'){ args.push('-vn','-q:a','2','output.mp3'); resultName='audio.mp3'; }
+            else { /* frames */ args.push('-vf','fps=1','frame%d.png'); await ffmpeg.exec(args);
+              const frames=[]; for(let i=1;i<=60;i++){ try{ frames.push(await ffmpeg.readFile(`frame${i}.png`)); }catch{ break; } }
+              const {default:JSZip}=await import('jszip'); const zip=new JSZip();
+              frames.forEach((fr,i)=>zip.file(`frame-${String(i+1).padStart(3,'0')}.png`,fr));
+              resultBlob=await zip.generateAsync({type:'blob'}); resultName='frames.zip';
+              downloadBtn.classList.remove('hidden');
+              setStatus(`Extracted ${frames.length} frames (1 fps)`);
+              actionBtn.disabled=false; skeleton.classList.add('hidden');
+              return;
+            }
+            await ffmpeg.exec(args);
+          }
+          const data=await ffmpeg.readFile('output.mp4'.replace('output.mp3','output.mp3').includes(resultName)&&resultName.endsWith('.mp3')?'output.mp3':'output.'+(resultName.endsWith('.mp3')?'mp3':'mp4'));
+          resultBlob=new Blob([data],{type:resultName.endsWith('.mp3')?'audio/mpeg':'video/mp4'});
+          downloadBtn.classList.remove('hidden');
+          setStatus(op.charAt(0).toUpperCase()+op.slice(1)+' done - '+formatBytes(resultBlob.size));
         } else if (slug === 'pdf-pro') {
           const delStr = document.getElementById('deletePages')?.value.trim();
           const reorderStr = document.getElementById('reorderInput')?.value.trim();

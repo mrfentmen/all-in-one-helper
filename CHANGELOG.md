@@ -307,3 +307,29 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - Build: exactly 100 pages (94 tools + 6)
 - OG images regenerated (95 files)
 
+
+## [1.4.0] - 2026-08-21 - Paid-Tool Clones Batch
+
+### Added
+- **Text Tools Hub** (/tools/text-tools): word count, case conversions (upper/lower/title/camel/snake/kebab), dedupe, sort, lorem - mode dropdown
+- **Media Studio hub** (/tools/media-studio): screen/webcam/mic recording via MediaRecorder + noise-remover + voice-changer controls
+- **Subtitle Editor**: SRT/VTT convert, validate, cumulative timestamp shifting
+- **Video Toolkit**: merge/trim/rotate/reverse/speed/audio-extract/frames-extract via self-hosted ffmpeg
+- **Passport Photo Maker**: US 2x2in / EU 35x45mm / visa sheet crops with alignment guides
+- **Email Signature Generator**: styled HTML signature, clipboard copy + .html download
+- **Certificate Maker**: bordered award certificate canvas -> PNG
+- **Business Card Maker**: placeholder page ready for form build (94 tools total)
+- **Noise Remover**: ffmpeg afftdn filter, light/medium/strong on audio/video
+- **Voice Changer**: chipmunk/deep/robot/slowmo via asetrate/atempo/vibrato
+
+### Changed
+- 10 tools consolidated into 2 hubs (20 new 301 redirect rules); tool count stays 94, pages exactly 100
+
+### Fixed
+- textDevControls container stayed hidden (textMode/subShiftBtn invisible)
+- textMode TDZ + mode-source bug (was reading hashAlgo)
+- isMediaStudio/isVideoToolkit TDZ declarations moved above usage
+
+### Verified
+- E2E: 160/160 passed in 54.7s
+- Build: exactly 100 pages

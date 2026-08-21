@@ -62,7 +62,7 @@ test.describe('Command palette', () => {
 
 test.describe('History + Bulk queue', () => {
   test('download pushes history', async ({ page }) => {
-    await page.goto('/tools/word-counter');
+    await page.goto('/tools/text-tools');
     await page.fill('#utilityInput', 'hello world test');
     await page.click('#actionBtn');
     await page.waitForTimeout(300);

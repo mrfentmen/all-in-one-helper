@@ -89,8 +89,9 @@ test.describe('Phase 3: new tools', () => {
     await expect(page.locator('#utilityOutput')).toContainText('Each of 4: $27.50');
   });
 
-  test('line-tools dedupes', async ({ page }) => {
-    await page.goto('/tools/line-tools');
+  test('text-tools dedupes via mode', async ({ page }) => {
+    await page.goto('/tools/text-tools');
+    await page.selectOption('#textMode', 'dedupe');
     await page.fill('#utilityInput', 'a\nb\na\nc');
     await page.click('#actionBtn');
     await expect(page.locator('#utilityOutput')).toContainText('(4 -> 3 lines)');
