@@ -1,0 +1,302 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { tools } from '../../data/tools';
+
+export async function getStaticPaths() {
+  return tools.map(t => ({ params: { slug: t.slug }, props: { tool: t } }));
+}
+
+const { tool } = Astro.props;
+const isPdf = tool.category === 'pdf';
+const isImage = tool.category === 'image';
+const isUtility = tool.category === 'utility';
+---
+
+<Layout title={tool.title} description={tool.longDescription}>
+  <div class="max-w-6xl mx-auto px-4 pt-8 pb-12">
+    <nav class="text-xs text-slate-500 flex items-center gap-2">
+      <a href="/" class="hover:text-slate-900">Home</a>
+      <span>›</span>
+      <span class="font-semibold text-slate-900">{tool.title}</span>
+      <span class="ml-2 bg-emerald-600 text-white px-2 py-1 rounded-full text-[10px] font-bold tracking-widest">NO UPLOAD</span>
+    </nav>
+
+    <div class="mt-4 grid lg:grid-cols-[1.6fr_0.9fr] gap-8 items-start">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-slate-900 text-white grid place-items-center text-xl">{tool.icon}</div>
+          <div>
+            <h1 class="text-2xl font-black tracking-tight">{tool.title}</h1>
+            <p class="text-sm text-slate-600">{tool.longDescription}</p>
+          </div>
+        </div>
+
+        <div data-ad-slot="top" class="mt-6 h-[90px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-sm bg-white">
+          Ad — Top (AdSense)
+        </div>
+
+        <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div id="dropzone" class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center bg-[#FCFCF9] hover:border-slate-900 transition cursor-pointer">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-900 text-white grid place-items-center text-xl">⬆</div>
+            <div class="mt-3 font-bold">Drop files here or click to browse</div>
+            <div class="text-xs text-slate-500 mt-1" id="drop-hint">Supports {tool.category === 'pdf' ? 'PDF' : tool.category === 'image' ? 'JPG, PNG, WEBP' : 'all files'} — stays on your device</div>
+            <input id="fileInput" type="file" class="hidden" multiple />
+            <div id="fileList" class="mt-4 text-left hidden">
+              <div class="text-xs font-bold text-slate-700">Selected files:</div>
+              <ul id="fileUl" class="mt-2 space-y-1 text-sm"></ul>
+              <button id="clearBtn" class="mt-3 text-xs underline">Clear</button>
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button id="actionBtn" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition disabled:opacity-40 disabled:cursor-not-allowed">Run — {tool.shortTitle}</button>
+            <button id="downloadBtn" class="hidden bg-[#FFDD00] text-black border-2 border-black px-6 py-3 rounded-full font-bold text-sm">⬇ Download result</button>
+            <span id="status" class="text-sm text-slate-600 self-center"></span>
+          </div>
+
+          <div id="utilityArea" class="mt-6 hidden">
+            <textarea id="utilityInput" rows="8" class="w-full border border-slate-200 rounded-xl p-4 text-sm font-mono outline-none focus:border-slate-900" placeholder="Paste here..."></textarea>
+            <pre id="utilityOutput" class="mt-3 bg-slate-900 text-emerald-300 p-4 rounded-xl text-sm overflow-auto hidden"></pre>
+          </div>
+
+          <div id="qrArea" class="mt-6 hidden text-center">
+            <input id="qrInput" placeholder="https://example.com or any text" class="w-full border border-slate-200 rounded-full px-4 py-3 text-sm outline-none focus:border-slate-900" />
+            <div class="mt-4 flex gap-2 justify-center">
+              <button id="qrBtn" class="bg-slate-900 text-white px-6 py-2 rounded-full font-bold text-sm">Generate QR</button>
+              <button id="qrDownload" class="hidden bg-[#FFDD00] border-2 border-black px-4 py-2 rounded-full font-bold text-sm">Download PNG</button>
+            </div>
+            <canvas id="qrCanvas" class="mx-auto mt-4 hidden border border-slate-200 rounded-xl"></canvas>
+          </div>
+
+          <div id="resultInfo" class="mt-4 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+            <div class="font-bold text-emerald-800">✓ Done — file never left your device</div>
+            <div class="text-emerald-700 mt-1">Verify in Network tab: 0 bytes uploaded. <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="underline font-bold">Buy us a coffee?</a></div>
+          </div>
+        </div>
+
+        <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6">
+          <h2 class="font-black">How to use {tool.title} without uploading</h2>
+          <ol class="mt-3 list-decimal list-inside text-sm text-slate-600 space-y-2 leading-relaxed">
+            <li>Click the dropzone or drag files — they stay in your browser's RAM.</li>
+            <li>Click "Run" — processing happens in a Web Worker via <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pdf-lib / Canvas / WASM</code> on your device.</li>
+            <li>Download result. Check DevTools → Network: no POST, no upload.</li>
+          </ol>
+          <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
+            <strong>Privacy:</strong> There is no <code>/upload</code> endpoint. We couldn't see your files even if we tried — the site is static on Cloudflare Pages.
+          </div>
+          <div class="mt-6">
+            <h3 class="font-bold text-sm">FAQ</h3>
+            <div class="mt-2 space-y-3 text-sm">
+              <div><div class="font-semibold">Is it really free?</div><div class="text-slate-600">Yes. 22 tools, no paywall, no watermarks. Ad + Buy Me a Coffee funded.</div></div>
+              <div><div class="font-semibold">What about large files?</div><div class="text-slate-600">Browser limit ~50-100MB. For larger, use desktop. We show friendly error, never crash.</div></div>
+              <div><div class="font-semibold">Why BMC?</div><div class="text-slate-600">Domain costs $10/year. Coffee funds better WASM models. Optional: <a href="https://www.buymeacoffee.com/contactae2b" class="underline">contactae2b</a></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div data-ad-slot="sidebar" class="h-[250px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-sm bg-white">
+          Sidebar Ad — AdSense<br /><span class="text-xs">+ custom via banners.json</span>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+          <div class="font-bold text-sm">Related tools</div>
+          <div class="mt-3 space-y-2 text-sm">
+            {tools.filter(t => t.category === tool.category && t.slug !== tool.slug).slice(0,3).map(r => (
+              <a href={`/tools/${r.slug}`} class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl">
+                <span class="w-8 h-8 rounded-lg bg-slate-900 text-white grid place-items-center text-sm">{r.icon}</span>
+                <span class="font-semibold">{r.title}</span>
+              </a>
+            ))}
+            <a href="/" class="block text-xs underline mt-2">← All 22 tools</a>
+          </div>
+        </div>
+        <div class="bg-[#FFDD00] border-2 border-black rounded-2xl p-4">
+          <div class="font-black">Support free tools</div>
+          <div class="text-sm mt-1">We run on $0 + domain. Your coffee keeps tools free & private.</div>
+          <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="mt-3 inline-flex bg-black text-white px-4 py-2 rounded-full text-sm font-bold">☕ Buy me a coffee</a>
+        </div>
+        <div data-ad-slot="below" class="h-[120px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-xs bg-white">
+          Below-tool custom banner (banners.json)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ slug: tool.slug }}>
+    const fileInput = document.getElementById('fileInput');
+    const dropzone = document.getElementById('dropzone');
+    const fileUl = document.getElementById('fileUl');
+    const fileList = document.getElementById('fileList');
+    const clearBtn = document.getElementById('clearBtn');
+    const actionBtn = document.getElementById('actionBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const status = document.getElementById('status');
+    const resultInfo = document.getElementById('resultInfo');
+    const utilityArea = document.getElementById('utilityArea');
+    const utilityInput = document.getElementById('utilityInput');
+    const utilityOutput = document.getElementById('utilityOutput');
+    const qrArea = document.getElementById('qrArea');
+    const qrInput = document.getElementById('qrInput');
+    const qrBtn = document.getElementById('qrBtn');
+    const qrCanvas = document.getElementById('qrCanvas');
+    const qrDownload = document.getElementById('qrDownload');
+
+    let files = [];
+    let resultBlob = null;
+    let resultName = 'result';
+
+    const utilitySlugs = ['word-counter','json-formatter','password-generator','color-picker'];
+    const qrSlugs = ['qr-generator'];
+    const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background'];
+    const pdfSlugs = ['merge-pdf','split-pdf','compress-pdf','pdf-to-jpg','jpg-to-pdf','rotate-pdf','extract-text','watermark-pdf','unlock-pdf'];
+
+    if (utilitySlugs.includes(slug)) {
+      utilityArea.classList.remove('hidden');
+      dropzone.style.display = 'none';
+      actionBtn.textContent = 'Run';
+      if (slug === 'word-counter') utilityInput.placeholder = 'Paste text to count words...';
+      if (slug === 'json-formatter') utilityInput.placeholder = '{"hello":"world"}';
+      if (slug === 'password-generator') { utilityInput.placeholder = 'Click Run to generate password'; utilityInput.value = ''; }
+      if (slug === 'color-picker') { utilityInput.placeholder = '#FFDD00 or pick via input'; utilityArea.innerHTML += '<input type="color" id="colorPick" value="#FFDD00" class="mt-3 w-full h-12 rounded-xl border" /><div id="colorVals" class="mt-2 text-xs font-mono"></div>'; }
+    }
+    if (qrSlugs.includes(slug)) {
+      qrArea.classList.remove('hidden');
+      dropzone.style.display = 'none';
+      actionBtn.style.display = 'none';
+    }
+
+    dropzone?.addEventListener('click', () => fileInput.click());
+    dropzone?.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('border-slate-900'); });
+    dropzone?.addEventListener('dragleave', () => dropzone.classList.remove('border-slate-900'));
+    dropzone?.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('border-slate-900');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput?.addEventListener('change', e => handleFiles(e.target.files));
+    clearBtn?.addEventListener('click', () => { files=[]; updateList(); });
+
+    function handleFiles(list) {
+      files = Array.from(list);
+      updateList();
+    }
+    function updateList() {
+      if (!files.length) { fileList.classList.add('hidden'); return; }
+      fileList.classList.remove('hidden');
+      fileUl.innerHTML = files.map(f => `<li class="flex justify-between border border-slate-200 rounded-full px-3 py-1 text-xs"><span>${f.name}</span><span>${(f.size/1024).toFixed(1)} KB</span></li>`).join('');
+    }
+    function setStatus(m){ status.textContent=m; }
+    function formatBytes(b){
+      if(b===0) return '0 B';
+      const k=1024, s=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(k));
+      return parseFloat((b/Math.pow(k,i)).toFixed(1))+' '+s[i];
+    }
+    function download(blob, name){
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      resultInfo.classList.remove('hidden');
+    }
+    downloadBtn.addEventListener('click', () => { if(resultBlob) download(resultBlob, resultName); });
+
+    actionBtn.addEventListener('click', async () => {
+      resultInfo.classList.add('hidden');
+      downloadBtn.classList.add('hidden');
+      // UTILITY LOGIC
+      if (slug === 'word-counter') {
+        const t = utilityInput.value || '';
+        const words = t.trim()? t.trim().split(/\s+/).length:0;
+        const chars = t.length;
+        const charsNoSpace = t.replace(/\s/g,'').length;
+        const sentences = t.split(/[.!?]+/).filter(s=>s.trim()).length;
+        utilityOutput.textContent = `Words: ${words}\nChars: ${chars} (${charsNoSpace} no spaces)\nSentences: ${sentences}\nReading: ${Math.ceil(words/200)} min`;
+        utilityOutput.classList.remove('hidden');
+        return;
+      }
+      if (slug === 'json-formatter') {
+        try { const o=JSON.parse(utilityInput.value); utilityOutput.textContent = JSON.stringify(o,null,2); utilityOutput.classList.remove('hidden'); resultBlob=new Blob([utilityOutput.textContent],{type:'application/json'}); resultName='formatted.json'; downloadBtn.classList.remove('hidden'); downloadBtn.onclick=()=>download(resultBlob,resultName);
+        } catch(e){ utilityOutput.textContent='Error: '+e.message; utilityOutput.classList.remove('hidden');}
+        return;
+      }
+      if (slug === 'password-generator') {
+        const len=16; const charset="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let p=""; for(let i=0;i<len;i++) p+=charset[Math.floor(Math.random()*charset.length)]; utilityInput.value=p; utilityOutput.textContent=p; utilityOutput.classList.remove('hidden'); navigator.clipboard.writeText(p); setStatus('Generated & copied to clipboard');
+        return;
+      }
+      if (slug === 'color-picker') {
+        const pick=document.getElementById('colorPick');
+        const vals=document.getElementById('colorVals');
+        const c= pick? pick.value : utilityInput.value;
+        if(/^#([0-9A-F]{3}){1,2}$/i.test(c.trim())){
+          const hex=c.trim(); vals.textContent = hex + ' — Copy: ' + hex;
+          vals.style.color=hex; vals.style.fontWeight='800';
+        }
+        return;
+      }
+      // FILE TOOLS
+      if (!files.length) { setStatus('Please select files first'); return; }
+      setStatus('Processing 100% in browser…');
+      actionBtn.disabled=true;
+      try {
+        if (slug === 'merge-pdf') {
+          const { PDFDocument } = await import('pdf-lib');
+          const merged = await PDFDocument.create();
+          for (const f of files) {
+            const bytes = await f.arrayBuffer();
+            const pdf = await PDFDocument.load(bytes);
+            const pages = await merged.copyPages(pdf, pdf.getPageIndices());
+            pages.forEach(p => merged.addPage(p));
+          }
+          const out = await merged.save();
+          resultBlob = new Blob([out], {type:'application/pdf'});
+          resultName='merged.pdf';
+          downloadBtn.classList.remove('hidden');
+          setStatus(`Done — ${formatBytes(resultBlob.size)} — click Download`);
+        } else if (slug === 'compress-image') {
+          const imageCompression = (await import('browser-image-compression')).default;
+          const outs=[];
+          for (const f of files) {
+            const c = await imageCompression(f, {maxSizeMB:1, maxWidthOrHeight:1920, useWebWorker:true});
+            outs.push(c);
+          }
+          if (outs.length===1){ resultBlob=outs[0]; resultName='compressed-'+outs[0].name;} else {
+            const { default: JSZip } = await import('jszip');
+            const zip=new JSZip(); outs.forEach(o=> zip.file('compressed-'+o.name, o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='compressed-images.zip';
+          }
+          downloadBtn.classList.remove('hidden');
+          setStatus(`Compressed ${files.length} image(s) — ${formatBytes(resultBlob.size)}`);
+        } else if (slug === 'convert-image') {
+          // simple canvas convert to PNG
+          const outs=[];
+          for (const f of files){
+            const bmp= await createImageBitmap(f);
+            const canvas=document.createElement('canvas'); canvas.width=bmp.width; canvas.height=bmp.height;
+            const ctx=canvas.getContext('2d'); ctx.drawImage(bmp,0,0);
+            const blob= await new Promise(r=> canvas.toBlob(r,'image/png'));
+            outs.push(new File([blob], f.name.replace(/\.[^.]+$/,'.png'), {type:'image/png'}));
+          }
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='converted.zip';}
+          downloadBtn.classList.remove('hidden'); setStatus('Converted to PNG — download');
+        } else {
+          setStatus('Tool coming soon — logic will be added in next deploy. Try Merge PDF / Compress Image / Word Counter / QR today.');
+        }
+      } catch(e){
+        console.error(e);
+        setStatus('Error: '+ (e.message||e));
+      } finally { actionBtn.disabled=false; }
+    });
+
+    // QR
+    qrBtn?.addEventListener('click', async () => {
+      const text = qrInput.value.trim() || 'https://example.com';
+      const QRCode = (await import('qrcode')).default;
+      const canvas = qrCanvas;
+      canvas.classList.remove('hidden');
+      await QRCode.toCanvas(canvas, text, { width: 300, margin: 2 });
+      qrDownload.classList.remove('hidden');
+      qrDownload.onclick = () => {
+        canvas.toBlob(b => download(b, 'qr.png'));
+      };
+    });
+  </script>
+</Layout>

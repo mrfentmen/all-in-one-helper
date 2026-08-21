@@ -1,51 +1,43 @@
-# All-in-One Helper — Project Index
+# Astro Starter Kit: Minimal
 
-**One folder to rule them all:** `/Users/del/Desktop/all in one helper/`
+```sh
+bun create astro@latest -- --template minimal
+```
 
-## What Is This?
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-Free, private, no-upload clone of iLovePDF + TinyPNG + Remove.bg + 19 more tools.
-- **Budget:** $0 + domain only
-- **Host:** Cloudflare Pages (free)
-- **Privacy:** Files never leave your browser (verifiable in Network tab)
-- **Monetization:** AdSense + Custom Banners (both)
+## 🚀 Project Structure
 
-## Documents (All 1000+ Words — Source of Truth)
+Inside of your Astro project, you'll see the following folders and files:
 
-| File | Purpose | Words |
-|------|---------|-------|
-| `SOURCE_OF_TRUTH.md` | Vision, scope, 22 tools, tech stack, constraints | 1508 |
-| `TASKS.md` | 40+ granular tasks, acceptance criteria | 1342 |
-| `ROADMAP.md` | 7-week timeline, phases, milestones | 1698 |
-| `CHANGELOG.md` | Version history, Keep a Changelog | 1197 |
-| `VOWS.md` | 8 public promises (privacy, free forever) | 1221 |
-| `CONSTITUTION.md` | Governing law, architecture, ad ethics | 1084 |
-| `PLAN.md` | Build blueprint, awaiting approval | ~900 |
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
 
-**Total:** ~8,950 words of planning. No code yet.
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-## How to Use
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-1.  Read `SOURCE_OF_TRUTH.md` first — if it conflicts, it wins.
-2.  Review `PLAN.md` — approve before any build.
-3.  Track work in `TASKS.md` — check boxes as you go.
-4.  Log changes in `CHANGELOG.md` — append-only.
-5.  Live by `VOWS.md` + `CONSTITUTION.md`.
+Any static assets, like images, can be placed in the `public/` directory.
 
-## Status
+## 🧞 Commands
 
-**Phase:** Planning — Awaiting Approval
-**Next Gate:** Reply "APPROVED" to `PLAN.md` to start Phase 0 (Foundation)
+All commands are run from the root of the project, from a terminal:
 
-## Quick Links
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `bun install`             | Installs dependencies                            |
+| `bun dev`             | Starts local dev server at `localhost:4321`      |
+| `bun build`           | Build your production site to `./dist/`          |
+| `bun preview`         | Preview your build locally, before deploying     |
+| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun astro -- --help` | Get help using the Astro CLI                     |
 
-- Roadmap visual: `ROADMAP.md` Gantt
-- Task matrix: `TASKS.md` Phase 5 QA
-- Ad plan: `SOURCE_OF_TRUTH.md` Section 6
+## 👀 Want to learn more?
 
-## Vow Summary
-
-> Your files never leave your device. Free forever. No account. Honest ads.
-
----
-*Created 2026-08-20. Docs-only, no build yet.*
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

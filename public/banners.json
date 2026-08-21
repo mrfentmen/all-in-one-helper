@@ -1,0 +1,24 @@
+{
+  "slots": {
+    "header": {
+      "type": "custom",
+      "enabled": true,
+      "html": "<a href=\"https://www.buymeacoffee.com/contactae2b\" target=\"_blank\" rel=\"noopener\" style=\"background:#FFDD00;color:#000;border:2px solid #000;padding:6px 14px;border-radius:9999px;font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:6px\">☕ Support via BMC</a>"
+    },
+    "sidebar": {
+      "type": "adsense",
+      "enabled": true,
+      "html": ""
+    },
+    "belowTool": {
+      "type": "custom",
+      "enabled": true,
+      "html": "<div style=\"border:1px dashed #cbd5e1;border-radius:12px;padding:16px;text-align:center;color:#64748b;font-size:13px\">Custom Banner — <code>banners.json</code> · Sell this slot for $50/mo</div>"
+    },
+    "footer": {
+      "type": "adsense",
+      "enabled": true,
+      "html": ""
+    }
+  }
+}

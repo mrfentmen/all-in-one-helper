@@ -1,0 +1,26 @@
+{
+  "name": "all-in-one-helper",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Free, private, no-upload clone of iLovePDF + TinyPNG + Remove.bg — 22 tools, 100% client-side, Cloudflare Pages",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.2.4",
+    "browser-image-compression": "^2.0.2",
+    "jszip": "^3.10.1",
+    "pdf-lib": "^1.17.1",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "@types/qrcode": "^1.5.6",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "tailwindcss": "3.4.1"
+  }
+}

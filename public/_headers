@@ -1,0 +1,10 @@
+/assets/*
+  cache-control: public, max-age=31536000, immutable
+
+/*.wasm
+  cache-control: public, max-age=31536000, immutable
+  content-type: application/wasm
+  cross-origin-embedder-policy: require-corp
+
+/*.js
+  cache-control: public, max-age=3600

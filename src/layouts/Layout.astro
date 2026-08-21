@@ -1,0 +1,100 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+const { title, description, canonical } = Astro.props;
+const siteName = "All-in-One Helper";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} — {siteName}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0f172a" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous" is:inline></script>
+  </head>
+  <body class="min-h-screen bg-[#FCFCF9] text-slate-900 flex flex-col font-sans antialiased">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <div class="max-w-6xl mx-auto px-4 h-[64px] flex items-center justify-between gap-4">
+        <a href="/" class="flex items-center gap-3 shrink-0">
+          <div class="w-9 h-9 rounded-xl bg-slate-900 text-white grid place-items-center font-black text-[14px] tracking-tight">A1</div>
+          <div class="hidden sm:block">
+            <div class="font-bold leading-none tracking-tight text-[15px]">All-in-One Helper</div>
+            <div class="text-[11px] text-slate-500 font-medium tracking-wide">PRIVATE · FREE · NO UPLOAD</div>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <a href="/#pdf" class="hover:text-slate-900">PDF</a>
+          <a href="/#image" class="hover:text-slate-900">Image</a>
+          <a href="/#video" class="hover:text-slate-900">Video</a>
+          <a href="/#utility" class="hover:text-slate-900">Utilities</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <div data-ad-slot="header" class="hidden lg:flex h-9 px-3 items-center text-[11px] border border-dashed border-slate-300 rounded-lg text-slate-400 bg-slate-50">AdSense Header</div>
+          <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 bg-[#FFDD00] text-black border border-black px-4 py-2 rounded-full text-sm font-bold hover:brightness-95 transition">☕ Buy me a coffee</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-b border-slate-200 bg-amber-50">
+      <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2 text-[13px] text-slate-700">
+        <span class="hidden sm:inline bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-full tracking-widest">PRIVATE</span>
+        <span>Your files never leave your device. <span class="font-semibold underline decoration-amber-300">Zero uploads, verified in Network tab.</span></span>
+      </div>
+    </div>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <div data-ad-slot="footer" class="max-w-6xl mx-auto px-4 py-4">
+      <div class="h-[90px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-sm bg-slate-50">
+        <span>Footer Ad — AdSense + Custom Banners (<span class="font-mono text-xs">banners.json</span>)</span>
+      </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-300">
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid sm:grid-cols-3 gap-8 text-sm">
+          <div>
+            <div class="font-bold text-white flex items-center gap-2"><span class="w-7 h-7 rounded-lg bg-white text-slate-900 grid place-items-center text-xs font-black">A1</span> All-in-One Helper</div>
+            <p class="mt-3 text-slate-400 leading-relaxed">Free, private, no-upload tools. 22 tools, 100% in-browser. No account, no watermarks, no limits.</p>
+            <div class="mt-4">
+              <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#FFDD00] text-black border-2 border-black px-4 py-2 rounded-full text-sm font-bold">☕ Buy me a coffee — contactae2b</a>
+            </div>
+          </div>
+          <div>
+            <div class="font-semibold text-white">Tools</div>
+            <ul class="mt-3 space-y-2 text-slate-400">
+              <li><a href="/tools/merge-pdf" class="hover:text-white">Merge PDF</a> · <a href="/tools/compress-image" class="hover:text-white">Compress Image</a></li>
+              <li><a href="/tools/remove-background" class="hover:text-white">Remove Background</a></li>
+              <li><a href="/tools/qr-generator" class="hover:text-white">QR Generator</a> · <a href="/tools/word-counter" class="hover:text-white">Word Counter</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="font-semibold text-white">Legal</div>
+            <ul class="mt-3 space-y-2 text-slate-400">
+              <li><a href="/privacy" class="hover:text-white">Privacy — files never leave device</a></li>
+              <li><a href="/terms" class="hover:text-white">Terms</a></li>
+              <li><a href="/contact" class="hover:text-white">Contact</a></li>
+            </ul>
+            <div class="mt-4 text-xs text-slate-500">© 2026 All-in-One Helper. Built for privacy.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="contactae2b" data-color="#FFDD00" data-emoji="" data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+  </body>
+</html>

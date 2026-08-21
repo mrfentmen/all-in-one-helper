@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://all-in-one-helper.pages.dev/sitemap.xml
