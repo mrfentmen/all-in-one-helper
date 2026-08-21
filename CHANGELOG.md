@@ -318,7 +318,7 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - **Passport Photo Maker**: US 2x2in / EU 35x45mm / visa sheet crops with alignment guides
 - **Email Signature Generator**: styled HTML signature, clipboard copy + .html download
 - **Certificate Maker**: bordered award certificate canvas -> PNG
-- **Business Card Maker**: placeholder page ready for form build (94 tools total)
+- **Business Card Maker**: 3.5x2in @300dpi card canvas -> PNG with name/title/company/contact
 - **Noise Remover**: ffmpeg afftdn filter, light/medium/strong on audio/video
 - **Voice Changer**: chipmunk/deep/robot/slowmo via asetrate/atempo/vibrato
 
