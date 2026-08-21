@@ -30,8 +30,8 @@ const { tool } = Astro.props;
 
         <div class="mt-6 h-[70px] rounded-xl border-2 border-dashed border-slate-900 bg-[#FFDD00] grid place-items-center text-center p-2"><div><div class="font-black text-sm">Your Ad Here</div><div class="text-xs">Contact <a href="mailto:contactae2000@gmail.com" class="underline">contactae2000@gmail.com</a> - $50/mo</div></div></div>
 
-        <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-          <div id="dropzone" class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center bg-[#FCFCF9] hover:border-slate-900 transition cursor-pointer">
+        <div class="mt-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+          <div id="dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 text-center bg-[#FCFCF9] dark:bg-slate-900 hover:border-slate-900 transition cursor-pointer">
             <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-900 text-white grid place-items-center text-xl">⬆</div>
             <div class="mt-3 font-bold">Drop files here or click to browse</div>
             <div class="text-xs text-slate-500 mt-1" id="drop-hint">Supports {tool.category === 'pdf' ? 'PDF' : tool.category === 'image' ? 'JPG, PNG, WEBP' : 'all files'} - stays on your device</div>
@@ -44,88 +44,88 @@ const { tool } = Astro.props;
           </div>
 
           <div id="pdfControls" class="mt-4 hidden space-y-3">
-            <div id="splitCtrl" class="hidden"><label class="text-xs font-bold">Pages to keep (e.g. 1,3-5 or 1-3)</label><input id="splitRange" class="mt-1 w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm outline-none focus:border-slate-900" placeholder="1,3-5" /></div>
-            <div id="rotateCtrl" class="hidden flex gap-2"><label class="text-xs font-bold">Rotate:</label><select id="rotateAngle" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select><input id="deleteRange" placeholder="Delete pages (e.g. 2,4)" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div>
-            <div id="watermarkCtrl" class="hidden space-y-2"><input id="watermarkText" placeholder="Watermark text (e.g. CONFIDENTIAL)" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /><label class="flex items-center gap-2 text-xs"><input id="pageNumbers" type="checkbox" /> Add page numbers</label></div>
-            <div id="unlockCtrl" class="hidden"><input id="pdfPassword" type="password" placeholder="PDF password" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /></div>
-            <div id="jpgToPdfCtrl" class="hidden flex gap-2"><select id="pdfPageSize" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="auto">Auto (image size)</option><option value="A4">A4</option></select><select id="pdfOrientation" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
+            <div id="splitCtrl" class="hidden"><label class="text-xs font-bold">Pages to keep (e.g. 1,3-5 or 1-3)</label><input id="splitRange" class="mt-1 w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm outline-none focus:border-slate-900" placeholder="1,3-5" /></div>
+            <div id="rotateCtrl" class="hidden flex gap-2"><label class="text-xs font-bold">Rotate:</label><select id="rotateAngle" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select><input id="deleteRange" placeholder="Delete pages (e.g. 2,4)" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /></div>
+            <div id="watermarkCtrl" class="hidden space-y-2"><input id="watermarkText" placeholder="Watermark text (e.g. CONFIDENTIAL)" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" /><label class="flex items-center gap-2 text-xs"><input id="pageNumbers" type="checkbox" /> Add page numbers</label></div>
+            <div id="unlockCtrl" class="hidden"><input id="pdfPassword" type="password" placeholder="PDF password" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" /></div>
+            <div id="jpgToPdfCtrl" class="hidden flex gap-2"><select id="pdfPageSize" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="auto">Auto (image size)</option><option value="A4">A4</option></select><select id="pdfOrientation" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
           </div>
 
           <div id="imageControls" class="mt-4 hidden space-y-3">
             <div id="compressCtrl" class="hidden"><label class="text-xs font-bold">Quality: <span id="qualityVal">0.7</span></label><input id="imageQuality" type="range" min="0.1" max="1" step="0.1" value="0.7" class="w-full" /></div>
-            <div id="convertCtrl" class="hidden flex gap-2 items-center"><label class="text-xs font-bold">Convert to:</label><select id="convertFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WEBP</option></select></div>
-            <div id="resizeCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="resizeW" type="number" placeholder="Width" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="resizeH" type="number" placeholder="Height" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div><div class="flex gap-2"><select id="resizePreset" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="">Custom</option><option value="1280x720">YouTube 1280×720</option><option value="1080x1080">Instagram 1080×1080</option><option value="1920x1080">Full HD 1920×1080</option></select><label class="flex items-center gap-1 text-xs"><input id="keepAspect" type="checkbox" checked /> Keep aspect</label></div></div>
-            <div id="upscaleCtrl" class="hidden"><label class="text-xs font-bold">Scale:</label><select id="upscaleFactor" class="ml-2 border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="2">2×</option><option value="4">4×</option></select></div>
+            <div id="convertCtrl" class="hidden flex gap-2 items-center"><label class="text-xs font-bold">Convert to:</label><select id="convertFormat" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WEBP</option></select></div>
+            <div id="resizeCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="resizeW" type="number" placeholder="Width" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><input id="resizeH" type="number" placeholder="Height" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /></div><div class="flex gap-2"><select id="resizePreset" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="">Custom</option><option value="1280x720">YouTube 1280×720</option><option value="1080x1080">Instagram 1080×1080</option><option value="1920x1080">Full HD 1920×1080</option></select><label class="flex items-center gap-1 text-xs"><input id="keepAspect" type="checkbox" checked /> Keep aspect</label></div></div>
+            <div id="upscaleCtrl" class="hidden"><label class="text-xs font-bold">Scale:</label><select id="upscaleFactor" class="ml-2 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="2">2×</option><option value="4">4×</option></select></div>
           </div>
 
           <div id="pdfPlusControls" class="mt-4 hidden space-y-3">
-            <div id="deleteCtrl" class="hidden"><label class="text-xs font-bold">Pages to delete (e.g. 2,5-7)</label><input id="deletePages" class="mt-1 w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" placeholder="2,5-7" /></div>
-            <div id="protectCtrl" class="hidden space-y-2"><input id="protectPass" type="password" placeholder="Password to protect" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /><input id="confirmPass" type="password" placeholder="Confirm password" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /></div>
+            <div id="deleteCtrl" class="hidden"><label class="text-xs font-bold">Pages to delete (e.g. 2,5-7)</label><input id="deletePages" class="mt-1 w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" placeholder="2,5-7" /></div>
+            <div id="protectCtrl" class="hidden space-y-2"><input id="protectPass" type="password" placeholder="Password to protect" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" /><input id="confirmPass" type="password" placeholder="Confirm password" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" /></div>
             <div id="signCtrl" class="hidden space-y-2"><div class="text-xs font-bold">Draw signature below:</div><canvas id="signCanvas" width="400" height="150" class="w-full border-2 border-slate-300 rounded-xl bg-white touch-none"></canvas><div class="flex gap-2"><button id="signClear" type="button" class="text-xs border border-slate-200 px-3 py-1 rounded-full">Clear</button><span class="text-xs text-slate-500">Sign will be placed at bottom-right</span></div></div>
-            <div id="reorderCtrl" class="hidden"><label class="text-xs font-bold">New order (e.g. 3,1,2)</label><input id="reorderInput" class="mt-1 w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" placeholder="3,1,2" /></div>
+            <div id="reorderCtrl" class="hidden"><label class="text-xs font-bold">New order (e.g. 3,1,2)</label><input id="reorderInput" class="mt-1 w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" placeholder="3,1,2" /></div>
           </div>
 
           <div id="imagePlusControls" class="mt-4 hidden space-y-3">
-            <div id="memeCtrl" class="hidden space-y-2"><input id="memeTop" placeholder="Top text" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /><input id="memeBottom" placeholder="Bottom text" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" /></div>
-            <div id="svgCtrl" class="hidden"><label class="text-xs font-bold">SVG Scale:</label><select id="svgScale" class="ml-2 border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="1">1×</option><option value="2">2×</option></select></div>
+            <div id="memeCtrl" class="hidden space-y-2"><input id="memeTop" placeholder="Top text" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" /><input id="memeBottom" placeholder="Bottom text" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" /></div>
+            <div id="svgCtrl" class="hidden"><label class="text-xs font-bold">SVG Scale:</label><select id="svgScale" class="ml-2 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="1">1×</option><option value="2">2×</option></select></div>
             <div id="blurCtrl" class="hidden"><label class="text-xs font-bold">Blur: <span id="blurVal">5</span>px</label><input id="blurAmount" type="range" min="0" max="20" value="5" class="w-full" /></div>
           </div>
 
           <div id="gifControls" class="mt-4 hidden space-y-3">
-            <div class="flex gap-2 items-center"><label class="text-xs font-bold">Delay:</label><input id="gifDelay" type="number" value="20" class="w-20 border border-slate-200 rounded-full px-2 py-1 text-sm" /><span class="text-xs">1/100s</span><label class="text-xs font-bold ml-2">Loop</label><input id="gifLoop" type="checkbox" checked /></div>
-            <div class="flex gap-2"><select id="gifSize" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="original">Original</option><option value="320">320px</option><option value="480">480px</option><option value="640">640px</option></select></div>
+            <div class="flex gap-2 items-center"><label class="text-xs font-bold">Delay:</label><input id="gifDelay" type="number" value="20" class="w-20 border border-slate-200 dark:border-slate-700 rounded-full px-2 py-1 text-sm" /><span class="text-xs">1/100s</span><label class="text-xs font-bold ml-2">Loop</label><input id="gifLoop" type="checkbox" checked /></div>
+            <div class="flex gap-2"><select id="gifSize" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="original">Original</option><option value="320">320px</option><option value="480">480px</option><option value="640">640px</option></select></div>
           </div>
 
           <div id="textDevControls" class="mt-4 hidden space-y-2">
-            <div class="flex gap-2 flex-wrap"><button id="swapBtn" type="button" class="hidden text-xs border border-slate-200 px-3 py-1 rounded-full">Swap</button><select id="hashAlgo" class="hidden border border-slate-200 rounded-full px-3 py-1 text-sm"><option value="SHA-256">SHA-256</option><option value="SHA-1">SHA-1</option><option value="MD5">MD5</option></select></div>
+            <div class="flex gap-2 flex-wrap"><button id="swapBtn" type="button" class="hidden text-xs border border-slate-200 px-3 py-1 rounded-full">Swap</button><select id="hashAlgo" class="hidden border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1 text-sm"><option value="SHA-256">SHA-256</option><option value="SHA-1">SHA-1</option><option value="MD5">MD5</option></select></div>
           </div>
 
           <div id="funControls" class="mt-4 hidden space-y-3">
-            <div id="invoiceCtrl" class="hidden space-y-2"><input id="invoiceFrom" placeholder="From (your company)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><input id="invoiceTo" placeholder="To (client)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><textarea id="invoiceItems" rows="3" placeholder="Items (e.g. Design - 2 × $100, one per line)" class="w-full border border-slate-200 rounded-xl p-3 text-sm"></textarea><input id="invoiceTax" placeholder="Tax % (e.g. 10)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /></div>
-            <div id="barcodeCtrl" class="hidden flex gap-2"><select id="barcodeType" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="CODE128">CODE128</option><option value="EAN13">EAN13</option><option value="CODE39">CODE39</option></select><input id="barcodeText" placeholder="Text for barcode" class="flex-1 border border-slate-200 rounded-full px-4 py-2 text-sm" /></div>
-            <div id="unitCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="unitValue" type="number" value="1" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><select id="unitFrom" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="km">km</option><option value="m">m</option><option value="lb">lb</option><option value="kg">kg</option><option value="c">°C</option><option value="f">°F</option></select><span class="self-center">→</span><select id="unitTo" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="m">m</option><option value="km">km</option><option value="kg">kg</option><option value="lb">lb</option><option value="f">°F</option><option value="c">°C</option></select></div><div id="unitResult" class="text-sm font-bold"></div></div>
-            <div id="ageCtrl" class="hidden space-y-2"><input id="ageDob" type="date" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><div class="flex gap-2"><input id="bmiH" type="number" placeholder="Height cm" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="bmiW" type="number" placeholder="Weight kg" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div><div id="ageResult" class="text-sm"></div></div>
+            <div id="invoiceCtrl" class="hidden space-y-2"><input id="invoiceFrom" placeholder="From (your company)" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm" /><input id="invoiceTo" placeholder="To (client)" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm" /><textarea id="invoiceItems" rows="3" placeholder="Items (e.g. Design - 2 × $100, one per line)" class="w-full border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-sm"></textarea><input id="invoiceTax" placeholder="Tax % (e.g. 10)" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm" /></div>
+            <div id="barcodeCtrl" class="hidden flex gap-2"><select id="barcodeType" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="CODE128">CODE128</option><option value="EAN13">EAN13</option><option value="CODE39">CODE39</option></select><input id="barcodeText" placeholder="Text for barcode" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm" /></div>
+            <div id="unitCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="unitValue" type="number" value="1" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><select id="unitFrom" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="km">km</option><option value="m">m</option><option value="lb">lb</option><option value="kg">kg</option><option value="c">°C</option><option value="f">°F</option></select><span class="self-center">→</span><select id="unitTo" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="m">m</option><option value="km">km</option><option value="kg">kg</option><option value="lb">lb</option><option value="f">°F</option><option value="c">°C</option></select></div><div id="unitResult" class="text-sm font-bold"></div></div>
+            <div id="ageCtrl" class="hidden space-y-2"><input id="ageDob" type="date" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm" /><div class="flex gap-2"><input id="bmiH" type="number" placeholder="Height cm" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><input id="bmiW" type="number" placeholder="Weight kg" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /></div><div id="ageResult" class="text-sm"></div></div>
             <div id="pomodoroCtrl" class="hidden text-center"><div id="pomDisplay" class="text-4xl font-black">25:00</div><div class="flex gap-2 justify-center mt-2"><button id="pomStart" class="bg-slate-900 text-white px-4 py-2 rounded-full text-sm">Start</button><button id="pomReset" class="border border-slate-200 px-4 py-2 rounded-full text-sm">Reset</button></div><div id="pomStatus" class="text-xs text-slate-500 mt-1">Ready</div></div>
           </div>
 
           <div id="videoControls" class="mt-4 hidden space-y-3">
-            <div class="flex gap-2"><select id="videoFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="mp4">MP4</option><option value="webm">WEBM</option><option value="mp3">MP3 (audio only)</option></select><input id="videoTrimStart" placeholder="Start sec (e.g. 0)" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="videoTrimEnd" placeholder="End sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div>
+            <div class="flex gap-2"><select id="videoFormat" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="mp4">MP4</option><option value="webm">WEBM</option><option value="mp3">MP3 (audio only)</option></select><input id="videoTrimStart" placeholder="Start sec (e.g. 0)" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><input id="videoTrimEnd" placeholder="End sec" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /></div>
             <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-2">Video processing is heavy - limit 100MB, may take a minute, runs in Web Worker. Your file never leaves device.</div>
           </div>
 
           <div id="audioControls" class="mt-4 hidden space-y-3">
-            <div class="flex gap-2"><input id="audioStart" placeholder="Start sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="audioEnd" placeholder="End sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><select id="audioFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="mp3">MP3</option><option value="wav">WAV</option></select></div>
+            <div class="flex gap-2"><input id="audioStart" placeholder="Start sec" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><input id="audioEnd" placeholder="End sec" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm" /><select id="audioFormat" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="mp3">MP3</option><option value="wav">WAV</option></select></div>
           </div>
 
           <div class="mt-4 flex flex-wrap gap-3">
             <button id="actionBtn" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition disabled:opacity-40 disabled:cursor-not-allowed">Run - {tool.shortTitle}</button>
             <button id="downloadBtn" class="hidden bg-[#FFDD00] text-black border-2 border-black px-6 py-3 rounded-full font-bold text-sm">⬇ Download result</button>
-            <span id="status" class="text-sm text-slate-600 self-center"></span>
+            <span id="status" class="text-sm text-slate-600 dark:text-slate-400 self-center"></span>
           </div>
 
           <div id="utilityArea" class="mt-6 hidden">
-            <textarea id="utilityInput" rows="8" class="w-full border border-slate-200 rounded-xl p-4 text-sm font-mono outline-none focus:border-slate-900" placeholder="Paste here..."></textarea>
-            <pre id="utilityOutput" class="mt-3 bg-slate-900 text-emerald-300 p-4 rounded-xl text-sm overflow-auto hidden"></pre>
+            <textarea id="utilityInput" rows="8" class="w-full border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm font-mono outline-none focus:border-slate-900" placeholder="Paste here..."></textarea>
+            <pre id="utilityOutput" class="mt-3 bg-slate-900 dark:bg-black text-emerald-300 p-4 rounded-xl text-sm overflow-auto hidden"></pre>
           </div>
 
           <div id="resumeArea" class="mt-6 hidden space-y-3">
             <div class="grid sm:grid-cols-2 gap-3">
-              <input id="resumeName" placeholder="Full Name" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
-              <input id="resumeTitle" placeholder="Job Title" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
-              <input id="resumeEmail" placeholder="Email" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
-              <input id="resumePhone" placeholder="Phone" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumeName" placeholder="Full Name" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumeTitle" placeholder="Job Title" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumeEmail" placeholder="Email" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" />
+              <input id="resumePhone" placeholder="Phone" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" />
             </div>
-            <textarea id="resumeSummary" rows="3" placeholder="Summary" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
-            <textarea id="resumeExp" rows="4" placeholder="Experience (e.g. Company - Role - Years - Description, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
-            <textarea id="resumeEdu" rows="3" placeholder="Education (e.g. University - Degree - Year, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
-            <input id="resumeSkills" placeholder="Skills (comma separated)" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
-            <div class="flex gap-2"><select id="resumeTemplate" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="1">Template 1 - Clean</option><option value="2">Template 2 - Bold</option></select></div>
+            <textarea id="resumeSummary" rows="3" placeholder="Summary" class="w-full border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm"></textarea>
+            <textarea id="resumeExp" rows="4" placeholder="Experience (e.g. Company - Role - Years - Description, one per line)" class="w-full border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm"></textarea>
+            <textarea id="resumeEdu" rows="3" placeholder="Education (e.g. University - Degree - Year, one per line)" class="w-full border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm"></textarea>
+            <input id="resumeSkills" placeholder="Skills (comma separated)" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm" />
+            <div class="flex gap-2"><select id="resumeTemplate" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm"><option value="1">Template 1 - Clean</option><option value="2">Template 2 - Bold</option></select></div>
           </div>
 
           <div id="qrArea" class="mt-6 hidden text-center">
-            <input id="qrInput" placeholder="https://example.com or any text" class="w-full border border-slate-200 rounded-full px-4 py-3 text-sm outline-none focus:border-slate-900" />
+            <input id="qrInput" placeholder="https://example.com or any text" class="w-full border border-slate-200 dark:border-slate-700 rounded-full px-4 py-3 text-sm outline-none focus:border-slate-900" />
             <div class="mt-3 flex gap-2 items-center justify-center">
-              <label class="text-xs">Size</label><input id="qrSize" type="number" value="300" class="w-20 border border-slate-200 rounded-full px-2 py-1 text-sm" />
+              <label class="text-xs">Size</label><input id="qrSize" type="number" value="300" class="w-20 border border-slate-200 dark:border-slate-700 rounded-full px-2 py-1 text-sm" />
               <input id="qrFg" type="color" value="#000000" class="w-8 h-8 rounded" /><input id="qrBg" type="color" value="#ffffff" class="w-8 h-8 rounded" />
             </div>
             <div class="mt-4 flex gap-2 justify-center">
@@ -136,8 +136,8 @@ const { tool } = Astro.props;
           </div>
 
           <div id="colorArea" class="mt-6 hidden">
-            <div class="flex gap-3 items-center"><input type="color" id="colorPick" value="#FFDD00" class="w-16 h-12 rounded-xl border" /><input id="colorHex" value="#FFDD00" class="flex-1 border border-slate-200 rounded-full px-4 py-2.5 text-sm font-mono" /><button id="colorCopy" class="bg-slate-900 text-white px-4 py-2 rounded-full text-sm">Copy</button></div>
-            <div id="colorVals" class="mt-3 text-xs font-mono bg-white border border-slate-200 rounded-xl p-3"></div>
+            <div class="flex gap-3 items-center"><input type="color" id="colorPick" value="#FFDD00" class="w-16 h-12 rounded-xl border" /><input id="colorHex" value="#FFDD00" class="flex-1 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-sm font-mono" /><button id="colorCopy" class="bg-slate-900 text-white px-4 py-2 rounded-full text-sm">Copy</button></div>
+            <div id="colorVals" class="mt-3 text-xs font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3"></div>
           </div>
 
           <div id="resultInfo" class="mt-4 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
@@ -148,9 +148,9 @@ const { tool } = Astro.props;
           <div id="previewArea" class="mt-4 hidden"><canvas id="previewCanvas" class="w-full border border-slate-200 rounded-xl"></canvas></div>
         </div>
 
-        <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6">
+        <div class="mt-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
           <h2 class="font-black">How to use {tool.title} without uploading</h2>
-          <ol class="mt-3 list-decimal list-inside text-sm text-slate-600 space-y-2 leading-relaxed">
+          <ol class="mt-3 list-decimal list-inside text-sm text-slate-600 dark:text-slate-400 space-y-2 leading-relaxed">
             <li>Click the dropzone or drag files - they stay in your browser's RAM.</li>
             <li>Click "Run" - processing happens via <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pdf-lib / Canvas / WASM</code> on your device.</li>
             <li>Download result. Check DevTools → Network: no POST, no upload.</li>
@@ -163,7 +163,7 @@ const { tool } = Astro.props;
 
       <div class="space-y-4">
         <div class="h-[150px] rounded-xl border-2 border-dashed border-slate-900 bg-[#FFDD00] grid place-items-center text-center p-3"><div><div class="font-black text-sm">Your Ad Here</div><div class="text-xs mt-1">Contact <a href="mailto:contactae2000@gmail.com" class="underline">contactae2000@gmail.com</a></div><div class="mt-2 text-[11px] bg-black text-white inline-block px-2 py-1 rounded-full">$50/mo per slot</div></div></div>
-        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
           <div class="font-bold text-sm">Related tools</div>
           <div class="mt-3 space-y-2 text-sm">
             {tools.filter(t => t.category === tool.category && t.slug !== tool.slug).slice(0,3).map(r => (
@@ -217,7 +217,7 @@ const { tool } = Astro.props;
     const skeleton = document.createElement('div');
     skeleton.id='skeleton';
     skeleton.className='hidden mt-4 space-y-2';
-    skeleton.innerHTML='<div class="h-4 bg-slate-200 rounded animate-pulse w-3/4"></div><div class="h-3 bg-slate-100 rounded animate-pulse"></div><div class="h-8 bg-slate-200 rounded-full animate-pulse w-24"></div>';
+    skeleton.innerHTML='<div class="h-4 bg-slate-200 rounded animate-pulse w-3/4"></div><div class="h-3 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div><div class="h-8 bg-slate-200 rounded-full animate-pulse w-24"></div>';
     document.getElementById('resultInfo')?.before(skeleton);
     let resultName = 'result';
 
@@ -435,15 +435,39 @@ const { tool } = Astro.props;
     fileInput?.addEventListener('change', e => handleFiles(e.target.files));
     clearBtn?.addEventListener('click', () => { files=[]; updateList(); });
 
-    function handleFiles(list){ files = Array.from(list); updateList(); }
+    function handleFiles(list){
+      files = Array.from(list); updateList();
+      try{
+        const q=JSON.parse(sessionStorage.getItem('helper_queue')||'[]');
+        list.slice(0,5).forEach(f=> q.unshift({name:f.name, size:f.size, type:f.type, tool:slug}));
+        sessionStorage.setItem('helper_queue', JSON.stringify(q.slice(0,10)));
+      }catch{}
+    }
     function updateList(){
       if (!files.length) { fileList.classList.add('hidden'); return; }
       fileList.classList.remove('hidden');
-      fileUl.innerHTML = files.map(f => `<li class="flex justify-between border border-slate-200 rounded-full px-3 py-1 text-xs"><span>${f.name}</span><span>${(f.size/1024).toFixed(1)} KB</span></li>`).join('');
+      fileUl.innerHTML = files.map(f => `<li class="flex justify-between border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1 text-xs"><span>${f.name}</span><span>${(f.size/1024).toFixed(1)} KB</span></li>`).join('');
     }
-    function setStatus(m){ status.textContent=m; }
+    function setStatus(m){
+      status.textContent=m;
+      if(/Done|ready|Compressed|Converted|Split|Extracted|Unlocked|Rotated|Watermark|Repaired|Filled|Numbered|Signed|Reordered|Deleted|Protected|Word DOCX|OCR done|Palette|Barcode|Invoice|GIF|Resized|Upscaled|HEIC|Collage|Blur|SVG/.test(m)){
+        try{
+          const h=JSON.parse(localStorage.getItem('helper_history')||'[]');
+          h.unshift({tool: slug, status: m, time: Date.now()});
+          localStorage.setItem('helper_history', JSON.stringify(h.slice(0,10)));
+        }catch{}
+      }
+    }
     function formatBytes(b){ if(b===0) return '0 B'; const k=1024, s=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(k)); return parseFloat((b/Math.pow(k,i)).toFixed(1))+' '+s[i]; }
-    function download(blob, name){ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000); resultInfo.classList.remove('hidden'); }
+    function download(blob, name){
+      const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+      resultInfo.classList.remove('hidden');
+      try{
+        const h=JSON.parse(localStorage.getItem('helper_history')||'[]');
+        h.unshift({tool: slug, file: name, size: blob.size, time: Date.now()});
+        localStorage.setItem('helper_history', JSON.stringify(h.slice(0,10)));
+      }catch{}
+    }
     downloadBtn.addEventListener('click', () => { if(resultBlob) download(resultBlob, resultName); });
 
     function parsePageRanges(str, max){
@@ -479,7 +503,7 @@ const { tool } = Astro.props;
         return;
       }
       if (slug === 'json-formatter') {
-        try { const o=JSON.parse(utilityInput.value); utilityOutput.textContent = JSON.stringify(o,null,2); utilityOutput.classList.remove('hidden'); resultBlob=new Blob([utilityOutput.textContent],{type:'application/json'}); resultName='formatted.json'; downloadBtn.classList.remove('hidden');
+        try { const o=JSON.parse(utilityInput.value); utilityOutput.textContent = JSON.stringify(o,null,2); utilityOutput.classList.remove('hidden'); resultBlob=new Blob([utilityOutput.textContent],{type:'application/json'}); resultName='formatted.json'; downloadBtn.classList.remove('hidden'); setStatus('Done - JSON formatted');
         } catch(e){ utilityOutput.textContent='Error: '+e.message; utilityOutput.classList.remove('hidden');}
         return;
       }

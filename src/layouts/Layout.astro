@@ -20,47 +20,59 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#0f172a" />
+    <script is:inline>
+      (function(){
+        try {
+          const t = localStorage.getItem('helper_theme');
+          const dark = t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if(dark) document.documentElement.classList.add('dark');
+        } catch {}
+      })();
+    </script>
   </head>
-  <body class="min-h-screen bg-[#FCFCF9] text-slate-900 flex flex-col font-sans antialiased">
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+  <body class="min-h-screen bg-[#FCFCF9] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans antialiased transition-colors">
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-6xl mx-auto px-4 h-[64px] flex items-center justify-between gap-4">
         <a href="/" class="flex items-center gap-3 shrink-0">
-          <div class="w-9 h-9 rounded-xl bg-slate-900 text-white grid place-items-center font-black text-[14px] tracking-tight">A1</div>
+          <div class="w-9 h-9 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 grid place-items-center font-black text-[14px] tracking-tight">A1</div>
           <div class="hidden sm:block">
             <div class="font-bold leading-none tracking-tight text-[15px]">All-in-One Helper</div>
-            <div class="text-[11px] text-slate-500 font-medium tracking-wide">PRIVATE - FREE - NO UPLOAD</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">PRIVATE - FREE - NO UPLOAD</div>
           </div>
         </a>
 
         <div class="hidden md:flex items-center gap-2 flex-1 max-w-xs mx-4">
           <div class="relative w-full">
-            <input id="globalSearch" type="search" placeholder="Search 94 tools - press /" class="w-full border border-slate-200 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 bg-white" />
+            <input id="globalSearch" type="search" placeholder="Search 94 tools - press /" class="w-full border border-slate-200 dark:border-slate-700 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 dark:focus:border-slate-300 bg-white dark:bg-slate-800 dark:placeholder-slate-400" />
             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
-            <div id="globalSearchResults" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-lg max-h-[60vh] overflow-auto z-50"></div>
+            <div id="globalSearchResults" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-lg max-h-[60vh] overflow-auto z-50"></div>
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <button id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme (light/dark)" class="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 grid place-items-center text-sm hover:border-slate-900 dark:hover:border-slate-300 transition"><span id="themeIcon">🌙</span></button>
           <div class="hidden lg:flex"><div class="bg-[#FFDD00] border-2 border-black px-3 py-1.5 rounded-full text-[11px] font-black">📢 Your ad here - <a href="mailto:contactae2000@gmail.com" class="underline">contactae2000@gmail.com</a></div></div>
           <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 bg-[#FFDD00] text-black border border-black px-4 py-2 rounded-full text-sm font-bold hover:brightness-95 transition">☕ Buy me a coffee</a>
         </div>
       </div>
     </header>
 
-    <div class="md:hidden bg-white border-b border-slate-200">
-      <div class="max-w-6xl mx-auto px-4 py-3">
-        <div class="relative">
-          <input id="globalSearchMobile" type="search" placeholder="Search 94 tools..." class="w-full border border-slate-200 rounded-full pl-9 pr-3 py-2.5 text-sm outline-none focus:border-slate-900 bg-[#FCFCF9]" />
+    <div class="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex gap-2">
+        <div class="relative flex-1">
+          <input id="globalSearchMobile" type="search" placeholder="Search 94 tools..." class="w-full border border-slate-200 dark:border-slate-700 rounded-full pl-9 pr-3 py-2.5 text-sm outline-none focus:border-slate-900 dark:focus:border-slate-300 bg-[#FCFCF9] dark:bg-slate-800 dark:placeholder-slate-400" />
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
-          <div id="globalSearchMobileResults" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-lg max-h-[50vh] overflow-auto z-50"></div>
+          <div id="globalSearchMobileResults" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-lg max-h-[50vh] overflow-auto z-50"></div>
         </div>
+        <button id="themeToggleMobile" aria-label="Toggle dark mode" class="w-10 h-10 shrink-0 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 grid place-items-center">🌙</button>
       </div>
     </div>
-    <div class="border-b border-slate-200 bg-amber-50">
-      <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2 text-[13px] text-slate-700">
+    <div class="border-b border-slate-200 dark:border-slate-800 bg-amber-50 dark:bg-amber-500/10">
+      <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2 text-[13px] text-slate-700 dark:text-amber-100">
         <span class="hidden sm:inline bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-full tracking-widest">PRIVATE</span>
         <span>Your files never leave your device. <span class="font-semibold underline decoration-amber-300">Zero uploads, verified in Network tab.</span></span>
       </div>
@@ -175,6 +187,67 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
           document.getElementById('globalSearch')?.focus();
         }
       });
+      // Theme toggle
+      function applyTheme(dark){
+        document.documentElement.classList.toggle('dark', dark);
+        const icon = dark ? '☀️' : '🌙';
+        document.getElementById('themeIcon').textContent = icon;
+        const m = document.getElementById('themeToggleMobile');
+        if(m) m.textContent = icon;
+        try { localStorage.setItem('helper_theme', dark ? 'dark' : 'light'); } catch {}
+      }
+      function toggleTheme(){
+        applyTheme(!document.documentElement.classList.contains('dark'));
+      }
+      document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+      document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme);
+      // Sync icon on load
+      if(document.documentElement.classList.contains('dark')){
+        document.getElementById('themeIcon').textContent='☀️';
+        const m=document.getElementById('themeToggleMobile'); if(m) m.textContent='☀️';
+      }
+      try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e=>{ if(!localStorage.getItem('helper_theme')) applyTheme(e.matches); }); } catch {}
+      // PWA service worker
+      if('serviceWorker' in navigator){
+        window.addEventListener('load', ()=> navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+      }
+      // Command palette (Cmd+K) - modal fuzzy nav
+      const palette = document.createElement('div');
+      palette.id = 'cmdPalette';
+      palette.className = 'hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm p-4 pt-[15vh]';
+      palette.innerHTML = `<div class="max-w-lg mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+        <input id="paletteInput" placeholder="Type a tool name..." class="w-full px-5 py-4 text-base outline-none bg-transparent border-b border-slate-200 dark:border-slate-700 dark:placeholder-slate-400" />
+        <div id="paletteResults" class="max-h-[50vh] overflow-auto"></div>
+        <div class="px-5 py-2 text-[11px] text-slate-400 border-t border-slate-200 dark:border-slate-700 flex gap-3"><span>↑↓ navigate</span><span>↵ open</span><span>esc close</span></div>
+      </div>`;
+      document.body.appendChild(palette);
+      const pInput = document.getElementById('paletteInput');
+      const pResults = document.getElementById('paletteResults');
+      let pIndex = 0;
+      let pList = [];
+      function renderPalette(){
+        const q = pInput.value.trim().toLowerCase();
+        pList = q ? TOOLS.filter(t=> t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.slug.includes(q)).slice(0,8) : TOOLS.slice(0,8);
+        pIndex = 0;
+        pResults.innerHTML = pList.map((t,i)=> `<a href="/tools/${t.slug}" data-pi="${i}" class="flex items-center gap-3 px-5 py-3 ${i===0?'bg-slate-100 dark:bg-slate-800':''} hover:bg-slate-100 dark:hover:bg-slate-800"><span class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 grid place-items-center text-sm">${t.icon}</span><div><div class="font-bold text-sm">${t.title}</div><div class="text-xs text-slate-500 line-clamp-1">${t.desc}</div></div></a>`).join('');
+      }
+      function openPalette(){ palette.classList.remove('hidden'); pInput.value=''; renderPalette(); pInput.focus(); }
+      function closePalette(){ palette.classList.add('hidden'); }
+      document.addEventListener('keydown', e=>{
+        if((e.metaKey||e.ctrlKey) && e.key==='k'){ e.preventDefault(); palette.classList.contains('hidden')?openPalette():closePalette(); }
+        if(e.key==='Escape' && !palette.classList.contains('hidden')) closePalette();
+        if(!palette.classList.contains('hidden')){
+          if(e.key==='ArrowDown'){ e.preventDefault(); pIndex=Math.min(pIndex+1,pList.length-1); highlight(); }
+          if(e.key==='ArrowUp'){ e.preventDefault(); pIndex=Math.max(pIndex-1,0); highlight(); }
+          if(e.key==='Enter' && pList[pIndex]){ e.preventDefault(); location.href=`/tools/${pList[pIndex].slug}`; }
+        }
+      });
+      function highlight(){
+        pResults.querySelectorAll('[data-pi]').forEach(el=> el.classList.toggle('bg-slate-100', +el.dataset.pi===pIndex));
+        pResults.querySelectorAll('[data-pi]').forEach(el=> el.classList.toggle('dark:bg-slate-800', +el.dataset.pi===pIndex));
+      }
+      palette.addEventListener('click', e=>{ if(e.target===palette) closePalette(); });
+      pInput.addEventListener('input', renderPalette);
       // Also push recent for tool pages via cache
       const slug = location.pathname.split('/').pop();
       if(slug && TOOLS.find(t=>t.slug===slug)){

@@ -1,0 +1,12 @@
+{
+  "name": "All-in-One Helper - Free Private Tools",
+  "short_name": "A1 Helper",
+  "description": "94 free tools that run 100% in your browser. No upload, no paywall.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCFCF9",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
