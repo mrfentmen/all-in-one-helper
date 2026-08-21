@@ -262,3 +262,28 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 ### Verified
 - Build 87 pages, 0 em dashes in src, 4 ad contacts per tool page, homepage 1 contact (now 4 on fc preview)
 - Deploy fc155d29.all-in-one-helper.pages.dev, main will update, curl 200
+
+## [1.2.0] - 2026-08-21 - Platform Features + PDF Pro Hub + 8 New Tools
+
+### Added
+- **Web Share Target**: share text/URLs from phone OS straight into QR/word-counter via PWA manifest
+- **Clipboard paste anywhere**: paste image -> compress-image, long text -> word-counter
+- **Keyboard shortcuts**: Enter=Run, Ctrl/Cmd+S=Download, ?=cheat sheet modal, Shift+D=theme toggle
+- **Save to folder**: File System Access API button next to download on supported browsers
+- **Before/After compare slider** on compress-image and blur-image results (draggable divider)
+- **Feedback widget**: thumbs up/down after every successful run, stored locally
+- **Print CSS**: resume-builder + invoice-generator print clean
+- **Advertising section on /contact**: $50/mo per slot pricing, self-serve info (0 new pages)
+- **OG images**: 95 build-time generated PNGs (one per tool + home) for social sharing
+- **PDF Pro Toolkit hub** (`/tools/pdf-pro`): delete pages, protect, sign, reorder, repair in one page with all controls; 9 old PDF URLs 301-redirect to it
+- **8 new tools**: encrypt-file (AES-256-GCM WebCrypto), exif-viewer/remover, steganography (hide text in PNG), checksum-verifier, subnet-calculator, base-converter, line-tools (dedupe/sort/reverse/trim), split-bill calculator
+
+### Changed
+- Page count stays at exactly 100 (94 tools -> 86 tools + pdf-pro + 8 new = 95 tool pages)
+- Search placeholders updated to "Search 95 tools"
+
+### Verified
+- E2E: 137/137 passed in 45.8s (was 123) - includes 14 new v1.2 feature tests
+- Build: 100 pages exactly
+- Old PDF tool URLs redirect via _redirects (production; preview server ignores them)
+

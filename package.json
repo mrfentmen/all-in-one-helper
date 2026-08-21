@@ -2,12 +2,13 @@
   "name": "all-in-one-helper",
   "type": "module",
   "version": "0.1.0",
-  "description": "Free, private, no-upload clone of iLovePDF + TinyPNG + Remove.bg — 22 tools, 100% client-side, Cloudflare Pages",
+  "description": "Free, private, no-upload clone of iLovePDF + TinyPNG + Remove.bg \u2014 22 tools, 100% client-side, Cloudflare Pages",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "og": "bun run scripts/export-tools.mjs && node scripts/gen-og.mjs && node scripts/gen-home-og.cjs"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.10",
@@ -38,6 +39,7 @@
     "@playwright/test": "^1.62.1",
     "@types/qrcode": "^1.5.6",
     "autoprefixer": "^10.5.4",
+    "canvas": "^3.2.3",
     "postcss": "^8.5.26",
     "tailwindcss": "3.4.1",
     "wrangler": "4"

@@ -1,0 +1,15 @@
+const { createCanvas } = require('canvas');
+const fs = require('fs');
+const canvas = createCanvas(1200, 630);
+const ctx = canvas.getContext('2d');
+ctx.fillStyle='#0f172a'; ctx.fillRect(0,0,1200,630);
+ctx.fillStyle='#FFDD00'; ctx.fillRect(0,560,1200,12);
+ctx.fillStyle='#ffffff'; ctx.font='bold 90px sans-serif'; ctx.textAlign='left';
+ctx.fillText('94 free tools.', 80, 220);
+ctx.fillStyle='#94a3b8'; ctx.font='40px sans-serif';
+ctx.fillText('No upload. No paywall. No account.', 80, 300);
+ctx.fillText('Everything runs in your browser.', 80, 355);
+ctx.fillStyle='#FFDD00'; ctx.font='bold 34px sans-serif';
+ctx.fillText('All-in-One Helper', 80, 500);
+fs.writeFileSync('./public/og/home.png', canvas.toBuffer('image/png'));
+console.log('home og done');

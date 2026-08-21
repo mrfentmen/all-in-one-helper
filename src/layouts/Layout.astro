@@ -4,8 +4,9 @@ interface Props {
   title: string;
   description: string;
   canonical?: string;
+  ogImage?: string;
 }
-const { title, description, canonical } = Astro.props;
+const { title, description, canonical, ogImage } = Astro.props;
 const siteName = "All-in-One Helper";
 const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, desc:t.description, icon:t.icon, cat:t.category})));
 ---
@@ -24,6 +25,7 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage || '/og/home.png'} />
     <meta name="theme-color" content="#0f172a" />
     <script is:inline>
       (function(){
@@ -48,7 +50,7 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
 
         <div class="hidden md:flex items-center gap-2 flex-1 max-w-xs mx-4">
           <div class="relative w-full">
-            <input id="globalSearch" type="search" placeholder="Search 94 tools - press /" class="w-full border border-slate-200 dark:border-slate-700 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 dark:focus:border-slate-300 bg-white dark:bg-slate-800 dark:placeholder-slate-400" />
+            <input id="globalSearch" type="search" placeholder="Search 95 tools - press /" class="w-full border border-slate-200 dark:border-slate-700 rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:border-slate-900 dark:focus:border-slate-300 bg-white dark:bg-slate-800 dark:placeholder-slate-400" />
             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
             <div id="globalSearchResults" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-lg max-h-[60vh] overflow-auto z-50"></div>
           </div>
@@ -64,7 +66,7 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
     <div class="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-6xl mx-auto px-4 py-3 flex gap-2">
         <div class="relative flex-1">
-          <input id="globalSearchMobile" type="search" placeholder="Search 94 tools..." class="w-full border border-slate-200 dark:border-slate-700 rounded-full pl-9 pr-3 py-2.5 text-sm outline-none focus:border-slate-900 dark:focus:border-slate-300 bg-[#FCFCF9] dark:bg-slate-800 dark:placeholder-slate-400" />
+          <input id="globalSearchMobile" type="search" placeholder="Search 95 tools..." class="w-full border border-slate-200 dark:border-slate-700 rounded-full pl-9 pr-3 py-2.5 text-sm outline-none focus:border-slate-900 dark:focus:border-slate-300 bg-[#FCFCF9] dark:bg-slate-800 dark:placeholder-slate-400" />
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
           <div id="globalSearchMobileResults" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-lg max-h-[50vh] overflow-auto z-50"></div>
         </div>
@@ -211,6 +213,58 @@ const toolsJson = JSON.stringify(tools.map(t=> ({slug:t.slug, title:t.title, des
       if('serviceWorker' in navigator){
         window.addEventListener('load', ()=> navigator.serviceWorker.register('/sw.js').catch(()=>{}));
       }
+      // Web Share Target (GET): /?title=&text=&url= -> route to tool
+      try{
+        const sp = new URLSearchParams(location.search);
+        const sharedText = sp.get('text') || sp.get('title');
+        const sharedUrl = sp.get('url');
+        if(sharedText || sharedUrl){
+          const val = (sharedUrl || sharedText || '').trim();
+          sessionStorage.setItem('helper_shared', val);
+          history.replaceState(null,'','/');
+          // route: URL -> qr-generator; long text -> word-counter
+          location.href = /^https?:\/\//.test(val) ? '/tools/qr-generator?text='+encodeURIComponent(val) : '/tools/word-counter?text='+encodeURIComponent(val);
+        }
+      }catch{}
+      // Clipboard paste anywhere: image -> compress-image, text -> word-counter
+      document.addEventListener('paste', e=>{
+        if(e.target instanceof HTMLElement && e.target.matches('input, textarea')) return;
+        if(document.activeElement && document.activeElement.matches && document.activeElement.matches('input, textarea')) return;
+        const items = e.clipboardData?.items || [];
+        for(const it of items){
+          if(it.type.startsWith('image/')){
+            location.href='/tools/compress-image';
+            return;
+          }
+        }
+        const txt = e.clipboardData?.getData('text');
+        if(txt && txt.length>10 && !location.pathname.startsWith('/tools/')){
+          location.href='/tools/word-counter';
+        }
+      });
+      // Keyboard shortcuts cheat sheet (? key)
+      const sheet = document.createElement('div');
+      sheet.id='shortcutSheet';
+      sheet.className='hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm p-4 pt-[15vh]';
+      sheet.innerHTML=`<div class="max-w-md mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-6">
+        <div class="font-black text-lg mb-4">Keyboard shortcuts</div>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span>Search tools</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">/</kbd></div>
+          <div class="flex justify-between"><span>Command palette</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Ctrl/⌘ K</kbd></div>
+          <div class="flex justify-between"><span>Run tool</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Enter</kbd></div>
+          <div class="flex justify-between"><span>Download result</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Ctrl/⌘ S</kbd></div>
+          <div class="flex justify-between"><span>Toggle theme</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Shift D</kbd></div>
+          <div class="flex justify-between"><span>This cheat sheet</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">?</kbd></div>
+          <div class="flex justify-between"><span>Close dialogs</span><kbd class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Esc</kbd></div>
+        </div>
+        <button onclick="document.getElementById('shortcutSheet').classList.add('hidden')" class="mt-4 w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white py-2 rounded-full font-bold text-sm">Got it</button>
+      </div>`;
+      document.body.appendChild(sheet);
+      document.addEventListener('keydown', e=>{
+        if(e.key==='?' && !e.target.matches('input, textarea')){ e.preventDefault(); sheet.classList.toggle('hidden'); }
+        if(e.key==='Escape') sheet.classList.add('hidden');
+        if(e.shiftKey && (e.key==='D'||e.key==='d') && !e.target.matches('input, textarea')){ e.preventDefault(); document.getElementById('themeToggle')?.click(); }
+      });
       // Command palette (Cmd+K) - modal fuzzy nav
       const palette = document.createElement('div');
       palette.id = 'cmdPalette';

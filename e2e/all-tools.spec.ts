@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { tools } from '../src/data/tools';
 
 test.describe('Homepage', () => {
-  test('loads with 94 tools, no infinite scroll, search and tabs', async ({ page }) => {
+  test('loads with 95 tools, no infinite scroll, search and tabs', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/All-in-One Helper/);
     // Check total count

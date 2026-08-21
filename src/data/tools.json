@@ -1,0 +1,566 @@
+[
+  {
+    "slug": "merge-pdf",
+    "title": "Merge PDF",
+    "description": "Combine multiple PDFs into one - drag to reorder, no upload.",
+    "icon": "📄"
+  },
+  {
+    "slug": "split-pdf",
+    "title": "Split PDF",
+    "description": "Extract pages or split by range. Private & instant.",
+    "icon": "✂️"
+  },
+  {
+    "slug": "compress-pdf",
+    "title": "Compress PDF",
+    "description": "Reduce PDF size without quality loss - client-side.",
+    "icon": "🗜️"
+  },
+  {
+    "slug": "pdf-to-jpg",
+    "title": "PDF to JPG",
+    "description": "Convert PDF pages to JPG images in your browser.",
+    "icon": "🖼️"
+  },
+  {
+    "slug": "jpg-to-pdf",
+    "title": "JPG to PDF",
+    "description": "Convert images to PDF - choose size & orientation.",
+    "icon": "📑"
+  },
+  {
+    "slug": "rotate-pdf",
+    "title": "Rotate PDF",
+    "description": "Rotate, delete, reorder pages visually.",
+    "icon": "🔄"
+  },
+  {
+    "slug": "extract-text",
+    "title": "Extract Text",
+    "description": "Pull text from any PDF - copy or download .txt",
+    "icon": "📝"
+  },
+  {
+    "slug": "watermark-pdf",
+    "title": "Watermark PDF",
+    "description": "Add watermark or page numbers to PDFs.",
+    "icon": "💧"
+  },
+  {
+    "slug": "unlock-pdf",
+    "title": "Unlock PDF",
+    "description": "Remove password from PDF you own (client-side).",
+    "icon": "🔓"
+  },
+  {
+    "slug": "compress-image",
+    "title": "Compress Image",
+    "description": "TinyPNG alternative - compress JPG/PNG/WEBP 70% smaller.",
+    "icon": "🖼️"
+  },
+  {
+    "slug": "remove-background",
+    "title": "Remove Background",
+    "description": "Remove.bg clone - AI background removal in browser.",
+    "icon": "✨"
+  },
+  {
+    "slug": "convert-image",
+    "title": "Convert Image",
+    "description": "WEBP ↔ PNG ↔ JPG ↔ AVIF - batch convert & zip.",
+    "icon": "🔀"
+  },
+  {
+    "slug": "resize-image",
+    "title": "Resize Image",
+    "description": "Resize & crop by pixels or presets (YouTube, IG).",
+    "icon": "📐"
+  },
+  {
+    "slug": "upscale-image",
+    "title": "Upscale Image",
+    "description": "2× AI upscale in browser - enhance low-res images.",
+    "icon": "🔍"
+  },
+  {
+    "slug": "video-compress",
+    "title": "Video Compress",
+    "description": "Compress & convert MP4 ↔ WEBM in browser (ffmpeg.wasm).",
+    "icon": "🎬"
+  },
+  {
+    "slug": "audio-tools",
+    "title": "Audio Cutter",
+    "description": "Cut MP3, convert MP3 ↔ WAV - in browser.",
+    "icon": "🎵"
+  },
+  {
+    "slug": "qr-generator",
+    "title": "QR Generator",
+    "description": "Text/URL → QR with logo, colors, PNG/SVG download.",
+    "icon": "⬢"
+  },
+  {
+    "slug": "resume-builder",
+    "title": "Resume Builder",
+    "description": "Form → beautiful PDF resume, 2 templates, export.",
+    "icon": "📋"
+  },
+  {
+    "slug": "word-counter",
+    "title": "Word Counter",
+    "description": "Count words, chars, sentences, reading time - instant.",
+    "icon": "🔢"
+  },
+  {
+    "slug": "json-formatter",
+    "title": "JSON Formatter",
+    "description": "Prettify, minify, validate JSON with error highlight.",
+    "icon": "{}"
+  },
+  {
+    "slug": "password-generator",
+    "title": "Password Generator",
+    "description": "Strong passwords, length/symbols, strength meter, copy.",
+    "icon": "🔑"
+  },
+  {
+    "slug": "color-picker",
+    "title": "Color Picker",
+    "description": "Pick colors, HEX/RGB/HSL, palette generator.",
+    "icon": "🎨"
+  },
+  {
+    "slug": "pdf-to-word",
+    "title": "PDF to Word",
+    "description": "Convert PDF to DOCX - extract text to Word.",
+    "icon": "📝"
+  },
+  {
+    "slug": "ocr-image",
+    "title": "OCR Image to Text",
+    "description": "Extract text from images via Tesseract.js - local.",
+    "icon": "🔤"
+  },
+  {
+    "slug": "meme-generator",
+    "title": "Meme Generator",
+    "description": "Add top/bottom text to images - canvas.",
+    "icon": "😂"
+  },
+  {
+    "slug": "favicon-generator",
+    "title": "Favicon Generator",
+    "description": "Image → favicon 16/32/180 PNG + ICO.",
+    "icon": "⭐"
+  },
+  {
+    "slug": "palette-extractor",
+    "title": "Palette Extractor",
+    "description": "Extract 5 dominant colors from image.",
+    "icon": "🎨"
+  },
+  {
+    "slug": "svg-to-png",
+    "title": "SVG to PNG",
+    "description": "Convert SVG to PNG 1×/2× - canvas.",
+    "icon": "🖼️"
+  },
+  {
+    "slug": "blur-image",
+    "title": "Blur Image",
+    "description": "Blur or pixelate images - canvas filter.",
+    "icon": "🌫️"
+  },
+  {
+    "slug": "gif-maker",
+    "title": "GIF Maker",
+    "description": "Images → GIF (ezgif.com/maker clone) - delay/crossfade.",
+    "icon": "🎞️"
+  },
+  {
+    "slug": "video-to-gif",
+    "title": "Video to GIF",
+    "description": "Video → GIF, trim, fps 10/15, scale.",
+    "icon": "🎬"
+  },
+  {
+    "slug": "gif-optimizer",
+    "title": "GIF Optimizer",
+    "description": "Compress GIF, reduce colors, lossy.",
+    "icon": "🗜️"
+  },
+  {
+    "slug": "gif-resizer",
+    "title": "GIF Resizer",
+    "description": "Resize/crop GIF - canvas.",
+    "icon": "📐"
+  },
+  {
+    "slug": "gif-splitter",
+    "title": "GIF Splitter",
+    "description": "GIF → frames (PNG zip).",
+    "icon": "✂️"
+  },
+  {
+    "slug": "base64",
+    "title": "Base64 Tool",
+    "description": "Encode/decode Base64 text & files.",
+    "icon": "🔣"
+  },
+  {
+    "slug": "url-encode",
+    "title": "URL Encode",
+    "description": "Encode/decode URLs - batch.",
+    "icon": "🔗"
+  },
+  {
+    "slug": "hash-generator",
+    "title": "Hash Generator",
+    "description": "MD5/SHA256/SHA1 for text & files.",
+    "icon": "#️⃣"
+  },
+  {
+    "slug": "diff-checker",
+    "title": "Diff Checker",
+    "description": "Side-by-side text diff - offline.",
+    "icon": " ↔️"
+  },
+  {
+    "slug": "regex-tester",
+    "title": "Regex Tester",
+    "description": "Test JS RegExp live - flags, groups.",
+    "icon": ".*"
+  },
+  {
+    "slug": "jwt-decoder",
+    "title": "JWT Decoder",
+    "description": "Decode JWT header/payload, exp.",
+    "icon": "🔑"
+  },
+  {
+    "slug": "markdown-to-html",
+    "title": "Markdown to HTML",
+    "description": "Markdown → HTML live preview.",
+    "icon": "📝"
+  },
+  {
+    "slug": "css-minify",
+    "title": "CSS/JS Minify",
+    "description": "Minify CSS/JS - ratio.",
+    "icon": "✂️"
+  },
+  {
+    "slug": "uuid-generator",
+    "title": "UUID Generator",
+    "description": "UUID v4, bulk 1-1000.",
+    "icon": "🆔"
+  },
+  {
+    "slug": "lorem-ipsum",
+    "title": "Lorem Ipsum",
+    "description": "Generate Lorem - paras/sentences/words.",
+    "icon": "📄"
+  },
+  {
+    "slug": "invoice-generator",
+    "title": "Invoice Generator",
+    "description": "Create invoice PDF - items/tax/logo.",
+    "icon": "🧾"
+  },
+  {
+    "slug": "barcode-generator",
+    "title": "Barcode Generator",
+    "description": "Generate barcodes (CODE128, EAN) + QR.",
+    "icon": "📊"
+  },
+  {
+    "slug": "unit-converter",
+    "title": "Unit Converter",
+    "description": "Length/weight/temp + currency (offline).",
+    "icon": "⚖️"
+  },
+  {
+    "slug": "age-calculator",
+    "title": "Age/BMI Calculator",
+    "description": "Age from DOB + BMI chart.",
+    "icon": "🎂"
+  },
+  {
+    "slug": "pomodoro-timer",
+    "title": "Pomodoro Timer",
+    "description": "25/5 timer, notification, streak.",
+    "icon": "⏰"
+  },
+  {
+    "slug": "heic-to-jpg",
+    "title": "HEIC to JPG",
+    "description": "Convert HEIC to JPG - canvas via heic2any.",
+    "icon": "📱"
+  },
+  {
+    "slug": "photo-collage",
+    "title": "Photo Collage",
+    "description": "Make collage from images - 2x2, 3x3.",
+    "icon": "🖼️"
+  },
+  {
+    "slug": "watermark-remover",
+    "title": "Watermark Remover",
+    "description": "Remove watermark area via inpaint - canvas.",
+    "icon": "💧"
+  },
+  {
+    "slug": "image-splitter",
+    "title": "Image Splitter",
+    "description": "Split image into tiles - 2x2 etc.",
+    "icon": "✂️"
+  },
+  {
+    "slug": "json-to-csv",
+    "title": "JSON to CSV",
+    "description": "Convert JSON array to CSV - client-side.",
+    "icon": "📊"
+  },
+  {
+    "slug": "csv-to-json",
+    "title": "CSV to JSON",
+    "description": "CSV to JSON - parse and prettify.",
+    "icon": "📈"
+  },
+  {
+    "slug": "xml-formatter",
+    "title": "XML Formatter",
+    "description": "Prettify XML - indent, validate.",
+    "icon": "<>"
+  },
+  {
+    "slug": "yaml-converter",
+    "title": "YAML Converter",
+    "description": "JSON ↔ YAML - convert.",
+    "icon": "⚙️"
+  },
+  {
+    "slug": "html-entity",
+    "title": "HTML Entity",
+    "description": "Encode/decode HTML entities.",
+    "icon": "&"
+  },
+  {
+    "slug": "cron-tester",
+    "title": "Cron Tester",
+    "description": "Test cron expressions - next runs.",
+    "icon": "⏰"
+  },
+  {
+    "slug": "time-zone",
+    "title": "Time Zone Converter",
+    "description": "Convert time zones - list.",
+    "icon": "🌍"
+  },
+  {
+    "slug": "contrast-checker",
+    "title": "Contrast Checker",
+    "description": "WCAG contrast AA/AAA checker.",
+    "icon": "◐"
+  },
+  {
+    "slug": "gradient-generator",
+    "title": "Gradient Generator",
+    "description": "CSS gradient maker - preview, copy.",
+    "icon": "🌈"
+  },
+  {
+    "slug": "case-converter",
+    "title": "Case Converter",
+    "description": "Upper, lower, title, camel, snake.",
+    "icon": "Aa"
+  },
+  {
+    "slug": "handwriting",
+    "title": "Text to Handwriting",
+    "description": "Text → handwriting image - canvas.",
+    "icon": "✍️"
+  },
+  {
+    "slug": "percentage-calc",
+    "title": "Percentage Calc",
+    "description": "Percentage calculator - quick.",
+    "icon": "%"
+  },
+  {
+    "slug": "loan-calc",
+    "title": "Loan Calculator",
+    "description": "Loan payment + interest - chart.",
+    "icon": "💰"
+  },
+  {
+    "slug": "countdown-timer",
+    "title": "Countdown Timer",
+    "description": "Countdown to date - live.",
+    "icon": "⏳"
+  },
+  {
+    "slug": "dice-roller",
+    "title": "Dice Roller",
+    "description": "Roll dice 1-6, D20, coin.",
+    "icon": "🎲"
+  },
+  {
+    "slug": "totp-generator",
+    "title": "TOTP 2FA",
+    "description": "Generate TOTP codes - otpauth.",
+    "icon": "🔐"
+  },
+  {
+    "slug": "screen-recorder",
+    "title": "Screen Recorder",
+    "description": "Record screen via MediaRecorder - download.",
+    "icon": "🔴"
+  },
+  {
+    "slug": "webcam-booth",
+    "title": "Webcam Booth",
+    "description": "Take photo via webcam - filters.",
+    "icon": "📷"
+  },
+  {
+    "slug": "audio-recorder",
+    "title": "Audio Recorder",
+    "description": "Record audio via mic - webm/mp3.",
+    "icon": "🎤"
+  },
+  {
+    "slug": "scientific-calc",
+    "title": "Scientific Calc",
+    "description": "Scientific calculator - sin, log, etc.",
+    "icon": "🧮"
+  },
+  {
+    "slug": "text-to-speech",
+    "title": "Text to Speech",
+    "description": "Text to speech via Web Speech API - offline.",
+    "icon": "🔊"
+  },
+  {
+    "slug": "speech-to-text",
+    "title": "Speech to Text",
+    "description": "Speech to text via Web Speech API - mic.",
+    "icon": "🎙️"
+  },
+  {
+    "slug": "wifi-qr",
+    "title": "WiFi QR Generator",
+    "description": "WiFi QR - SSID, password, WPA.",
+    "icon": "📶"
+  },
+  {
+    "slug": "vcard-qr",
+    "title": "vCard QR",
+    "description": "Contact to QR - vCard.",
+    "icon": "👤"
+  },
+  {
+    "slug": "hex-to-rgb",
+    "title": "HEX to RGB",
+    "description": "HEX ↔ RGB/HSL converter.",
+    "icon": "🎨"
+  },
+  {
+    "slug": "csv-to-markdown",
+    "title": "CSV to Markdown",
+    "description": "CSV to Markdown table.",
+    "icon": "📝"
+  },
+  {
+    "slug": "regex-visualizer",
+    "title": "Regex Visualizer",
+    "description": "Visualize regex railroad.",
+    "icon": "🛤️"
+  },
+  {
+    "slug": "shadow-generator",
+    "title": "Shadow Generator",
+    "description": "CSS box-shadow generator - preview.",
+    "icon": "🌑"
+  },
+  {
+    "slug": "user-agent-parser",
+    "title": "User Agent Parser",
+    "description": "Parse user agent - browser, OS.",
+    "icon": "🖥️"
+  },
+  {
+    "slug": "ip-info",
+    "title": "IP Info",
+    "description": "My IP + geo via ipify.",
+    "icon": "🌐"
+  },
+  {
+    "slug": "wheel-picker",
+    "title": "Wheel Picker",
+    "description": "Random wheel - choices, spin.",
+    "icon": "🎡"
+  },
+  {
+    "slug": "table-to-html",
+    "title": "Table to HTML",
+    "description": "Table to HTML - editable.",
+    "icon": "📊"
+  },
+  {
+    "slug": "pdf-pro",
+    "title": "PDF Pro Toolkit",
+    "description": "Delete, protect, repair, sign, reorder pages and more - all in tabs.",
+    "icon": "🧰"
+  },
+  {
+    "slug": "encrypt-file",
+    "title": "Encrypt File",
+    "description": "Password-encrypt any file with AES-256 - in browser.",
+    "icon": "🔐"
+  },
+  {
+    "slug": "exif-viewer",
+    "title": "EXIF Viewer & Remover",
+    "description": "View and strip GPS/location data from photos.",
+    "icon": "📍"
+  },
+  {
+    "slug": "steganography",
+    "title": "Steganography",
+    "description": "Hide secret text inside PNG images.",
+    "icon": "🕵️"
+  },
+  {
+    "slug": "checksum-verifier",
+    "title": "Checksum Verifier",
+    "description": "Compare file hashes to verify downloads.",
+    "icon": "✅"
+  },
+  {
+    "slug": "subnet-calculator",
+    "title": "Subnet Calculator",
+    "description": "CIDR, IP range, mask and broadcast.",
+    "icon": "🌐"
+  },
+  {
+    "slug": "base-converter",
+    "title": "Base Converter",
+    "description": "Binary, octal, decimal, hex conversions.",
+    "icon": "🔢"
+  },
+  {
+    "slug": "line-tools",
+    "title": "Line Tools",
+    "description": "Remove duplicates, sort, number, trim lines.",
+    "icon": "📋"
+  },
+  {
+    "slug": "split-bill",
+    "title": "Split Bill Calculator",
+    "description": "Bill + tip + tax split between friends.",
+    "icon": "🧾"
+  }
+]
