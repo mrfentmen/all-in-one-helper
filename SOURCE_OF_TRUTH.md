@@ -1,8 +1,8 @@
-# ALL-IN-ONE HELPER — SOURCE OF TRUTH
+# ALL-IN-ONE HELPER - SOURCE OF TRUTH
 > The single authoritative document for the project. If it conflicts with any other doc, this one wins.
 
-**Version:** 0.1.0 — Draft
-**Status:** Planning — Do Not Build Yet
+**Version:** 0.1.0 - Draft
+**Status:** Planning - Do Not Build Yet
 **Location:** `/Users/del/Desktop/all in one helper/`
 **Stack:** Cloudflare Pages + 100% Client-Side (No Server Storage)
 **Budget:** $0 + Domain Only
@@ -12,7 +12,7 @@
 
 ## 1. VISION (Why This Exists)
 
-The internet is full of paywalled utilities. iLovePDF charges $108/year to merge PDFs. TinyPNG charges $39/year to compress images. Remove.bg charges $9/month to remove backgrounds. SmallPDF, Adobe Acrobat Online, WeTransfer Pro, Canva Pro — all charge for operations that can be performed entirely in the user's browser for free.
+The internet is full of paywalled utilities. iLovePDF charges $108/year to merge PDFs. TinyPNG charges $39/year to compress images. Remove.bg charges $9/month to remove backgrounds. SmallPDF, Adobe Acrobat Online, WeTransfer Pro, Canva Pro - all charge for operations that can be performed entirely in the user's browser for free.
 
 **All-in-One Helper** is the free, forever, private, no-upload alternative. Every tool runs 100% client-side via WebAssembly and Canvas APIs. No file ever leaves the user's device. No account required. No storage costs. No server.
 
@@ -50,53 +50,53 @@ To provide every common file utility for free, forever, with zero data collectio
 
 ---
 
-## 4. SCOPE — THE 22 TOOLS (v1.0)
+## 4. SCOPE - THE 22 TOOLS (v1.0)
 
-### Category A: PDF Tools (9 Tools) — Highest SEO Value
+### Category A: PDF Tools (9 Tools) - Highest SEO Value
 These target the highest CPC keywords. iLovePDF and SmallPDF dominate this space with paywalls.
 
-1.  **Merge PDF** — Combine multiple PDFs into one. Drag to reorder. Client lib: `pdf-lib`.
-2.  **Split PDF** — Extract pages / split by range. `pdf-lib`.
-3.  **Compress PDF** — Reduce file size via image downsampling within PDF. `pdf-lib`.
-4.  **PDF to JPG** — Render each page to image. `pdf.js` + canvas.
-5.  **JPG to PDF** — Convert images to PDF. `pdf-lib` + canvas.
-6.  **Rotate / Organize PDF** — Rotate, delete, reorder pages. `pdf-lib`.
-7.  **Extract Text** — Pull text from PDF. `pdf.js`.
-8.  **Add Watermark / Page Numbers** — Overlay text/numbers. `pdf-lib`.
-9.  **Unlock PDF** — Remove password (client-side, user-provided password only, ethical use).
+1.  **Merge PDF** - Combine multiple PDFs into one. Drag to reorder. Client lib: `pdf-lib`.
+2.  **Split PDF** - Extract pages / split by range. `pdf-lib`.
+3.  **Compress PDF** - Reduce file size via image downsampling within PDF. `pdf-lib`.
+4.  **PDF to JPG** - Render each page to image. `pdf.js` + canvas.
+5.  **JPG to PDF** - Convert images to PDF. `pdf-lib` + canvas.
+6.  **Rotate / Organize PDF** - Rotate, delete, reorder pages. `pdf-lib`.
+7.  **Extract Text** - Pull text from PDF. `pdf.js`.
+8.  **Add Watermark / Page Numbers** - Overlay text/numbers. `pdf-lib`.
+9.  **Unlock PDF** - Remove password (client-side, user-provided password only, ethical use).
 
 ### Category B: Image Tools (5 Tools)
 Clone TinyPNG, Remove.bg, CloudConvert.
 
-10. **Compress Image** — Lossy/lossless compression, quality slider. `browser-image-compression` + Canvas. Supports JPG/PNG/WEBP.
-11. **Remove Background** — AI background removal locally. `@imgly/background-removal` (WASM, ~30MB model cached).
-12. **Convert Image** — WEBP ↔ PNG ↔ JPG ↔ AVIF. Canvas.
-13. **Resize / Crop Image** — By pixels or percentage, with aspect lock. Canvas.
-14. **Upscale Image** — 2x upscale via `upscalerjs` WASM (optional v1 stretch).
+10. **Compress Image** - Lossy/lossless compression, quality slider. `browser-image-compression` + Canvas. Supports JPG/PNG/WEBP.
+11. **Remove Background** - AI background removal locally. `@imgly/background-removal` (WASM, ~30MB model cached).
+12. **Convert Image** - WEBP ↔ PNG ↔ JPG ↔ AVIF. Canvas.
+13. **Resize / Crop Image** - By pixels or percentage, with aspect lock. Canvas.
+14. **Upscale Image** - 2x upscale via `upscalerjs` WASM (optional v1 stretch).
 
 ### Category C: Video / Audio Tools (2 Tools)
 Heaviest WASM, highest wow-factor. Use `ffmpeg.wasm`.
 
-15. **Video Compress / Convert** — MP4 ↔ WEBM, compress, trim. `ffmpeg.wasm` in Web Worker.
-16. **Audio Cutter / Converter** — MP3 cutter, MP3 ↔ WAV. `ffmpeg.wasm`.
+15. **Video Compress / Convert** - MP4 ↔ WEBM, compress, trim. `ffmpeg.wasm` in Web Worker.
+16. **Audio Cutter / Converter** - MP3 cutter, MP3 ↔ WAV. `ffmpeg.wasm`.
 
 ### Category D: Utility Tools (6 Tools)
 Zero-WASM, instant, high-frequency use, great for daily traffic.
 
-17. **QR Generator** — Text/URL → QR, with logo, color, download PNG/SVG. `qrcode`.
-18. **Resume Builder** — Form → beautiful PDF export via `pdf-lib`. Templates.
-19. **Word Counter** — Word/char/reading time. Pure JS.
-20. **JSON Formatter / Validator** — Prettify, minify, validate. Pure JS.
-21. **Password Generator** — Length, symbols, copy. Pure JS, offline.
-22. **Color Picker / Palette** — Eyedropper, HEX/RGB/HSL, palette generator. Pure JS.
+17. **QR Generator** - Text/URL → QR, with logo, color, download PNG/SVG. `qrcode`.
+18. **Resume Builder** - Form → beautiful PDF export via `pdf-lib`. Templates.
+19. **Word Counter** - Word/char/reading time. Pure JS.
+20. **JSON Formatter / Validator** - Prettify, minify, validate. Pure JS.
+21. **Password Generator** - Length, symbols, copy. Pure JS, offline.
+22. **Color Picker / Palette** - Eyedropper, HEX/RGB/HSL, palette generator. Pure JS.
 
 **v1 Cut Line:** If a tool requires server AI (e.g., LLM), it is v2. All v1 tools must be demonstrably client-side.
 
 ---
 
-## 5. TECH STACK — THE $0 ARCHITECTURE
+## 5. TECH STACK - THE $0 ARCHITECTURE
 
-**Hosting:** Cloudflare Pages — Free, unlimited bandwidth, global CDN, custom domain.
+**Hosting:** Cloudflare Pages - Free, unlimited bandwidth, global CDN, custom domain.
 **Framework:** Astro or Vite + Vanilla JS (or Svelte). No Next.js server functions needed. Static output only. Chosen for minimal JS and perfect SEO.
 **Styling:** Tailwind CSS (via CDN or build). Clean, fast, no UI framework bloat.
 **File Processing:**
@@ -110,7 +110,7 @@ Zero-WASM, instant, high-frequency use, great for daily traffic.
 
 ---
 
-## 6. MONETIZATION — DUAL INVENTORY
+## 6. MONETIZATION - DUAL INVENTORY
 
 **Inventory A: Google AdSense**
 - Auto Ads + 3 manual units per tool page: Top (horizontal), Sidebar (vertical), Bottom (native).
@@ -124,7 +124,7 @@ Zero-WASM, instant, high-frequency use, great for daily traffic.
 
 **Inventory C: Buy Me a Coffee (Donations)**
 - Script: `<script src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="contactae2b" data-color="#FFDD00" data-emoji="" data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff">`
-- Placement: Footer on every page + dedicated `/support` page + thank-you after download completion (non-intrusive toast: "Tools are free — buy us a coffee?").
+- Placement: Footer on every page + dedicated `/support` page + thank-you after download completion (non-intrusive toast: "Tools are free - buy us a coffee?").
 - Does not conflict with AdSense (BMC is donation, not ad network). Loaded async, does not block tool JS.
 - Fallback: If script blocked by adblocker, show static link: `https://www.buymeacoffee.com/contactae2b` with same styling.
 

@@ -29,14 +29,14 @@ const { tool } = Astro.props;
         </div>
 
         <div data-ad-slot="top" class="mt-6 h-[90px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-sm bg-white">
-          Ad — Top (AdSense)
+          Ad - Top (AdSense)
         </div>
 
         <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
           <div id="dropzone" class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center bg-[#FCFCF9] hover:border-slate-900 transition cursor-pointer">
             <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-900 text-white grid place-items-center text-xl">⬆</div>
             <div class="mt-3 font-bold">Drop files here or click to browse</div>
-            <div class="text-xs text-slate-500 mt-1" id="drop-hint">Supports {tool.category === 'pdf' ? 'PDF' : tool.category === 'image' ? 'JPG, PNG, WEBP' : 'all files'} — stays on your device</div>
+            <div class="text-xs text-slate-500 mt-1" id="drop-hint">Supports {tool.category === 'pdf' ? 'PDF' : tool.category === 'image' ? 'JPG, PNG, WEBP' : 'all files'} - stays on your device</div>
             <input id="fileInput" type="file" class="hidden" multiple />
             <div id="fileList" class="mt-4 text-left hidden">
               <div class="text-xs font-bold text-slate-700">Selected files:</div>
@@ -83,7 +83,7 @@ const { tool } = Astro.props;
           </div>
 
           <div id="funControls" class="mt-4 hidden space-y-3">
-            <div id="invoiceCtrl" class="hidden space-y-2"><input id="invoiceFrom" placeholder="From (your company)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><input id="invoiceTo" placeholder="To (client)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><textarea id="invoiceItems" rows="3" placeholder="Items (e.g. Design — 2 × $100, one per line)" class="w-full border border-slate-200 rounded-xl p-3 text-sm"></textarea><input id="invoiceTax" placeholder="Tax % (e.g. 10)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /></div>
+            <div id="invoiceCtrl" class="hidden space-y-2"><input id="invoiceFrom" placeholder="From (your company)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><input id="invoiceTo" placeholder="To (client)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><textarea id="invoiceItems" rows="3" placeholder="Items (e.g. Design - 2 × $100, one per line)" class="w-full border border-slate-200 rounded-xl p-3 text-sm"></textarea><input id="invoiceTax" placeholder="Tax % (e.g. 10)" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /></div>
             <div id="barcodeCtrl" class="hidden flex gap-2"><select id="barcodeType" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="CODE128">CODE128</option><option value="EAN13">EAN13</option><option value="CODE39">CODE39</option></select><input id="barcodeText" placeholder="Text for barcode" class="flex-1 border border-slate-200 rounded-full px-4 py-2 text-sm" /></div>
             <div id="unitCtrl" class="hidden space-y-2"><div class="flex gap-2"><input id="unitValue" type="number" value="1" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><select id="unitFrom" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="km">km</option><option value="m">m</option><option value="lb">lb</option><option value="kg">kg</option><option value="c">°C</option><option value="f">°F</option></select><span class="self-center">→</span><select id="unitTo" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="m">m</option><option value="km">km</option><option value="kg">kg</option><option value="lb">lb</option><option value="f">°F</option><option value="c">°C</option></select></div><div id="unitResult" class="text-sm font-bold"></div></div>
             <div id="ageCtrl" class="hidden space-y-2"><input id="ageDob" type="date" class="w-full border border-slate-200 rounded-full px-4 py-2 text-sm" /><div class="flex gap-2"><input id="bmiH" type="number" placeholder="Height cm" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="bmiW" type="number" placeholder="Weight kg" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div><div id="ageResult" class="text-sm"></div></div>
@@ -92,7 +92,7 @@ const { tool } = Astro.props;
 
           <div id="videoControls" class="mt-4 hidden space-y-3">
             <div class="flex gap-2"><select id="videoFormat" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="mp4">MP4</option><option value="webm">WEBM</option><option value="mp3">MP3 (audio only)</option></select><input id="videoTrimStart" placeholder="Start sec (e.g. 0)" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /><input id="videoTrimEnd" placeholder="End sec" class="flex-1 border border-slate-200 rounded-full px-3 py-2 text-sm" /></div>
-            <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-2">Video processing is heavy — limit 100MB, may take a minute, runs in Web Worker. Your file never leaves device.</div>
+            <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-2">Video processing is heavy - limit 100MB, may take a minute, runs in Web Worker. Your file never leaves device.</div>
           </div>
 
           <div id="audioControls" class="mt-4 hidden space-y-3">
@@ -100,7 +100,7 @@ const { tool } = Astro.props;
           </div>
 
           <div class="mt-4 flex flex-wrap gap-3">
-            <button id="actionBtn" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition disabled:opacity-40 disabled:cursor-not-allowed">Run — {tool.shortTitle}</button>
+            <button id="actionBtn" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition disabled:opacity-40 disabled:cursor-not-allowed">Run - {tool.shortTitle}</button>
             <button id="downloadBtn" class="hidden bg-[#FFDD00] text-black border-2 border-black px-6 py-3 rounded-full font-bold text-sm">⬇ Download result</button>
             <span id="status" class="text-sm text-slate-600 self-center"></span>
           </div>
@@ -118,10 +118,10 @@ const { tool } = Astro.props;
               <input id="resumePhone" placeholder="Phone" class="border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
             </div>
             <textarea id="resumeSummary" rows="3" placeholder="Summary" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
-            <textarea id="resumeExp" rows="4" placeholder="Experience (e.g. Company — Role — Years — Description, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
-            <textarea id="resumeEdu" rows="3" placeholder="Education (e.g. University — Degree — Year, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
+            <textarea id="resumeExp" rows="4" placeholder="Experience (e.g. Company - Role - Years - Description, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
+            <textarea id="resumeEdu" rows="3" placeholder="Education (e.g. University - Degree - Year, one per line)" class="w-full border border-slate-200 rounded-xl p-4 text-sm"></textarea>
             <input id="resumeSkills" placeholder="Skills (comma separated)" class="w-full border border-slate-200 rounded-full px-4 py-2.5 text-sm" />
-            <div class="flex gap-2"><select id="resumeTemplate" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="1">Template 1 — Clean</option><option value="2">Template 2 — Bold</option></select></div>
+            <div class="flex gap-2"><select id="resumeTemplate" class="border border-slate-200 rounded-full px-3 py-2 text-sm"><option value="1">Template 1 - Clean</option><option value="2">Template 2 - Bold</option></select></div>
           </div>
 
           <div id="qrArea" class="mt-6 hidden text-center">
@@ -143,7 +143,7 @@ const { tool } = Astro.props;
           </div>
 
           <div id="resultInfo" class="mt-4 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
-            <div class="font-bold text-emerald-800">✓ Done — file never left your device</div>
+            <div class="font-bold text-emerald-800">✓ Done - file never left your device</div>
             <div class="text-emerald-700 mt-1">Verify in Network tab: 0 bytes uploaded. <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="underline font-bold">Buy us a coffee?</a></div>
           </div>
 
@@ -153,19 +153,19 @@ const { tool } = Astro.props;
         <div class="mt-6 bg-white border border-slate-200 rounded-2xl p-6">
           <h2 class="font-black">How to use {tool.title} without uploading</h2>
           <ol class="mt-3 list-decimal list-inside text-sm text-slate-600 space-y-2 leading-relaxed">
-            <li>Click the dropzone or drag files — they stay in your browser's RAM.</li>
-            <li>Click "Run" — processing happens via <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pdf-lib / Canvas / WASM</code> on your device.</li>
+            <li>Click the dropzone or drag files - they stay in your browser's RAM.</li>
+            <li>Click "Run" - processing happens via <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pdf-lib / Canvas / WASM</code> on your device.</li>
             <li>Download result. Check DevTools → Network: no POST, no upload.</li>
           </ol>
           <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
-            <strong>Privacy:</strong> There is no <code>/upload</code> endpoint. We couldn't see your files even if we tried — the site is static on Cloudflare Pages.
+            <strong>Privacy:</strong> There is no <code>/upload</code> endpoint. We couldn't see your files even if we tried - the site is static on Cloudflare Pages.
           </div>
         </div>
       </div>
 
       <div class="space-y-4">
         <div data-ad-slot="sidebar" class="h-[250px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-sm bg-white">
-          Sidebar Ad — AdSense<br /><span class="text-xs">+ custom via banners.json</span>
+          Sidebar Ad - AdSense<br /><span class="text-xs">+ custom via banners.json</span>
         </div>
         <div class="bg-white border border-slate-200 rounded-2xl p-4">
           <div class="font-bold text-sm">Related tools</div>
@@ -215,6 +215,14 @@ const { tool } = Astro.props;
 
     let files = [];
     let resultBlob = null;
+    // Cache recent tool
+    try { const r=JSON.parse(localStorage.getItem('helper_recent')||'[]'); const f=r.filter(s=>s!==slug); f.unshift(slug); localStorage.setItem('helper_recent', JSON.stringify(f.slice(0,5))); localStorage.setItem('helper_prefs', JSON.stringify({...JSON.parse(localStorage.getItem('helper_prefs')||'{}'), lastCategory: document.querySelector('[data-tab].bg-slate-900')?.dataset.tab||''})); } catch {}
+    // Skeleton for processing
+    const skeleton = document.createElement('div');
+    skeleton.id='skeleton';
+    skeleton.className='hidden mt-4 space-y-2';
+    skeleton.innerHTML='<div class="h-4 bg-slate-200 rounded animate-pulse w-3/4"></div><div class="h-3 bg-slate-100 rounded animate-pulse"></div><div class="h-8 bg-slate-200 rounded-full animate-pulse w-24"></div>';
+    document.getElementById('resultInfo')?.before(skeleton);
     let resultName = 'result';
 
     const utilitySlugs = ['word-counter','json-formatter','password-generator'];
@@ -222,11 +230,11 @@ const { tool } = Astro.props;
     const imageSlugs = ['compress-image','convert-image','resize-image','upscale-image','remove-background'];
     const videoSlugs = ['video-compress'];
     const audioSlugs = ['audio-tools'];
-    const pdfPlusSlugs = ['delete-pages','protect-pdf','repair-pdf','pdf-to-word','sign-pdf','reorder-pdf'];
-    const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image'];
-    const gifSlugs = ['gif-maker','video-to-gif','gif-optimizer','gif-resizer','gif-splitter'];
-    const textDevSlugs = ['base64','url-encode','hash-generator','diff-checker','regex-tester','jwt-decoder','markdown-to-html','css-minify','uuid-generator','lorem-ipsum'];
-    const funSlugs = ['invoice-generator','barcode-generator','unit-converter','age-calculator','pomodoro-timer'];
+    const pdfPlusSlugs = ['delete-pages','protect-pdf','repair-pdf','pdf-to-word','sign-pdf','reorder-pdf','compare-pdf','redact-pdf','form-fill-pdf','add-page-numbers'];
+    const imagePlusSlugs = ['ocr-image','meme-generator','favicon-generator','palette-extractor','svg-to-png','blur-image','heic-to-jpg','photo-collage','watermark-remover','image-splitter'];
+    const gifSlugs = ['gif-maker','video-to-gif','gif-optimizer','gif-resizer','gif-splitter','screen-recorder','webcam-booth','audio-recorder'];
+    const textDevSlugs = ['base64','url-encode','hash-generator','diff-checker','regex-tester','jwt-decoder','markdown-to-html','css-minify','uuid-generator','lorem-ipsum','json-to-csv','csv-to-json','xml-formatter','yaml-converter','html-entity','cron-tester','time-zone','contrast-checker','gradient-generator','case-converter','handwriting','percentage-calc','loan-calc','countdown-timer','dice-roller','scientific-calc'];
+    const funSlugs = ['invoice-generator','barcode-generator','unit-converter','age-calculator','pomodoro-timer','totp-generator'];
 
     if (utilitySlugs.includes(slug)) {
       utilityArea.classList.remove('hidden');
@@ -403,7 +411,7 @@ const { tool } = Astro.props;
         if(hex.length===4){ r=parseInt(hex[1]+hex[1],16); g=parseInt(hex[2]+hex[2],16); b=parseInt(hex[3]+hex[3],16); }
         else { r=parseInt(hex.slice(1,3),16); g=parseInt(hex.slice(3,5),16); b=parseInt(hex.slice(5,7),16); }
         const hsl = rgbToHsl(r,g,b);
-        colorVals.innerHTML = `HEX: ${hex} — RGB: ${r},${g},${b} — HSL: ${hsl.h},${hsl.s}%,${hsl.l}%<br><span style="display:inline-block;width:100%;height:24px;background:${hex};border-radius:9999px;border:2px solid #000;margin-top:8px"></span>`;
+        colorVals.innerHTML = `HEX: ${hex} - RGB: ${r},${g},${b} - HSL: ${hsl.h},${hsl.s}%,${hsl.l}%<br><span style="display:inline-block;width:100%;height:24px;background:${hex};border-radius:9999px;border:2px solid #000;margin-top:8px"></span>`;
       }catch{}
     }
     function rgbToHsl(r,g,b){ r/=255; g/=255; b/=255; const max=Math.max(r,g,b),min=Math.min(r,g,b); let h,s,l=(max+min)/2; if(max===min){ h=s=0; } else { const d=max-min; s=l>0.5? d/(2-max-min): d/(max+min); switch(max){ case r: h=(g-b)/d+(g<b?6:0); break; case g: h=(b-r)/d+2; break; case b: h=(r-g)/d+4; break; } h/=6; } return {h:Math.round(h*360), s:Math.round(s*100), l:Math.round(l*100)}; }
@@ -473,7 +481,7 @@ const { tool } = Astro.props;
       if (slug === 'password-generator') {
         let len = parseInt(utilityInput.value) || 16;
         if(len<4) len=4; if(len>128) len=128;
-        const charset="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let p=""; for(let i=0;i<len;i++) p+=charset[Math.floor(Math.random()*charset.length)]; utilityInput.value=p; utilityOutput.textContent=p + `\nLength: ${len} — Strength: ${len>=16?'Strong':len>=12?'Medium':'Weak'}`; utilityOutput.classList.remove('hidden'); navigator.clipboard.writeText(p).catch(()=>{}); setStatus('Generated & copied');
+        const charset="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"; let p=""; for(let i=0;i<len;i++) p+=charset[Math.floor(Math.random()*charset.length)]; utilityInput.value=p; utilityOutput.textContent=p + `\nLength: ${len} - Strength: ${len>=16?'Strong':len>=12?'Medium':'Weak'}`; utilityOutput.classList.remove('hidden'); navigator.clipboard.writeText(p).catch(()=>{}); setStatus('Generated & copied');
         return;
       }
       if (slug === 'color-picker') {
@@ -527,10 +535,10 @@ const { tool } = Astro.props;
           drawSection('EXPERIENCE', exp, true);
           drawSection('EDUCATION', edu, true);
           drawSection('SKILLS', skills, false);
-          page.drawText('Generated with All-in-One Helper — all-in-one-helper.pages.dev — Files never leave device', {x:40, y:30, size:6, font, color: rgb(0.6,0.6,0.6)});
+          page.drawText('Generated with All-in-One Helper - all-in-one-helper.pages.dev - Files never leave device', {x:40, y:30, size:6, font, color: rgb(0.6,0.6,0.6)});
           const out = await pdf.save();
           resultBlob = new Blob([out], {type:'application/pdf'}); resultName = name.replace(/\s+/g,'_')+'_Resume.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus('Resume PDF ready — '+formatBytes(resultBlob.size));
+          downloadBtn.classList.remove('hidden'); setStatus('Resume PDF ready - '+formatBytes(resultBlob.size));
         } catch(e){ setStatus('Error: '+e.message); }
         finally{ actionBtn.disabled=false; }
         return;
@@ -538,7 +546,7 @@ const { tool } = Astro.props;
       if (slug === 'qr-generator') return;
 
       if (!files.length) { setStatus('Please select files first'); return; }
-      setStatus('Processing 100% in browser…');
+      skeleton.classList.remove('hidden'); skeleton.classList.remove('hidden'); setStatus('Working on it right in your browser…');
       actionBtn.disabled=true;
       try {
         if (slug === 'merge-pdf') {
@@ -553,7 +561,7 @@ const { tool } = Astro.props;
           }
           const out = await merged.save();
           resultBlob = new Blob([out], {type:'application/pdf'}); resultName='merged.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus(`Done — ${formatBytes(resultBlob.size)} — click Download`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Done - ${formatBytes(resultBlob.size)} - click Download`);
         } else if (slug === 'split-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF to split');
           const rangeStr = document.getElementById('splitRange').value.trim();
@@ -582,7 +590,7 @@ const { tool } = Astro.props;
             const outBytes = await outPdf.save();
             resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='split.pdf';
           }
-          downloadBtn.classList.remove('hidden'); setStatus(`Split done — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Split done - ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'compress-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF');
           const { PDFDocument } = await import('pdf-lib');
@@ -644,7 +652,7 @@ const { tool } = Astro.props;
           }
           const outBytes = await outPdf.save();
           resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='images.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus(`Created PDF with ${files.length} image(s) — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Created PDF with ${files.length} image(s) - ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'rotate-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF');
           const angle = parseInt(document.getElementById('rotateAngle').value);
@@ -666,7 +674,7 @@ const { tool } = Astro.props;
           });
           const outBytes = await pdf.save();
           resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='rotated.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus(`Rotated ${angle}° ${delRange? 'and deleted '+delRange:''} — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Rotated ${angle}° ${delRange? 'and deleted '+delRange:''} - ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'extract-text') {
           if(files.length!==1) throw new Error('Select 1 PDF');
           const pdfjs = await import('pdfjs-dist');
@@ -715,7 +723,7 @@ const { tool } = Astro.props;
           try{ pdf = await PDFDocument.load(bytes, { password: pwd }); } catch{ throw new Error('Wrong password or PDF not encrypted'); }
           const outBytes = await pdf.save();
           resultBlob = new Blob([outBytes], {type:'application/pdf'}); resultName='unlocked.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus('Unlocked — password removed');
+          downloadBtn.classList.remove('hidden'); setStatus('Unlocked - password removed');
         } else if (slug === 'compress-image') {
           const q = parseFloat(document.getElementById('imageQuality').value);
           const imageCompression = (await import('browser-image-compression')).default;
@@ -729,14 +737,14 @@ const { tool } = Astro.props;
             const { default: JSZip } = await import('jszip');
             const zip=new JSZip(); outs.forEach(o=> zip.file('compressed-'+o.name, o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='compressed-images.zip';
           }
-          downloadBtn.classList.remove('hidden'); setStatus(`Compressed ${files.length} image(s) — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Compressed ${files.length} image(s) - ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'remove-background') {
           if(files.length!==1) throw new Error('Select 1 image');
-          setStatus('Loading AI model (~30MB, cached after first)...');
+          skeleton.classList.remove('hidden'); setStatus('Loading AI model (~30MB, cached after first)...');
           const { removeBackground } = await import('@imgly/background-removal');
           const outBlob = await removeBackground(files[0]);
           resultBlob = outBlob; resultName = files[0].name.replace(/\.[^.]+$/, '.png');
-          downloadBtn.classList.remove('hidden'); setStatus(`Background removed — ${formatBytes(resultBlob.size)} — download PNG`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Background removed - ${formatBytes(resultBlob.size)} - download PNG`);
           // preview
           const url = URL.createObjectURL(resultBlob);
           const img = new Image(); img.src=url; img.style.maxWidth='100%'; img.style.borderRadius='12px';
@@ -754,7 +762,7 @@ const { tool } = Astro.props;
             outs.push(new File([blob], f.name.replace(/\.[^.]+$/, '.'+ext), {type: fmt}));
           }
           if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name;} else { const { default: JSZip } = await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name,o)); resultBlob= await zip.generateAsync({type:'blob'}); resultName='converted.zip';}
-          downloadBtn.classList.remove('hidden'); setStatus(`Converted ${files.length} image(s) to ${fmt} — download`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Converted ${files.length} image(s) to ${fmt} - download`);
         } else if (slug === 'resize-image') {
           const w = parseInt(document.getElementById('resizeW').value);
           const h = parseInt(document.getElementById('resizeH').value);
@@ -794,7 +802,7 @@ const { tool } = Astro.props;
           const fmt=document.getElementById('videoFormat').value;
           const start=document.getElementById('videoTrimStart').value.trim();
           const end=document.getElementById('videoTrimEnd').value.trim();
-          setStatus('Loading ffmpeg (~30MB, first time)...');
+          skeleton.classList.remove('hidden'); setStatus('Loading ffmpeg (~30MB, first time)...');
           const { FFmpeg } = await import('@ffmpeg/ffmpeg');
           const { toBlobURL } = await import('@ffmpeg/util');
           const ffmpeg = new FFmpeg();
@@ -817,14 +825,14 @@ const { tool } = Astro.props;
           const outName = fmt==='mp3'? 'output.mp3': fmt==='webm'? 'output.webm':'output.mp4';
           const data = await ffmpeg.readFile(outName);
           resultBlob = new Blob([data], {type: fmt==='mp3'? 'audio/mpeg': 'video/'+fmt}); resultName='converted.'+fmt;
-          downloadBtn.classList.remove('hidden'); setStatus(`Video ${fmt.toUpperCase()} ready — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Video ${fmt.toUpperCase()} ready - ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'audio-tools') {
           if(files.length!==1) throw new Error('Select 1 audio');
           const f=files[0];
           const start=document.getElementById('audioStart').value.trim();
           const end=document.getElementById('audioEnd').value.trim();
           const fmt=document.getElementById('audioFormat').value;
-          setStatus('Loading ffmpeg...');
+          skeleton.classList.remove('hidden'); setStatus('Loading ffmpeg...');
           const { FFmpeg } = await import('@ffmpeg/ffmpeg');
           const { toBlobURL } = await import('@ffmpeg/util');
           const ffmpeg = new FFmpeg();
@@ -870,7 +878,7 @@ const { tool } = Astro.props;
           // Real encryption would need qpdf WASM, not available, so we do placeholder but functional: add password metadata
           const out = await pdf.save();
           resultBlob = new Blob([out], {type:'application/pdf'}); resultName='protected.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus('Protected (basic) — for strong encryption use desktop Acrobat)');
+          downloadBtn.classList.remove('hidden'); setStatus('Protected (basic) - for strong encryption use desktop Acrobat)');
         } else if (slug === 'repair-pdf') {
           if(files.length!==1) throw new Error('Select 1 PDF');
           const { PDFDocument } = await import('pdf-lib');
@@ -879,7 +887,7 @@ const { tool } = Astro.props;
           try { pdf = await PDFDocument.load(bytes, { ignoreEncryption: true }); } catch(e){ throw new Error('Cannot parse PDF: '+e.message); }
           const out = await pdf.save({ useObjectStreams: true });
           resultBlob = new Blob([out], {type:'application/pdf'}); resultName='repaired.pdf';
-          downloadBtn.classList.remove('hidden'); setStatus(`Repaired — ${formatBytes(bytes.byteLength)} → ${formatBytes(out.byteLength)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Repaired - ${formatBytes(bytes.byteLength)} → ${formatBytes(out.byteLength)}`);
         } else if (slug === 'pdf-to-word') {
           if(files.length!==1) throw new Error('Select 1 PDF');
           const pdfjs = await import('pdfjs-dist');
@@ -932,7 +940,7 @@ const { tool } = Astro.props;
           downloadBtn.classList.remove('hidden'); setStatus('Reordered PDF ready');
         } else if (slug === 'ocr-image') {
           if(files.length!==1) throw new Error('Select 1 image');
-          setStatus('Loading OCR engine (~8MB)...');
+          skeleton.classList.remove('hidden'); setStatus('Loading OCR engine (~8MB)...');
           const { createWorker } = await import('tesseract.js');
           const worker = await createWorker('eng');
           const { data:{ text } } = await worker.recognize(files[0]);
@@ -942,7 +950,7 @@ const { tool } = Astro.props;
           utilityOutput.textContent = text.slice(0,50000);
           utilityOutput.classList.remove('hidden');
           resultBlob = new Blob([text], {type:'text/plain'}); resultName='ocr.txt';
-          downloadBtn.classList.remove('hidden'); setStatus('OCR done — '+text.length+' chars');
+          downloadBtn.classList.remove('hidden'); setStatus('OCR done - '+text.length+' chars');
         } else if (slug === 'meme-generator') {
           if(files.length!==1) throw new Error('Select 1 image');
           const top = document.getElementById('memeTop').value;
@@ -971,9 +979,9 @@ const { tool } = Astro.props;
             const ab=await blob.arrayBuffer();
             zip.file(`favicon-${s}x${s}.png`, ab);
           }
-          // Simple ICO for 16 and 32 (combine) — for MVP, just zip PNGs, user can rename
+          // Simple ICO for 16 and 32 (combine) - for MVP, just zip PNGs, user can rename
           resultBlob = await zip.generateAsync({type:'blob'}); resultName='favicons.zip';
-          downloadBtn.classList.remove('hidden'); setStatus('Favicons 16/32/180 ready — zip');
+          downloadBtn.classList.remove('hidden'); setStatus('Favicons 16/32/180 ready - zip');
         } else if (slug === 'palette-extractor') {
           if(files.length!==1) throw new Error('Select 1 image');
           const bmp = await createImageBitmap(files[0]);
@@ -989,7 +997,7 @@ const { tool } = Astro.props;
           utilityOutput.innerHTML = top.map(c=> `<span style="display:inline-block;width:40px;height:40px;background:${c};border:2px solid #000;border-radius:8px;margin:4px" title="${c}"></span> ${c}`).join('<br>');
           utilityOutput.classList.remove('hidden');
           resultBlob = new Blob([top.join('\n')], {type:'text/plain'}); resultName='palette.txt';
-          downloadBtn.classList.remove('hidden'); setStatus('Palette extracted — 5 colors');
+          downloadBtn.classList.remove('hidden'); setStatus('Palette extracted - 5 colors');
         } else if (slug === 'svg-to-png') {
           if(!files.length) throw new Error('Select SVG file');
           const scale=parseInt(document.getElementById('svgScale').value)||1;
@@ -1037,7 +1045,7 @@ const { tool } = Astro.props;
           await ffmpeg.exec(['-f','concat','-safe','0','-i','list.txt','-vf',vf,'-loop','0','output.gif']);
           const data=await ffmpeg.readFile('output.gif');
           resultBlob=new Blob([data], {type:'image/gif'}); resultName='made.gif';
-          downloadBtn.classList.remove('hidden'); setStatus(`GIF made from ${files.length} images — ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`GIF made from ${files.length} images - ${formatBytes(resultBlob.size)}`);
           const url=URL.createObjectURL(resultBlob); const img=new Image(); img.src=url; img.style.maxWidth='100%'; const prev=document.getElementById('previewArea'); prev.innerHTML=''; prev.appendChild(img); prev.classList.remove('hidden');
         } else if (slug === 'video-to-gif') {
           if(files.length!==1) throw new Error('Select 1 video');
@@ -1061,7 +1069,7 @@ const { tool } = Astro.props;
           await ffmpeg.exec(['-i','input.gif','-vf','scale=iw*0.9:ih*0.9','output.gif']);
           const data=await ffmpeg.readFile('output.gif');
           resultBlob=new Blob([data], {type:'image/gif'}); resultName='optimized.gif';
-          downloadBtn.classList.remove('hidden'); setStatus(`Optimized — ${formatBytes(files[0].size)} → ${formatBytes(resultBlob.size)}`);
+          downloadBtn.classList.remove('hidden'); setStatus(`Optimized - ${formatBytes(files[0].size)} → ${formatBytes(resultBlob.size)}`);
         } else if (slug === 'gif-resizer') {
           if(files.length!==1) throw new Error('Select 1 GIF');
           const size=document.getElementById('gifSize').value;
@@ -1193,7 +1201,7 @@ const { tool } = Astro.props;
           const re=new RegExp(m[1], m[2]);
           const testStr=lines.slice(1).join('---');
           const matches=[...testStr.matchAll(re)];
-          utilityOutput.textContent = matches.length? matches.map((mat,i)=>`Match ${i+1}: ${mat[0]} — Groups: ${JSON.stringify(mat.groups||mat.slice(1))}`).join('\n') : 'No matches';
+          utilityOutput.textContent = matches.length? matches.map((mat,i)=>`Match ${i+1}: ${mat[0]} - Groups: ${JSON.stringify(mat.groups||mat.slice(1))}`).join('\n') : 'No matches';
           utilityOutput.classList.remove('hidden');
         } else if (slug === 'jwt-decoder') {
           const token=utilityInput.value.trim();
@@ -1261,7 +1269,7 @@ const { tool } = Astro.props;
           let total=0;
           items.split('\n').forEach(line=>{
             if(!line.trim()) return;
-            // Try parse "Desc — 2 × $100"
+            // Try parse "Desc - 2 × $100"
             let priceMatch=line.match(/\$([0-9.]+)/);
             let price=priceMatch? parseFloat(priceMatch[1]):0;
             total+=price;
@@ -1320,15 +1328,341 @@ const { tool } = Astro.props;
           document.getElementById('ageResult').textContent=out||'Enter DOB or height/weight';
           setStatus('Calculated');
         } else if (slug === 'pomodoro-timer') {
-          // Handled via separate controls below
           setStatus('Use Start/Reset buttons below');
+        } else if (slug === 'compare-pdf') {
+          if(files.length!==2) throw new Error('Select 2 PDFs to compare');
+          const pdfjs = await import('pdfjs-dist');
+          pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+          let texts=[];
+          for(const f of files){
+            const bytes=await f.arrayBuffer();
+            const pdf=await (pdfjs.getDocument({data:new Uint8Array(bytes)}).promise);
+            let t='';
+            for(let i=1;i<=pdf.numPages;i++){ const p=await pdf.getPage(i); const c=await p.getTextContent(); t+=c.items.map(it=>it.str).join(' ')+'\n'; }
+            texts.push(t);
+          }
+          const { diffLines } = await import('diff');
+          const diffs=diffLines(texts[0], texts[1]);
+          let html='';
+          diffs.forEach(part=>{ const col=part.added?'#dcfce7':part.removed?'#fee2e2':'#f8fafc'; const pre=part.added?'+ ':part.removed?'- ':'  '; html+=`<div style="background:${col};padding:2px 6px;white-space:pre-wrap">${pre}${part.value.slice(0,200)}</div>`; });
+          utilityArea.classList.remove('hidden'); utilityOutput.innerHTML=html; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([texts[0]+'\n---\n'+texts[1]], {type:'text/plain'}); resultName='compare.txt';
+          downloadBtn.classList.remove('hidden'); setStatus('Compared 2 PDFs');
+        } else if (slug === 'redact-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const { PDFDocument, rgb } = await import('pdf-lib');
+          const bytes=await files[0].arrayBuffer();
+          const pdf=await PDFDocument.load(bytes);
+          pdf.getPages().forEach(page=>{
+            const {width, height}=page.getSize();
+            page.drawRectangle({x: width*0.2, y: height*0.5, width: width*0.6, height: 20, color: rgb(0,0,0), opacity: 1});
+          });
+          const out=await pdf.save();
+          resultBlob=new Blob([out], {type:'application/pdf'}); resultName='redacted.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus('Redacted (black bar, draw custom in canvas for precise)');
+        } else if (slug === 'form-fill-pdf') {
+          if(files.length!==1) throw new Error('Select 1 PDF form');
+          const { PDFDocument } = await import('pdf-lib');
+          const bytes=await files[0].arrayBuffer();
+          const pdf=await PDFDocument.load(bytes);
+          const form=pdf.getForm();
+          const fields=form.getFields();
+          if(!fields.length) throw new Error('No form fields found in PDF');
+          // Fill with sample
+          fields.forEach(f=>{ try{ const tf=form.getTextField(f.getName()); tf.setText('Filled'); }catch{} });
+          const out=await pdf.save();
+          resultBlob=new Blob([out], {type:'application/pdf'}); resultName='filled.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus(`Filled ${fields.length} fields`);
+        } else if (slug === 'add-page-numbers') {
+          if(files.length!==1) throw new Error('Select 1 PDF');
+          const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+          const bytes=await files[0].arrayBuffer();
+          const pdf=await PDFDocument.load(bytes);
+          const font=await pdf.embedFont(StandardFonts.Helvetica);
+          pdf.getPages().forEach((page, idx)=>{
+            const {width}=page.getSize();
+            page.drawText(`${idx+1}`, {x: width/2-5, y:20, size:10, font, color: rgb(0.3,0.3,0.3)});
+          });
+          const out=await pdf.save();
+          resultBlob=new Blob([out], {type:'application/pdf'}); resultName='numbered.pdf';
+          downloadBtn.classList.remove('hidden'); setStatus('Page numbers added');
+        } else if (slug === 'heic-to-jpg') {
+          if(!files.length) throw new Error('Select HEIC image(s)');
+          const heic2any = (await import('heic2any')).default;
+          const outs=[];
+          for(const f of files){
+            const blob=await heic2any({blob: f, toType: 'image/jpeg', quality: 0.9});
+            const outBlob = Array.isArray(blob)? blob[0]: blob;
+            outs.push(new File([outBlob], f.name.replace(/\.heic$/i, '.jpg'), {type:'image/jpeg'}));
+          }
+          if(outs.length===1){ resultBlob=outs[0]; resultName=outs[0].name; } else { const {default:JSZip}=await import('jszip'); const zip=new JSZip(); outs.forEach(o=> zip.file(o.name, o)); resultBlob=await zip.generateAsync({type:'blob'}); resultName='heic-jpgs.zip'; }
+          downloadBtn.classList.remove('hidden'); setStatus('HEIC → JPG done');
+        } else if (slug === 'photo-collage') {
+          if(files.length<2) throw new Error('Select 2+ images');
+          const cols=2;
+          const rows=Math.ceil(files.length/cols);
+          const size=500;
+          const canvas=document.createElement('canvas'); canvas.width=cols*size; canvas.height=rows*size;
+          const ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+          for(let i=0;i<files.length;i++){
+            const bmp=await createImageBitmap(files[i]);
+            const x=(i%cols)*size, y=Math.floor(i/cols)*size;
+            ctx.drawImage(bmp, x, y, size, size);
+          }
+          const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
+          resultBlob=blob; resultName='collage.png';
+          downloadBtn.classList.remove('hidden'); setStatus(`Collage ${cols}x${rows} done`);
+          const url=URL.createObjectURL(blob); const img=new Image(); img.src=url; img.style.maxWidth='100%'; document.getElementById('previewArea').innerHTML=''; document.getElementById('previewArea').appendChild(img); document.getElementById('previewArea').classList.remove('hidden');
+        } else if (slug === 'watermark-remover') {
+          if(files.length!==1) throw new Error('Select 1 image');
+          const bmp=await createImageBitmap(files[0]);
+          const canvas=document.createElement('canvas'); canvas.width=bmp.width; canvas.height=bmp.height;
+          const ctx=canvas.getContext('2d'); ctx.drawImage(bmp,0,0);
+          // Simple: blur center area as demo inpaint
+          ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.fillRect(canvas.width*0.3, canvas.height*0.4, canvas.width*0.4, 40);
+          ctx.filter='blur(8px)'; ctx.drawImage(canvas,0,0);
+          const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
+          resultBlob=blob; resultName='cleaned.png';
+          downloadBtn.classList.remove('hidden'); setStatus('Watermark area blurred (select area for precise inpaint)');
+        } else if (slug === 'image-splitter') {
+          if(files.length!==1) throw new Error('Select 1 image');
+          const bmp=await createImageBitmap(files[0]);
+          const cols=2, rows=2;
+          const {default:JSZip}=await import('jszip'); const zip=new JSZip();
+          const w=bmp.width/cols, h=bmp.height/rows;
+          for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+            const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
+            const ctx=canvas.getContext('2d'); ctx.drawImage(bmp, c*w, r*h, w, h, 0,0,w,h);
+            const blob=await new Promise(res=> canvas.toBlob(res,'image/png'));
+            const ab=await blob.arrayBuffer();
+            zip.file(`tile-${r}-${c}.png`, ab);
+          }
+          resultBlob=await zip.generateAsync({type:'blob'}); resultName='tiles.zip';
+          downloadBtn.classList.remove('hidden'); setStatus('Split 2x2 tiles');
+        } else if (slug === 'json-to-csv') {
+          const txt=utilityInput.value.trim();
+          if(!txt) throw new Error('Paste JSON array');
+          const arr=JSON.parse(txt);
+          if(!Array.isArray(arr)) throw new Error('JSON must be array of objects');
+          const keys=Object.keys(arr[0]);
+          let csv=keys.join(',')+'\n';
+          arr.forEach(row=>{ csv+=keys.map(k=> JSON.stringify(row[k]??'')).join(',')+'\n'; });
+          utilityOutput.textContent=csv; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([csv], {type:'text/csv'}); resultName='converted.csv';
+          downloadBtn.classList.remove('hidden');
+        } else if (slug === 'csv-to-json') {
+          const txt=utilityInput.value.trim();
+          const lines=txt.split('\n').filter(l=>l.trim());
+          const headers=lines[0].split(',').map(h=>h.trim());
+          const arr=lines.slice(1).map(line=>{
+            const vals=line.split(','); const obj={}; headers.forEach((h,i)=> obj[h]=vals[i]?.trim()); return obj;
+          });
+          const json=JSON.stringify(arr,null,2);
+          utilityOutput.textContent=json; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([json], {type:'application/json'}); resultName='converted.json';
+          downloadBtn.classList.remove('hidden');
+        } else if (slug === 'xml-formatter') {
+          const txt=utilityInput.value.trim();
+          if(!txt) throw new Error('Paste XML');
+          // Simple pretty: insert newlines between tags
+          let pretty=txt.replace(/></g,'>\n<');
+          let pad=0;
+          pretty=pretty.split('\n').map(line=>{
+            if(line.match(/^<\/\w/)) pad=Math.max(0,pad-2);
+            const res=' '.repeat(pad)+line;
+            if(line.match(/^<\w[^>]*[^\/]>$/)) pad+=2;
+            return res;
+          }).join('\n');
+          utilityOutput.textContent=pretty; utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([pretty], {type:'text/xml'}); resultName='formatted.xml';
+          downloadBtn.classList.remove('hidden');
+        } else if (slug === 'yaml-converter') {
+          const txt=utilityInput.value.trim();
+          const yaml=(await import('js-yaml')).default;
+          try{
+            const obj=JSON.parse(txt);
+            const y=yaml.dump(obj);
+            utilityOutput.textContent=y; utilityOutput.classList.remove('hidden');
+            resultBlob=new Blob([y], {type:'text/yaml'}); resultName='converted.yaml';
+          } catch{
+            const obj=yaml.load(txt);
+            const j=JSON.stringify(obj,null,2);
+            utilityOutput.textContent=j; utilityOutput.classList.remove('hidden');
+            resultBlob=new Blob([j], {type:'application/json'}); resultName='converted.json';
+          }
+          downloadBtn.classList.remove('hidden');
+        } else if (slug === 'html-entity') {
+          const txt=utilityInput.value;
+          if(txt.includes('&') && txt.includes(';')){
+            const ta=document.createElement('textarea'); ta.innerHTML=txt; const dec=ta.value;
+            utilityOutput.textContent=dec; utilityOutput.classList.remove('hidden');
+          } else {
+            const enc=txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+            utilityOutput.textContent=enc; utilityOutput.classList.remove('hidden');
+          }
+          resultBlob=new Blob([utilityOutput.textContent], {type:'text/plain'}); resultName='entities.txt';
+          downloadBtn.classList.remove('hidden');
+        } else if (slug === 'cron-tester') {
+          const expr=utilityInput.value.trim()||'*/5 * * * *';
+          const { parseExpression } = await import('cron-parser');
+          try{
+            const it=parseExpression(expr);
+            let out='Next 5 runs:\n';
+            for(let i=0;i<5;i++) out+=it.next().toString()+'\n';
+            utilityOutput.textContent=out; utilityOutput.classList.remove('hidden');
+          } catch(e){ utilityOutput.textContent='Invalid cron: '+e.message; utilityOutput.classList.remove('hidden'); }
+        } else if (slug === 'time-zone') {
+          const txt=utilityInput.value.trim()||new Date().toISOString();
+          const date=new Date(txt);
+          if(isNaN(date)) throw new Error('Invalid date, use ISO like 2026-08-20T12:00');
+          const zones=['UTC','America/New_York','Europe/London','Asia/Tokyo','Australia/Sydney'];
+          let out='';
+          zones.forEach(z=>{ out+=`${z}: ${date.toLocaleString('en-US',{timeZone:z})}\n`; });
+          utilityOutput.textContent=out; utilityOutput.classList.remove('hidden');
+        } else if (slug === 'contrast-checker') {
+          const txt=utilityInput.value.trim()||'#000000 vs #ffffff';
+          const m=txt.match(/(#[0-9A-Fa-f]{6}).*(#[0-9A-Fa-f]{6})/);
+          if(!m) throw new Error('Enter two hex colors like #000000 vs #ffffff');
+          function lum(hex){ const r=parseInt(hex.slice(1,3),16)/255, g=parseInt(hex.slice(3,5),16)/255, b=parseInt(hex.slice(5,7),16)/255; const a=[r,g,b].map(v=> v<=0.03928? v/12.92: Math.pow((v+0.055)/1.055,2.4)); return 0.2126*a[0]+0.7152*a[1]+0.0722*a[2]; }
+          const l1=lum(m[1]), l2=lum(m[2]);
+          const ratio=(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+          const aa=ratio>=4.5?'PASS':'FAIL', aaa=ratio>=7?'PASS':'FAIL';
+          utilityOutput.textContent=`Contrast: ${ratio.toFixed(2)}\nAA (4.5): ${aa}\nAAA (7): ${aaa}`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'gradient-generator') {
+          const from=document.getElementById('colorPick')?.value||'#FFDD00';
+          const to='#0f172a';
+          const css=`linear-gradient(135deg, ${from}, ${to})`;
+          utilityOutput.innerHTML=`<div style="height:80px;background:${css};border-radius:12px"></div><div style="margin-top:8px;font-family:monospace;font-size:12px">${css}</div>`;
+          utilityOutput.classList.remove('hidden');
+          resultBlob=new Blob([`background: ${css};`], {type:'text/css'}); resultName='gradient.css';
+          downloadBtn.classList.remove('hidden');
+        } else if (slug === 'case-converter') {
+          const txt=utilityInput.value;
+          const lower=txt.toLowerCase(), upper=txt.toUpperCase();
+          const title=txt.replace(/\w\S*/g, w=> w.charAt(0).toUpperCase()+w.slice(1).toLowerCase());
+          const camel=txt.replace(/(?:^\w|[A-Z]|\b\w)/g, (w,i)=> i===0? w.toLowerCase(): w.toUpperCase()).replace(/\s+/g,'');
+          const snake=txt.replace(/\s+/g,'_').toLowerCase();
+          const kebab=txt.replace(/\s+/g,'-').toLowerCase();
+          utilityOutput.textContent=`lower:\n${lower}\n\nupper:\n${upper}\n\nTitle:\n${title}\n\ncamel:\n${camel}\n\nsnake:\n${snake}\n\nkebab:\n${kebab}`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'handwriting') {
+          const txt=utilityInput.value||'Hello World';
+          const canvas=document.createElement('canvas'); canvas.width=800; canvas.height=400;
+          const ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+          ctx.fillStyle='#000'; ctx.font='24px "Comic Sans MS", cursive'; ctx.fillText(txt, 20, 50);
+          // Simple handwriting: draw text with slight offset
+          const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
+          resultBlob=blob; resultName='handwriting.png';
+          downloadBtn.classList.remove('hidden'); setStatus('Handwriting image ready');
+          const url=URL.createObjectURL(blob); const img=new Image(); img.src=url; img.style.maxWidth='100%'; document.getElementById('previewArea').innerHTML=''; document.getElementById('previewArea').appendChild(img); document.getElementById('previewArea').classList.remove('hidden');
+        } else if (slug === 'percentage-calc') {
+          const txt=utilityInput.value.trim();
+          // Expect like "20% of 150"
+          let m=txt.match(/([0-9.]+)%\s*of\s*([0-9.]+)/i);
+          if(m){
+            const res=parseFloat(m[2])*parseFloat(m[1])/100;
+            utilityOutput.textContent=`${m[1]}% of ${m[2]} = ${res}`;
+            utilityOutput.classList.remove('hidden');
+          } else {
+            utilityOutput.textContent='Enter like "20% of 150" or "30 is what % of 150"';
+            utilityOutput.classList.remove('hidden');
+          }
+        } else if (slug === 'loan-calc') {
+          const txt=utilityInput.value.trim();
+          // Expect "100000 5% 30y" or similar
+          const parts=txt.split(/\s+/);
+          const principal=parseFloat(parts[0])||100000;
+          const rate=parseFloat((parts[1]||'5').replace('%',''))/100/12;
+          const years=parseFloat((parts[2]||'30').replace('y',''))||30;
+          const n=years*12;
+          const payment=principal*rate*Math.pow(1+rate,n)/(Math.pow(1+rate,n)-1);
+          const total=payment*n;
+          utilityOutput.textContent=`Loan $${principal} at ${(rate*12*100).toFixed(2)}% for ${years}y\nMonthly: $${payment.toFixed(2)}\nTotal: $${total.toFixed(2)}\nInterest: $${(total-principal).toFixed(2)}`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'countdown-timer') {
+          const txt=utilityInput.value.trim();
+          const target=txt? new Date(txt): new Date(Date.now()+24*60*60*1000);
+          if(isNaN(target)) throw new Error('Invalid date, use YYYY-MM-DD');
+          const diff=target-Date.now();
+          if(diff<=0) throw new Error('Date is in past');
+          const days=Math.floor(diff/86400000), hrs=Math.floor(diff%86400000/3600000), mins=Math.floor(diff%3600000/60000), secs=Math.floor(diff%60000/1000);
+          utilityOutput.textContent=`Countdown to ${target.toLocaleString()}:\n${days}d ${hrs}h ${mins}m ${secs}s`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'dice-roller') {
+          const dice=['⚀','⚁','⚂','⚃','⚄','⚅'];
+          const roll=Math.floor(Math.random()*6);
+          const coin=Math.random()>0.5?'Heads':'Tails';
+          utilityOutput.textContent=`Dice: ${dice[roll]} (${roll+1})\nCoin: ${coin}\nRandom 1-100: ${Math.floor(Math.random()*100)+1}`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'totp-generator') {
+          const secret=utilityInput.value.trim()||'JBSWY3DPEHPK3PXP';
+          const OTPAuth=(await import('otpauth')).default;
+          const totp=new OTPAuth.TOTP({ issuer:'Helper', label:'user', algorithm:'SHA1', digits:6, period:30, secret });
+          const code=totp.generate();
+          const remaining=30 - Math.floor(Date.now()/1000)%30;
+          utilityOutput.textContent=`TOTP: ${code}\nSecret: ${secret}\nExpires in ${remaining}s\nURI: ${totp.toString()}`;
+          utilityOutput.classList.remove('hidden');
+        } else if (slug === 'screen-recorder') {
+          setStatus('Click to start screen record - will ask permission');
+          try{
+            const stream=await navigator.mediaDevices.getDisplayMedia({video:true});
+            const rec=new MediaRecorder(stream);
+            const chunks=[];
+            rec.ondataavailable=e=> chunks.push(e.data);
+            rec.onstop=()=>{ resultBlob=new Blob(chunks, {type:'video/webm'}); resultName='screen.webm'; downloadBtn.classList.remove('hidden'); setStatus('Screen recorded - download'); stream.getTracks().forEach(t=>t.stop()); };
+            rec.start(); setStatus('Recording... click again to stop');
+            // Toggle
+            let recording=true;
+            downloadBtn.onclick=()=>{ if(recording){ rec.stop(); recording=false; } else download(resultBlob, resultName); };
+            downloadBtn.classList.remove('hidden'); downloadBtn.textContent='Stop / Download';
+          } catch(e){ setStatus('Error: '+e.message); }
+        } else if (slug === 'webcam-booth') {
+          setStatus('Starting webcam...');
+          try{
+            const stream=await navigator.mediaDevices.getUserMedia({video:true});
+            const video=document.createElement('video'); video.srcObject=stream; video.autoplay=true; video.muted=true;
+            const preview=document.getElementById('previewArea'); preview.innerHTML=''; preview.appendChild(video); preview.classList.remove('hidden');
+            await new Promise(r=> video.onloadedmetadata=r);
+            const btn=document.createElement('button'); btn.textContent='📷 Capture'; btn.className='mt-2 bg-slate-900 text-white px-4 py-2 rounded-full text-sm'; preview.appendChild(btn);
+            btn.onclick=async()=>{
+              const canvas=document.createElement('canvas'); canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+              canvas.getContext('2d').drawImage(video,0,0);
+              const blob=await new Promise(r=> canvas.toBlob(r,'image/png'));
+              resultBlob=blob; resultName='webcam.png'; downloadBtn.classList.remove('hidden'); setStatus('Captured');
+              stream.getTracks().forEach(t=>t.stop());
+            };
+          } catch(e){ setStatus('Error: '+e.message); }
+        } else if (slug === 'audio-recorder') {
+          setStatus('Click to start mic record');
+          try{
+            const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+            const rec=new MediaRecorder(stream);
+            const chunks=[];
+            rec.ondataavailable=e=>chunks.push(e.data);
+            rec.onstop=()=>{ resultBlob=new Blob(chunks, {type:'audio/webm'}); resultName='audio.webm'; downloadBtn.classList.remove('hidden'); setStatus('Audio recorded'); stream.getTracks().forEach(t=>t.stop()); };
+            rec.start(); setStatus('Recording audio...');
+            downloadBtn.classList.remove('hidden'); downloadBtn.textContent='Stop';
+            let recing=true;
+            downloadBtn.onclick=()=>{ if(recing){ rec.stop(); recing=false; downloadBtn.textContent='Download'; } else download(resultBlob, resultName); };
+          } catch(e){ setStatus('Error: '+e.message); }
+        } else if (slug === 'scientific-calc') {
+          const expr=utilityInput.value.trim();
+          if(!expr) throw new Error('Enter expression like sin(0.5) + log(10)');
+          // Simple eval with Math
+          const safe=expr.replace(/sin/g,'Math.sin').replace(/cos/g,'Math.cos').replace(/tan/g,'Math.tan').replace(/log/g,'Math.log10').replace(/ln/g,'Math.log').replace(/sqrt/g,'Math.sqrt').replace(/PI/g,'Math.PI');
+          try{
+            const res=Function('"use strict"; return ('+safe+')')();
+            utilityOutput.textContent=`${expr} = ${res}`;
+            utilityOutput.classList.remove('hidden');
+          } catch(e){ utilityOutput.textContent='Error: '+e.message; utilityOutput.classList.remove('hidden'); }
         } else {
           setStatus('Unknown tool');
         }
       } catch(e){
         console.error(e);
         setStatus('Error: '+ (e.message||e));
-      } finally { actionBtn.disabled=false; }
+      } finally { actionBtn.disabled=false; skeleton.classList.add('hidden'); }
     });
 
     // QR

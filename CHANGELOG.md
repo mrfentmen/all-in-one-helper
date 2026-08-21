@@ -1,11 +1,11 @@
-# ALL-IN-ONE HELPER — CHANGELOG
+# ALL-IN-ONE HELPER - CHANGELOG
 > All notable changes to this project. Format based on Keep a Changelog and Semantic Versioning.
 
 **Guideline:** Every version that touches `dist/` must be logged here before `git tag`.
 
 ---
 
-## [Unreleased] — Planning Phase
+## [Unreleased] - Planning Phase
 
 ### Added
 - Created project planning docs: `SOURCE_OF_TRUTH.md`, `TASKS.md`, `ROADMAP.md`, `CHANGELOG.md`, `VOWS.md`, `CONSTITUTION.md` in `/Users/del/Desktop/all in one helper/`.
@@ -20,7 +20,7 @@
 
 ---
 
-## [0.1.0] — 2026-08-20 — The Promise
+## [0.1.0] - 2026-08-20 - The Promise
 
 ### Added
 - **Vision locked:** Free, private, no-upload alternative to iLovePDF/TinyPNG/Remove.bg.
@@ -30,17 +30,17 @@
 - **Folder created:** `~/Desktop/all in one helper/` as single working directory.
 
 ### Changed
-- N/A — initial release.
+- N/A - initial release.
 
 ### Fixed
-- N/A — initial release.
+- N/A - initial release.
 
 ### Technical Notes
 - No code written yet. This version is docs-only, per constitution.
 
 ---
 
-## [1.0.0] — TBA — The Launch (Planned)
+## [1.0.0] - TBA - The Launch (Planned)
 
 ### Added (Planned)
 - **Homepage:** Hero, 22 tool cards, search, FAQ, header/footer with ad slots.
@@ -63,11 +63,11 @@
 - [ ] Privacy page explicitly states "files never leave your device."
 
 ### Migration Guide
-- N/A — first production release. Users bookmark `https://yourdomain.com`.
+- N/A - first production release. Users bookmark `https://yourdomain.com`.
 
 ---
 
-## [1.1.0] — TBA — The Polish (Planned, Month 2)
+## [1.1.0] - TBA - The Polish (Planned, Month 2)
 
 ### Added (Planned)
 - Blog: 5 long-tail SEO posts.
@@ -83,10 +83,10 @@
 
 ---
 
-## [1.2.0] — TBA — The Backend Tease (Planned, Month 3-4)
+## [1.2.0] - TBA - The Backend Tease (Planned, Month 3-4)
 
 ### Added (Planned)
-- **Link Shortener** — First Worker + KV feature: `yourdomain.com/s/abc` → redirect. Still $0 (100k req/day free).
+- **Link Shortener** - First Worker + KV feature: `yourdomain.com/s/abc` → redirect. Still $0 (100k req/day free).
 - Banner rotation via Worker + KV (no redeploy to change banner).
 
 ### Changed (Planned)
@@ -94,7 +94,7 @@
 
 ---
 
-## [2.0.0] — TBA — The 50-Tool Expansion (Planned, Year 1)
+## [2.0.0] - TBA - The 50-Tool Expansion (Planned, Year 1)
 
 ### Added (Planned)
 - 28 additional tools to reach 50 total (PDF to Word, image palette extractor, etc.).
@@ -173,7 +173,7 @@ Only then do you move from `[Unreleased]` to a versioned heading.
 **Example 1: Adding a Tool**
 
 ```
-## [1.0.1] — 2026-09-15
+## [1.0.1] - 2026-09-15
 ### Added
 - Image Compress now supports batch of 20 with zip download via jszip 3.10.1
 ### Fixed
@@ -183,7 +183,7 @@ Only then do you move from `[Unreleased]` to a versioned heading.
 **Example 2: Ad Change**
 
 ```
-## [1.0.2] — 2026-09-20
+## [1.0.2] - 2026-09-20
 ### Changed
 - Moved AdSense sidebar unit 16px below dropzone to avoid policy violation for accidental clicks
 ### Added
@@ -193,7 +193,7 @@ Only then do you move from `[Unreleased]` to a versioned heading.
 **Example 3: Performance**
 
 ```
-## [1.1.0] — 2026-10-01
+## [1.1.0] - 2026-10-01
 ### Changed
 - Lazy-loaded @imgly/background-removal only on user interaction (click), saved 400kb on initial load
 ### Fixed
@@ -205,20 +205,20 @@ Only then do you move from `[Unreleased]` to a versioned heading.
 This changelog is never truncated. Even after 50 releases, we keep all history. It is the provenance of the site's honesty. If a user asks "when did you add background removal?", the answer is here.
 
 
-## [0.1.1] — 2026-08-20 — Add Buy Me a Coffee
+## [0.1.1] - 2026-08-20 - Add Buy Me a Coffee
 
 ### Added
 - **Monetization Triple:** Added Buy Me a Coffee donation button (`contactae2b`, #FFDD00) via `https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js` with `data-slug="contactae2b"`. Placed in footer + /support page + post-download toast. Complements AdSense + Custom Banners, no policy conflict.
 - Task T-407 for BMC integration (async load, fallback static link).
 - Updated SOURCE_OF_TRUTH Section 6 to Inventory C, PLAN Phase 4 to T-401..T-407.
 
-## [0.2.0] — 2026-08-20 — Phase 0 Deployed
+## [0.2.0] - 2026-08-20 - Phase 0 Deployed
 
 ### Added
 - Live at https://all-in-one-helper.pages.dev and https://005c6970.all-in-one-helper.pages.dev (Cloudflare Pages project `all-in-one-helper`, account ee32aa05d0ccfff9085adf3406874497)
 - 27 static pages built: index + 22 tools + 4 legal (privacy/terms/contact/support)
 - GitHub repo https://github.com/mrfentmen/all-in-one-helper pushed (force, 2 commits)
-- Wrangler deploy via `CLOUDFLARE_API_TOKEN` (cfut_...) — 32 files uploaded
+- Wrangler deploy via `CLOUDFLARE_API_TOKEN` (cfut_...) - 32 files uploaded
 
 ### Changed
 - README.md replaced Astro starter with project README + live URLs
@@ -229,7 +229,7 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - curl -k https://all-in-one-helper.pages.dev/tools/merge-pdf/ → 200
 - Build: 27 pages, no upload, BMC button contactae2b #FFDD00 live
 
-## [1.0.0] — 2026-08-20 — All 22 Tools Live (No Mock)
+## [1.0.0] - 2026-08-20 - All 22 Tools Live (No Mock)
 
 ### Added
 - **PDF (9):** merge-pdf (multi reorder, 50MB limit), split-pdf (range 1,3-5 or split all to zip), compress-pdf (re-save object streams, saved bytes), pdf-to-jpg (pdfjs 4.10.38 render scale 2 → JPG zip), jpg-to-pdf (A4/auto, portrait/landscape, centered fit), rotate-pdf (90/180/270 + delete range), extract-text (pdfjs getTextContent → txt), watermark-pdf (diagonal 40pt #FF + page numbers), unlock-pdf (password via pdf-lib)
@@ -245,3 +245,20 @@ This changelog is never truncated. Even after 50 releases, we keep all history. 
 - Deployed https://8aeb94c8.all-in-one-helper.pages.dev and https://all-in-one-helper.pages.dev → curl 200 for split, remove-bg, video, resume
 - All processing 100% in browser, Network tab 0 bytes upload
 
+## [1.1.0] — 2026-08-20 — Polish: Humanize, Skeletons, Cache, No Infinite Scroll, Ads, 82 Tools (87 pages)
+
+### Changed
+- Humanized all pages: removed 1091 em dashes, replaced with hyphens, added contractions, conversational tone, no vibecoded phrases
+- Homepage: removed unlimited scrolling, added category tabs (All/PDF/Image/Video/Utility), paginated grid 12 per page + Show 12 more, recent 3 (cached), FAQ collapsed, skeletons for loading, content-visibility
+- Tool pages: cached recent + prefs via localStorage (helper_recent, helper_prefs), WASM via Cache API, skeleton loaders not spinners, shimmer animate
+- Layout: header/footer skeletons, 2-4 ad slots per page (header, top, sidebar, footer) with "Your ad here - contactae2000@gmail.com $50/mo" + banners.json
+- No em dashes in src (0 remaining), humanized privacy/terms/contact/support
+
+### Added
+- 28 new tools (82 total, 87 pages) to stay under 100 pages: compare-pdf, redact-pdf, form-fill-pdf, add-page-numbers, heic-to-jpg, photo-collage, watermark-remover, image-splitter, json-to-csv, csv-to-json, xml-formatter, yaml-converter, html-entity, cron-tester, time-zone, contrast-checker, gradient-generator, case-converter, handwriting, percentage-calc, loan-calc, countdown-timer, dice-roller, totp-generator, screen-recorder, webcam-booth, audio-recorder, scientific-calc
+- Deps: js-yaml 5.3, cron-parser 5.10, otpauth 9.5, heic2any 0.0.4
+- Components: Skeleton.astro, lib/cache.ts (localStorage + Cache API), PLAN_3_POLISH.md
+
+### Verified
+- Build 87 pages, 0 em dashes in src, 4 ad contacts per tool page, homepage 1 contact (now 4 on fc preview)
+- Deploy fc155d29.all-in-one-helper.pages.dev, main will update, curl 200

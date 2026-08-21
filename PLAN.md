@@ -1,7 +1,7 @@
-# ALL-IN-ONE HELPER — IMPLEMENTATION PLAN
+# ALL-IN-ONE HELPER - IMPLEMENTATION PLAN
 > Do NOT build until this plan is approved. This is the build blueprint.
 
-**Status:** AWAITING APPROVAL — No code yet
+**Status:** AWAITING APPROVAL - No code yet
 **Approach:** Phase-gated, 7 weeks, $0 infra, Cloudflare Pages only
 **Approval Gate:** You must reply "APPROVED" before any `npm create` or code file is touched.
 
@@ -30,31 +30,31 @@
 
 ---
 
-## 3. BUILD PHASES (No Code Yet — Just Plan)
+## 3. BUILD PHASES (No Code Yet - Just Plan)
 
-### Phase 0: Foundation (Week 1) — See TASKS T-001 to T-014
+### Phase 0: Foundation (Week 1) - See TASKS T-001 to T-014
 **Goal:** Deploy empty shell to Cloudflare.
-**Risk:** WASM headers CORS — mitigated by `_headers` file.
+**Risk:** WASM headers CORS - mitigated by `_headers` file.
 **Deliverable:** `https://yourdomain.com` shows 22 "Coming Soon" cards, Lighthouse 95+.
 
-### Phase 1: PDF Tools (Week 2-3) — T-101 to T-109
+### Phase 1: PDF Tools (Week 2-3) - T-101 to T-109
 **Order:** Merge → Split → Compress → PDF↔JPG → Rotate → Extract → Watermark → Unlock
 **Why this order:** Shared `pdf-lib` code, increasing complexity.
 **Worker:** All PDF logic in `src/lib/pdf-worker.ts` via Comlink.
 
-### Phase 2: Image Tools (Week 4) — T-201 to T-205
-**Flagship:** Remove BG — requires 30MB model caching. Test on iPhone early or cut.
+### Phase 2: Image Tools (Week 4) - T-201 to T-205
+**Flagship:** Remove BG - requires 30MB model caching. Test on iPhone early or cut.
 **Batch:** Compress + Convert share zip logic.
 
-### Phase 3: Video/Audio + Utils (Week 5) — T-301 to T-308
+### Phase 3: Video/Audio + Utils (Week 5) - T-301 to T-308
 **Gate:** ffmpeg.wasm only on `/tools/video-compress`, behind `if (route === 'video') import('...')`.
 **Easy wins:** Utilities built in 1 day each, parallelizable.
 
-### Phase 4: Monetization & SEO (Week 6) — T-401 to T-407
+### Phase 4: Monetization & SEO (Week 6) - T-401 to T-407
 **Gate:** AdSense needs 15+ pages + legal. Apply Day 1 of Week 6. Also integrate Buy Me a Coffee `contactae2b` button (#FFDD00) in footer.
 **Content:** Each tool page needs human 300-word how-to. Use no AI filler.
 
-### Phase 5: QA & Launch (Week 7) — T-501 to T-506
+### Phase 5: QA & Launch (Week 7) - T-501 to T-506
 **Matrix:** 22 tools × 5 browsers = 110 manual checks. Create sheet.
 **Legal:** Privacy/Terms/Contact mandatory for AdSense.
 
@@ -96,7 +96,7 @@ all-in-one-helper/          (future repo, not this Desktop folder)
 3.  First deploy to `*.pages.dev`, share URL for your review
 4.  Then proceed Phase 1, tool by tool, PR by PR
 
-**Monetization Triple:** AdSense (auto) + Custom Banners (`banners.json`) + Buy Me a Coffee `contactae2b` (#FFDD00, `button.prod.min.js`) — all three can run together.
+**Monetization Triple:** AdSense (auto) + Custom Banners (`banners.json`) + Buy Me a Coffee `contactae2b` (#FFDD00, `button.prod.min.js`) - all three can run together.
 
 **We will NOT run any `npm create` or `mkdir` for code until you say "APPROVED" or "GO".**
 

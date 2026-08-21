@@ -1,4 +1,4 @@
-# ALL-IN-ONE HELPER — CONSTITUTION
+# ALL-IN-ONE HELPER - CONSTITUTION
 > The governing law of the project. Amendments require a changelog entry and a new version tag. This document outranks all others except SOURCE_OF_TRUTH.
 
 **Ratified:** 2026-08-20

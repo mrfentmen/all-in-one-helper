@@ -1,4 +1,4 @@
-# ALL-IN-ONE HELPER — VOWS
+# ALL-IN-ONE HELPER - VOWS
 > Public promises to every user. These are not marketing. They are binding. If we break a vow, we have failed.
 
 **Effective:** 2026-08-20
@@ -9,7 +9,7 @@
 
 ## PREAMBLE
 
-We built All-in-One Helper because we were tired of needing to pay $9 to remove a background, $15 to merge a PDF, and giving our private files to a server we don't trust — just to get them back watermarked.
+We built All-in-One Helper because we were tired of needing to pay $9 to remove a background, $15 to merge a PDF, and giving our private files to a server we don't trust - just to get them back watermarked.
 
 We make these vows so you never have to wonder what we do with your files, your data, or your trust.
 
@@ -19,7 +19,7 @@ We make these vows so you never have to wonder what we do with your files, your 
 
 **We vow that your files never touch our servers.**
 
-Every tool — Merge PDF, Compress Image, Remove Background, Video Convert — runs 100% in your browser. You can verify this yourself:
+Every tool - Merge PDF, Compress Image, Remove Background, Video Convert - runs 100% in your browser. You can verify this yourself:
 
 1.  Open DevTools (F12) → Network tab.
 2.  Use any tool with a large file.
@@ -63,9 +63,9 @@ We may add optional donation links or ad-free tips, but the core tools will neve
 
 **We DO collect (transparently):**
 - **Cloudflare Web Analytics:** Aggregated, anonymized pageviews, no cookies, no fingerprinting. Used to know which tools are popular so we know what to improve. You can block it with any ad blocker and the site still works.
-- **Google AdSense (if you see ads):** Google may use cookies to show ads, per their policy. We do not control it. You can opt out via `myadcenter.google.com`. We load AdSense only on pages with ads, and we never sell your data to them — they serve the ad.
+- **Google AdSense (if you see ads):** Google may use cookies to show ads, per their policy. We do not control it. You can opt out via `myadcenter.google.com`. We load AdSense only on pages with ads, and we never sell your data to them - they serve the ad.
 - **Custom Banners:** Our own `banners.json` is static and sets no cookies.
-- **localStorage (on your device only):** We may save preferences like dark mode or recent tools — this never leaves your device.
+- **localStorage (on your device only):** We may save preferences like dark mode or recent tools - this never leaves your device.
 
 **We will never:** Sell data, send newsletters without explicit opt-in, or add Facebook Pixel.
 
@@ -132,7 +132,7 @@ We need ads to keep the site free, but we will lose money before we ruin the exp
 If we can no longer maintain All-in-One Helper, we will:
 1.  Make the GitHub repo public and archived.
 2.  Keep the Cloudflare Pages deployment alive as long as free tier exists.
-3.  Add a banner: "Maintenance mode — tools still work but no updates."
+3.  Add a banner: "Maintenance mode - tools still work but no updates."
 
 We will not sell the domain to a spam network. We would rather let it expire than betray trust.
 
@@ -142,10 +142,10 @@ We will not sell the domain to a spam network. We would rather let it expire tha
 
 You don't have to trust us. Verify:
 
-- **Check the Network tab** — prove no upload.
-- **View Source** — it's static HTML.
-- **Block JS** — see graceful message, not silent failure.
-- **Email us** — we publish contact for a reason.
+- **Check the Network tab** - prove no upload.
+- **View Source** - it's static HTML.
+- **Block JS** - see graceful message, not silent failure.
+- **Email us** - we publish contact for a reason.
 
 These vows are versioned. If we change them, the old version stays in git history and the changelog explains why. We will never weaken Vows 1-3 without a major version bump and 30-day notice.
 

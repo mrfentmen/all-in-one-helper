@@ -1,4 +1,4 @@
-# All-in-One Helper — Project Index
+# All-in-One Helper - Project Index
 
 **One folder to rule them all:** `/Users/del/Desktop/all in one helper/`
 
@@ -10,7 +10,7 @@ Free, private, no-upload clone of iLovePDF + TinyPNG + Remove.bg + 19 more tools
 - **Privacy:** Files never leave your browser (verifiable in Network tab)
 - **Monetization:** AdSense + Custom Banners (both)
 
-## Documents (All 1000+ Words — Source of Truth)
+## Documents (All 1000+ Words - Source of Truth)
 
 | File | Purpose | Words |
 |------|---------|-------|
@@ -26,15 +26,15 @@ Free, private, no-upload clone of iLovePDF + TinyPNG + Remove.bg + 19 more tools
 
 ## How to Use
 
-1.  Read `SOURCE_OF_TRUTH.md` first — if it conflicts, it wins.
-2.  Review `PLAN.md` — approve before any build.
-3.  Track work in `TASKS.md` — check boxes as you go.
-4.  Log changes in `CHANGELOG.md` — append-only.
+1.  Read `SOURCE_OF_TRUTH.md` first - if it conflicts, it wins.
+2.  Review `PLAN.md` - approve before any build.
+3.  Track work in `TASKS.md` - check boxes as you go.
+4.  Log changes in `CHANGELOG.md` - append-only.
 5.  Live by `VOWS.md` + `CONSTITUTION.md`.
 
 ## Status
 
-**Phase:** Planning — Awaiting Approval
+**Phase:** Planning - Awaiting Approval
 **Next Gate:** Reply "APPROVED" to `PLAN.md` to start Phase 0 (Foundation)
 
 ## Quick Links

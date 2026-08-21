@@ -1,36 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { tools, categories } from '../data/tools';
-
-const grouped = {
-  pdf: tools.filter(t => t.category === 'pdf'),
-  image: tools.filter(t => t.category === 'image'),
-  video: tools.filter(t => t.category === 'video'),
-  utility: tools.filter(t => t.category === 'utility'),
-};
+const total = tools.length;
 ---
 
-<Layout title="Free Tools — Private, No Upload" description="22 free tools that run 100% in your browser. Merge PDFs, compress images, remove backgrounds, generate QR codes. No upload, no paywall, no account.">
+<Layout title={`Free Tools - ${total} Private, No Upload`} description={`${total} free tools that run 100% in your browser. Merge PDFs, compress images, remove backgrounds, GIF maker, OCR, and more. No upload, no paywall.`}>
   <section class="max-w-6xl mx-auto px-4 pt-10 pb-6">
     <div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
       <div>
         <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-slate-500 border border-slate-200 rounded-full px-3 py-1 bg-white">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          100% CLIENT-SIDE · ZERO UPLOADS
+          100% CLIENT-SIDE · ZERO UPLOADS · 95 PAGES MAX
         </div>
         <h1 class="mt-4 text-4xl sm:text-5xl font-black tracking-tight leading-[0.95]">
           Free tools<br />
           <span class="text-slate-400">without</span> the catch
         </h1>
-        <p class="mt-4 text-[15px] leading-relaxed text-slate-600 max-w-xl">Clone of iLovePDF, TinyPNG & Remove.bg — but everything runs in your browser. No server, no paywall, no watermarks. Verify in Network tab: <span class="font-semibold text-slate-900">zero bytes uploaded.</span></p>
+        <p class="mt-4 text-[15px] leading-relaxed text-slate-600 max-w-xl">We got tired of paywalls and uploads. So we rebuilt the good stuff to run right in your browser. No server waiting, no watermarks. You can check yourself in your Network tab: <span class="font-semibold text-slate-900">zero bytes uploaded.</span></p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#pdf" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition">Browse 22 tools →</a>
-          <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="bg-[#FFDD00] text-black border-2 border-black px-6 py-3 rounded-full font-bold text-sm hover:brightness-95 transition">☕ Buy me a coffee</a>
+          <a href="#tools" class="bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-black transition">Browse {total} tools →</a>
+          <a href="https://www.buymeacoffee.com/contactae2b" target="_blank" class="bg-[#FFDD00] text-black border-2 border-black px-6 py-3 rounded-full font-bold text-sm">☕ Buy me a coffee</a>
         </div>
         <div class="mt-6 flex items-center gap-4 text-xs text-slate-500">
-          <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-emerald-100 grid place-items-center">✓</span> No signup</span>
-          <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-emerald-100 grid place-items-center">✓</span> No watermarks</span>
-          <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-emerald-100 grid place-items-center">✓</span> Works offline</span>
+          <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-emerald-100 grid place-items-center">✓</span> No signup needed</span>
+          <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-emerald-100 grid place-items-center">✓</span> No watermarks, ever</span>
+          <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-emerald-100 grid place-items-center">✓</span> Works offline too</span>
         </div>
       </div>
       <div class="bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm">
@@ -41,81 +35,198 @@ const grouped = {
         <div class="mt-4 border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center bg-[#FCFCF9]">
           <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-900 text-white grid place-items-center text-xl">⬆</div>
           <div class="mt-3 font-bold">Drop files here</div>
-          <div class="text-xs text-slate-500 mt-1">PDFs, images, video — stays on your device</div>
+          <div class="text-xs text-slate-500 mt-1">PDFs, images, video - stays on your device</div>
           <div class="mt-4 grid grid-cols-3 gap-2 text-xs">
             <span class="bg-slate-900 text-white px-3 py-2 rounded-full font-semibold">Merge PDF</span>
-            <span class="bg-white border border-slate-200 px-3 py-2 rounded-full font-semibold">Compress</span>
-            <span class="bg-white border border-slate-200 px-3 py-2 rounded-full font-semibold">Remove BG</span>
+            <span class="bg-white border border-slate-200 px-3 py-2 rounded-full font-semibold">GIF Maker</span>
+            <span class="bg-white border border-slate-200 px-3 py-2 rounded-full font-semibold">OCR</span>
           </div>
         </div>
         <div class="mt-4 flex gap-2">
-          <input id="search" placeholder="Search 22 tools... (e.g. compress, pdf, qr)" class="flex-1 border border-slate-200 rounded-full px-4 py-2.5 text-sm outline-none focus:border-slate-900 bg-white" />
+          <input id="search" placeholder={`Search ${total} tools... (e.g. gif, pdf, ocr)`} class="flex-1 border border-slate-200 rounded-full px-4 py-2.5 text-sm outline-none focus:border-slate-900 bg-white" />
         </div>
-        <div class="mt-3 text-[11px] text-slate-500">Popular: <a class="underline" href="/tools/merge-pdf">merge pdf</a> · <a class="underline" href="/tools/compress-image">tinyPNG</a> · <a class="underline" href="/tools/remove-background">remove bg</a></div>
+        <div class="mt-3 text-[11px] text-slate-500">Popular: <a class="underline" href="/tools/merge-pdf">merge pdf</a> · <a class="underline" href="/tools/gif-maker">gif maker</a> · <a class="underline" href="/tools/ocr-image">ocr</a></div>
       </div>
     </div>
     <div data-ad-slot="top" class="mt-8 h-[90px] border border-dashed border-slate-300 rounded-xl grid place-items-center text-slate-400 text-sm bg-white">
-      Top Ad — AdSense (3 units per tool page: top / sidebar / footer) + custom via banners.json
+      Top Ad - AdSense
     </div>
   </section>
-  <section class="max-w-6xl mx-auto px-4 pb-12">
-    <div class="flex items-center justify-between mt-2">
+
+  <section id="tools" class="max-w-6xl mx-auto px-4 pb-12">
+    <div id="recentRow" class="hidden mb-6">
+      <div class="flex items-center gap-2 text-sm font-bold"><span>⏱ Continue</span><span class="text-xs font-normal text-slate-500">Your recent tools (cached locally)</span></div>
+      <div id="recentGrid" class="mt-3 grid sm:grid-cols-3 gap-3"></div>
+    </div>
+
+    <div class="flex items-center justify-between">
       <h2 class="font-black text-xl tracking-tight">All tools</h2>
-      <span class="text-xs font-bold tracking-widest text-slate-500 border border-slate-200 rounded-full px-3 py-1 bg-white">22 TOOLS · $0 · NO UPLOAD</span>
+      <span id="toolCount" class="text-xs font-bold tracking-widest text-slate-500 border border-slate-200 rounded-full px-3 py-1 bg-white">{total} TOOLS · $0 · NO UPLOAD</span>
     </div>
-    {Object.entries(grouped).map(([cat, list]) => (
-      <div id={cat} class="mt-8">
-        <div class="flex items-center gap-3">
-          <h3 class:list={["text-sm font-black tracking-widest", categories[cat as keyof typeof categories].color]}>{categories[cat as keyof typeof categories].label.toUpperCase()}</h3>
-          <div class="h-px flex-1 bg-slate-200"></div>
-          <span class="text-xs bg-white border border-slate-200 rounded-full px-2 py-1 font-bold">{list.length}</span>
-        </div>
-        <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4" data-tools-grid>
-          {list.map(t => (
-            <a href={`/tools/${t.slug}`} data-tool-card data-title={t.title.toLowerCase()} data-desc={t.description.toLowerCase()} class="group bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-900 hover:shadow-md transition flex flex-col">
-              <div class="flex items-start justify-between">
-                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white grid place-items-center text-lg">{t.icon}</div>
-                <span class="text-[10px] font-bold tracking-widest bg-slate-900 text-white px-2 py-1 rounded-full">{t.category.toUpperCase()}</span>
-              </div>
-              <div class="mt-4 font-bold leading-tight group-hover:underline">{t.title}</div>
-              <div class="mt-1 text-sm text-slate-600 leading-relaxed line-clamp-2">{t.description}</div>
-              <div class="mt-4 flex items-center gap-2 text-xs font-bold">
-                <span class="bg-[#FFDD00] border border-black px-3 py-1.5 rounded-full">Open →</span>
-                <span class="text-slate-400">No upload</span>
-              </div>
-            </a>
-          ))}
-        </div>
+
+    <div class="mt-4 sticky top-[64px] z-20 bg-[#FCFCF9]/80 backdrop-blur-md py-2 -mx-4 px-4 border-y border-slate-200">
+      <div class="flex gap-2 overflow-x-auto scrollbar-none" id="tabs" role="tablist">
+        <button data-tab="all" class="tab whitespace-nowrap bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-bold">All {total}</button>
+        <button data-tab="pdf" class="tab whitespace-nowrap bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-bold">PDF {tools.filter(t=>t.category==='pdf').length}</button>
+        <button data-tab="image" class="tab whitespace-nowrap bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-bold">Image {tools.filter(t=>t.category==='image').length}</button>
+        <button data-tab="video" class="tab whitespace-nowrap bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-bold">Video {tools.filter(t=>t.category==='video').length}</button>
+        <button data-tab="utility" class="tab whitespace-nowrap bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-bold">Utility {tools.filter(t=>t.category==='utility').length}</button>
       </div>
-    ))}
+    </div>
+
+    <div id="skeletonGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {Array.from({length: 6}).map(()=> (
+        <div class="bg-white border border-slate-200 rounded-2xl p-5">
+          <div class="flex justify-between"><div class="w-10 h-10 rounded-xl bg-slate-200 animate-pulse"></div><div class="w-12 h-6 rounded-full bg-slate-200 animate-pulse"></div></div>
+          <div class="mt-4 h-4 bg-slate-200 rounded animate-pulse w-3/4"></div>
+          <div class="mt-2 h-3 bg-slate-100 rounded animate-pulse"></div>
+          <div class="mt-4 h-8 bg-slate-200 rounded-full animate-pulse w-24"></div>
+        </div>
+      ))}
+    </div>
+
+    <div id="toolsGrid" class="hidden mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4" style="content-visibility:auto; contain: layout;">
+      {tools.map(t => (
+        <a href={`/tools/${t.slug}`} data-tool-card data-cat={t.category} data-title={t.title.toLowerCase()} data-desc={t.description.toLowerCase()} class="group bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-900 hover:shadow-md transition flex flex-col">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-slate-900 text-white grid place-items-center text-lg">{t.icon}</div>
+            <span class="text-[10px] font-bold tracking-widest bg-slate-900 text-white px-2 py-1 rounded-full">{t.category.toUpperCase()}</span>
+          </div>
+          <div class="mt-4 font-bold leading-tight group-hover:underline">{t.title}</div>
+          <div class="mt-1 text-sm text-slate-600 leading-relaxed line-clamp-2">{t.description}</div>
+          <div class="mt-4 flex items-center gap-2 text-xs font-bold">
+            <span class="bg-[#FFDD00] border border-black px-3 py-1.5 rounded-full">Open →</span>
+            <span class="text-slate-400">No upload</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div id="pagination" class="mt-6 flex justify-center gap-2">
+      <button id="showMore" class="hidden bg-white border border-slate-900 text-slate-900 px-6 py-2 rounded-full text-sm font-bold hover:bg-slate-900 hover:text-white transition">Show 12 more</button>
+      <span id="pageInfo" class="text-xs text-slate-500 self-center"></span>
+    </div>
+
+    <div id="noResults" class="hidden mt-6 text-center text-sm text-slate-500">No tools found - try another search.</div>
+
     <div class="mt-10 bg-white border border-slate-200 rounded-2xl p-6">
-      <h3 class="font-black">Why not just use iLovePDF?</h3>
-      <p class="mt-2 text-sm text-slate-600 leading-relaxed">iLovePDF charges $108/year, requires uploads, and throttles free users. We do the same work with <code class="bg-slate-100 px-1.5 py-0.5 rounded">pdf-lib</code> + <code class="bg-slate-100 px-1.5 py-0.5 rounded">Canvas</code> in your browser. Faster (no wait), private (no server sees your files), and free forever. Check Network tab while merging — zero upload.</p>
+      <h3 class="font-black">Why use this instead of iLovePDF?</h3>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">iLovePDF is great, but it charges, makes you upload, and limits free use. We do the same thing with <code class="bg-slate-100 px-1.5 py-0.5 rounded">pdf-lib</code> + Canvas in browser. Faster, private, and actually free.</p>
       <div class="mt-4 grid sm:grid-cols-3 gap-3 text-sm">
-        <div class="border border-slate-200 rounded-xl p-4 bg-[#FCFCF9]"><div class="font-bold">🔒 Private</div><div class="text-slate-600 text-xs mt-1">Files never leave RAM. No endpoint to hack.</div></div>
-        <div class="border border-slate-200 rounded-xl p-4 bg-[#FCFCF9]"><div class="font-bold">⚡ Fast</div><div class="text-slate-600 text-xs mt-1">No upload wait. Works offline after load.</div></div>
-        <div class="border border-slate-200 rounded-xl p-4 bg-[#FCFCF9]"><div class="font-bold">💛 Free</div><div class="text-slate-600 text-xs mt-1">Ad + BMC funded. Domain only cost.</div></div>
+        <div class="border border-slate-200 rounded-xl p-4 bg-[#FCFCF9]"><div class="font-bold">🔒 Private</div><div class="text-slate-600 text-xs mt-1">Files never leave RAM.</div></div>
+        <div class="border border-slate-200 rounded-xl p-4 bg-[#FCFCF9]"><div class="font-bold">⚡ Fast</div><div class="text-slate-600 text-xs mt-1">No upload wait. Offline.</div></div>
+        <div class="border border-slate-200 rounded-xl p-4 bg-[#FCFCF9]"><div class="font-bold">💛 Free</div><div class="text-slate-600 text-xs mt-1">Ad + BMC funded.</div></div>
       </div>
     </div>
-    <div class="mt-8 border border-slate-200 rounded-2xl p-6 bg-slate-900 text-white">
-      <div class="font-black">FAQ</div>
+
+    <details class="mt-8 border border-slate-200 rounded-2xl p-6 bg-slate-900 text-white group">
+      <summary class="font-black cursor-pointer list-none flex justify-between items-center">FAQ <span class="group-open:rotate-180 transition">▾</span></summary>
       <div class="mt-4 grid sm:grid-cols-2 gap-6 text-sm">
-        <div><div class="font-bold">Do you store my files?</div><div class="text-slate-400 mt-1">No. There is no upload endpoint. Files are processed in a Web Worker on your device.</div></div>
-        <div><div class="font-bold">Can I use offline?</div><div class="text-slate-400 mt-1">Yes, after first load. Try airplane mode.</div></div>
-        <div><div class="font-bold">Why Buy Me a Coffee?</div><div class="text-slate-400 mt-1">Ads cover domain. Coffee funds WASM model improvements. Totally optional: <a href="https://www.buymeacoffee.com/contactae2b" class="underline text-[#FFDD00]">contactae2b</a></div></div>
-        <div><div class="font-bold">AdSense + custom banners?</div><div class="text-slate-400 mt-1">Both, labeled. No ad mimics a Download button. See banners.json</div></div>
+        <div><div class="font-bold">Do you keep my files?</div><div class="text-slate-400 mt-1">Nope. There's literally no upload button to our server. Everything happens in your browser.</div></div>
+        <div><div class="font-bold">Can I use it offline?</div><div class="text-slate-400 mt-1">Yep! Once it loads the first time, try airplane mode. It still works.</div></div>
+        <div><div class="font-bold">Why buy you a coffee?</div><div class="text-slate-400 mt-1">Ads pay for our domain. Coffee helps us make the tools even better. <a href="https://www.buymeacoffee.com/contactae2b" class="underline text-[#FFDD00]">contactae2b</a></div></div>
+        <div><div class="font-bold">Cached?</div><div class="text-slate-400 mt-1">Recent + prefs cached locally (localStorage). Clear in Privacy.</div></div>
       </div>
-    </div>
+    </details>
   </section>
+
   <script is:inline>
-    const input = document.getElementById('search');
-    const cards = document.querySelectorAll('[data-tool-card]');
-    input?.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase();
-      cards.forEach(c => {
-        const hay = c.getAttribute('data-title') + ' ' + c.getAttribute('data-desc');
-        c.style.display = hay.includes(q) ? '' : 'none';
+    const toolsGrid = document.getElementById('toolsGrid');
+    const skeletonGrid = document.getElementById('skeletonGrid');
+    const tabs = document.querySelectorAll('.tab');
+    const cards = Array.from(document.querySelectorAll('[data-tool-card]'));
+    const search = document.getElementById('search');
+    const showMore = document.getElementById('showMore');
+    const pageInfo = document.getElementById('pageInfo');
+    const noResults = document.getElementById('noResults');
+    const recentRow = document.getElementById('recentRow');
+    const recentGrid = document.getElementById('recentGrid');
+
+    let activeTab = localStorage.getItem('helper_prefs') ? JSON.parse(localStorage.getItem('helper_prefs')).lastCategory || 'all' : 'all';
+    let query = '';
+    let visibleCount = 12;
+    const PER_PAGE = 12;
+
+    function getPrefs(){ try{ return JSON.parse(localStorage.getItem('helper_prefs')||'{}'); }catch{return{}} }
+    function setPrefs(v){ localStorage.setItem('helper_prefs', JSON.stringify({...getPrefs(), ...v})); }
+
+    // Skeleton -> real after 300ms (simulate no spinner, just shimmer)
+    setTimeout(()=>{
+      skeletonGrid.classList.add('hidden');
+      toolsGrid.classList.remove('hidden');
+      update();
+    }, 300);
+
+    // Recent (cached)
+    try{
+      const recent = JSON.parse(localStorage.getItem('helper_recent')||'[]');
+      if(recent.length){
+        recentRow.classList.remove('hidden');
+        recentGrid.innerHTML = recent.slice(0,3).map(slug=>{
+          const c = cards.find(x=> x.getAttribute('href')===`/tools/${slug}`);
+          if(!c) return '';
+          return `<a href="/tools/${slug}" class="bg-white border border-slate-200 rounded-xl p-3 flex items-center gap-3 hover:border-slate-900"><span class="w-8 h-8 rounded-lg bg-slate-900 text-white grid place-items-center">${c.querySelector('div').textContent.trim().slice(0,2)}</span><span class="font-bold text-sm">${c.dataset.title}</span></a>`;
+        }).join('');
+      }
+    }catch{}
+
+    function filtered(){
+      return cards.filter(c=>{
+        const catOk = activeTab==='all' || c.dataset.cat===activeTab;
+        const qOk = !query || (c.dataset.title + ' ' + c.dataset.desc).includes(query);
+        return catOk && qOk;
+      });
+    }
+
+    function update(){
+      const list = filtered();
+      cards.forEach(c=> c.style.display='none');
+      if(!list.length){
+        noResults.classList.remove('hidden');
+        showMore.classList.add('hidden');
+        pageInfo.textContent='';
+        return;
+      }
+      noResults.classList.add('hidden');
+      list.slice(0, visibleCount).forEach(c=> c.style.display='');
+      pageInfo.textContent = `Showing ${Math.min(visibleCount, list.length)} of ${list.length}`;
+      showMore.classList.toggle('hidden', list.length <= visibleCount);
+      // Cache last tab
+      setPrefs({lastCategory: activeTab});
+    }
+
+    tabs.forEach(b=>{
+      if(b.dataset.tab===activeTab){ b.classList.add('bg-slate-900','text-white'); b.classList.remove('bg-white','border'); }
+      b.addEventListener('click', ()=>{
+        tabs.forEach(x=>{ x.classList.remove('bg-slate-900','text-white'); x.classList.add('bg-white','border'); });
+        b.classList.add('bg-slate-900','text-white'); b.classList.remove('bg-white','border');
+        activeTab=b.dataset.tab;
+        visibleCount=PER_PAGE;
+        update();
       });
     });
+
+    let t;
+    search?.addEventListener('input', e=>{
+      clearTimeout(t);
+      // Show skeleton while typing (debounced)
+      skeletonGrid.classList.remove('hidden');
+      toolsGrid.classList.add('hidden');
+      t=setTimeout(()=>{
+        query=e.target.value.toLowerCase().trim();
+        visibleCount=PER_PAGE;
+        skeletonGrid.classList.add('hidden');
+        toolsGrid.classList.remove('hidden');
+        update();
+      }, 150);
+    });
+
+    showMore?.addEventListener('click', ()=>{
+      visibleCount+=PER_PAGE;
+      update();
+    });
+
+    // Initial
+    update();
   </script>
 </Layout>
