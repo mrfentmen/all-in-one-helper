@@ -122,6 +122,14 @@ const { tool } = Astro.props;
               </div>
               <div class="flex gap-2"><button id="certPng" type="button" class="border border-slate-900 dark:border-slate-300 px-4 py-2 rounded-full text-xs font-bold">Download PNG</button></div>
             </div>
+            <div id="bcCtrl" class="hidden space-y-2">
+              <div class="grid sm:grid-cols-2 gap-2">
+                <input id="bcName" placeholder="Full name" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="bcTitle" placeholder="Job title" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="bcCompany" placeholder="Company" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+                <input id="bcContact" placeholder="email · phone · website" class="border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 text-sm bg-white dark:bg-slate-800" />
+              </div>
+            </div>
             <div id="nrCtrl" class="hidden flex gap-2 items-center">
               <label class="text-xs font-bold">Strength:</label>
               <select id="nrLevel" class="border border-slate-200 dark:border-slate-700 rounded-full px-3 py-2 text-sm bg-white dark:bg-slate-800"><option value="light">Light</option><option value="medium" selected>Medium</option><option value="strong">Strong</option></select>
@@ -311,6 +319,11 @@ const { tool } = Astro.props;
     if (slug === 'noise-remover') {
       document.getElementById('v13Controls').classList.remove('hidden');
       document.getElementById('nrCtrl').classList.remove('hidden');
+    }
+    if (slug === 'business-card') {
+      document.getElementById('v13Controls').classList.remove('hidden');
+      document.getElementById('bcCtrl').classList.remove('hidden');
+      dropzone.style.display = 'none';
     }
     if (slug === 'voice-changer') {
       document.getElementById('v13Controls').classList.remove('hidden');
@@ -762,7 +775,7 @@ const { tool } = Astro.props;
       }
       if (slug === 'qr-generator') return;
 
-      if (!files.length && slug!=='calculators' && !['media-studio','email-signature','certificate-maker'].includes(slug) && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
+      if (!files.length && slug!=='calculators' && !['media-studio','email-signature','certificate-maker','business-card'].includes(slug) && !textDevSlugs.includes(slug) && !funSlugs.includes(slug) && !['color-picker','qr-generator','resume-builder','word-counter','json-formatter','password-generator'].includes(slug) && !['age-calculator','unit-converter','pomodoro-timer','barcode-generator'].includes(slug)) { setStatus('Please select files first'); return; }
       skeleton.classList.remove('hidden'); skeleton.classList.remove('hidden'); setStatus('Working on it right in your browser…');
       actionBtn.disabled=true;
       try {
@@ -2661,6 +2674,24 @@ const { tool } = Astro.props;
           resultBlob=new Blob([data],{type:resultName.endsWith('.mp3')?'audio/mpeg':'video/mp4'});
           downloadBtn.classList.remove('hidden');
           setStatus(op.charAt(0).toUpperCase()+op.slice(1)+' done - '+formatBytes(resultBlob.size));
+        } else if (slug === 'business-card') {
+          const g=id=>document.getElementById(id)?.value||'';
+          const name=g('bcName')||'Your Name', title=g('bcTitle')||'Title', company=g('bcCompany')||'Company', contact=g('bcContact')||'email@example.com';
+          // 3.5x2in at 300dpi = 1050x600
+          const canvas=document.createElement('canvas'); canvas.width=1050; canvas.height=600;
+          const ctx=canvas.getContext('2d');
+          ctx.fillStyle='#0f172a'; ctx.fillRect(0,0,1050,600);
+          ctx.fillStyle='#FFDD00'; ctx.fillRect(0,520,1050,80);
+          ctx.fillStyle='#ffffff'; ctx.textAlign='left';
+          ctx.font='bold 64px sans-serif'; ctx.fillText(name,70,220);
+          ctx.font='32px sans-serif'; ctx.fillStyle='#cbd5e1'; ctx.fillText(title,70,290);
+          ctx.fillStyle='#FFDD00'; ctx.font='bold 44px sans-serif'; ctx.fillText(company,70,420);
+          ctx.fillStyle='#94a3b8'; ctx.font='26px sans-serif';
+          contact.split('·').forEach((c,i)=> ctx.fillText(c.trim(),70,480+i*36));
+          resultBlob=await new Promise(r=>canvas.toBlob(r,'image/png')); resultName='business-card.png';
+          downloadBtn.classList.remove('hidden');
+          const prev=document.getElementById('previewArea'); prev.innerHTML=''; const img=new Image(); img.src=URL.createObjectURL(resultBlob); img.style.maxWidth='100%'; prev.appendChild(img); prev.classList.remove('hidden');
+          setStatus('Card rendered - 3.5x2in @300dpi');
         } else if (slug === 'pdf-pro') {
           const delStr = document.getElementById('deletePages')?.value.trim();
           const reorderStr = document.getElementById('reorderInput')?.value.trim();

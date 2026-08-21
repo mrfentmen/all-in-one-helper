@@ -155,3 +155,13 @@ test.describe('8 paid-clone tools', () => {
     if (!status.includes('applied')) console.log('voice-changer note:', status);
   });
 });
+
+test('business-card renders card PNG', async ({ page }) => {
+  await page.goto('/tools/business-card');
+  await page.fill('#bcName', 'Jane Doe');
+  await page.fill('#bcTitle', 'CEO');
+  await page.fill('#bcCompany', 'Acme');
+  await page.click('#actionBtn');
+  await expect(page.locator('#status')).toContainText('Card rendered', { timeout: 10000 });
+  await expect(page.locator('#downloadBtn')).toBeVisible();
+});
